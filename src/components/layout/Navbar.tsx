@@ -139,7 +139,7 @@ export default function Navbar() {
                 cursor: 'pointer',
                 transition: 'all 0.3s',
               }}
-              className="lg:!flex"
+              className="lg:flex!"
               transition={{ duration: 0.3 }}
             >
               Get Started
