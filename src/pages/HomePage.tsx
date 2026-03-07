@@ -1,12 +1,11 @@
-import { About } from "../sections/About";
-import { ClaritySteps } from "../sections/ClaritySteps";
-import { FAQsection } from "../sections/FAQsection";
-import HeroSection from "../sections/Hero";
-
-import { ShowCaseCards } from "../sections/ShowCaseCards";
-import { StatsCarousel } from "../sections/StatasCarousel";
-import { SuccessStories } from "../sections/SuccessStories";
-import { Works } from "../sections/Works";
+import HeroSection from '../sections/Hero';
+import { StatsCarousel } from '../sections/StatasCarousel';
+import { ShowCaseCards } from '../sections/ShowCaseCards';
+import { About } from '../sections/About';
+import { ClaritySteps } from '../sections/ClaritySteps';
+import { Works } from '../sections/Works';
+import { SuccessStories } from '../sections/SuccessStories';
+import { FAQsection } from '../sections/FAQsection';
 
 export default function HomePage() {
   return (
@@ -20,5 +19,5 @@ export default function HomePage() {
       <SuccessStories />
       <FAQsection />
     </main>
-  )
+  );
 }

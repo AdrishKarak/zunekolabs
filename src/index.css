@@ -1,15 +1,126 @@
 @import "tailwindcss";
 
-body {
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,600,700&f[]=satoshi@400,500,700&display=swap');
+
+:root {
+  --bg-void: #030d07;
+  --bg-deep: #061a0e;
+  --bg-surface: #0b2e18;
+  --bg-raised: #0f3d20;
+  --accent-primary: #00e87a;
+  --accent-secondary: #00b85e;
+  --accent-glow: rgba(0, 232, 122, 0.15);
+  --border-subtle: rgba(0, 232, 122, 0.12);
+  --border-bright: rgba(0, 232, 122, 0.45);
+  --text-primary: #f0faf4;
+  --text-secondary: #8ab59a;
+  --text-tertiary: #4d7a5e;
+  --gold: #c9a84c;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-heading: 'Cabinet Grotesk', system-ui, sans-serif;
+  --font-body: 'Satoshi', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body, #root {
-  min-height: 100%;
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  body { cursor: auto; }
 }
 
 #root {
-  display: flex;
-  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- Custom scrollbar --- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-void); }
+::-webkit-scrollbar-thumb { background: var(--accent-secondary); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+
+/* --- Marquee animation --- */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-left { animation: marquee-left 30s linear infinite; }
+.marquee-right { animation: marquee-right 30s linear infinite; }
+
+/* --- Pulse dot --- */
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.4); opacity: 0.5; }
+}
+.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+
+/* --- Bounce scroll indicator --- */
+@keyframes bounce-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+.bounce-y { animation: bounce-y 1.5s ease-in-out infinite; }
+
+/* --- Page load --- */
+@keyframes slideUp {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-100%); }
+}
+
+/* --- Grain texture --- */
+.grain-texture {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* --- Font helpers --- */
+.font-display  { font-family: var(--font-display); }
+.font-heading  { font-family: var(--font-heading); }
+.font-body     { font-family: var(--font-body); }
+.font-mono     { font-family: var(--font-mono); }
+.text-accent   { color: var(--accent-primary); }
+.text-void     { color: var(--bg-void); }
+
+/* --- Dialogue line drawing animation --- */
+@keyframes drawLine {
+  from { height: 0; }
+  to   { height: 100%; }
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

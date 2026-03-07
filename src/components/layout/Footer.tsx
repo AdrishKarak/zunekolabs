@@ -1,217 +1,237 @@
-import ZunekoLogo from "../../assets/Zuneko.svg";
+import { motion } from 'framer-motion';
+import { Linkedin, Twitter, Instagram, MapPin, Mail, ArrowRight } from 'lucide-react';
+import ZunekoLogo from '../../assets/Zuneko.svg';
 
-const LogoText = () => (
-  <span className="text-2xl font-extrabold tracking-tight">
-    <span className="text-green-800">Zuneko</span>
-    <span className="text-emerald-500">Labs</span>
-  </span>
-);
+const EASE_SMOOTH = [0.16, 1, 0.3, 1] as const;
 
-const footerLinks = {
-  Services: [
-    "AI Automation",
-    "ERP Solutions",
-    "Web Development",
-    "App Development",
-  ],
-  Company: ["About Us", "Our Team", "Careers", "Blog"],
-  Resources: ["Case Studies", "Documentation", "Support", "API Reference"],
+const FOOTER_LINKS = {
+  Services: ['AI Automation', 'Computer Vision', 'LLM Applications', 'Frappe ERPNext', 'Custom Software', 'Digital Strategy'],
+  Company: ['About Us', 'Our Work', 'Careers', 'Blog', 'Press'],
+  Resources: ['Case Studies', 'Documentation', 'API Reference', 'Community', 'Support'],
 };
 
-const offices = [
+const OFFICES = [
   {
-    title: "Kolkata HQ",
-    address: "DH6/27, Action Area 1D, New Town, Kolkata – 700156",
-    mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.9988162099685!2d88.481583!3d22.5791476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a020be6e6fd5d37%3A0x6cab9abf7f8e4f48!2sEMDEE%20NEW%20OFFICE!5e0!3m2!1sen!2sin!4v1772903059360!5m2!1sen!2sin",
+    name: 'Pune Office',
+    address: 'Emdee Digitronics, Baner Road, Pune – 411045, Maharashtra',
+    mapSrc: 'https://maps.google.com/?q=Baner,Pune,Maharashtra,India&output=embed',
   },
   {
-    title: "Kolkata Office 2",
-    address: "2B, Saraswati Apartment, 114/1 Golaghata Road, Kolkata – 700048",
-    mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d117887.52507870358!2d88.3428347!3d22.5796584!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02760ea963c899%3A0x1236b5af851aac57!2sEmdee%20Digitronics%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1772903093406!5m2!1sen!2sin",
+    name: 'Kolkata Office',
+    address: 'Emdee Digitronics, Salt Lake Sector V, Kolkata – 700091, West Bengal',
+    mapSrc: 'https://maps.google.com/?q=Salt+Lake+Sector+V,Kolkata,West+Bengal,India&output=embed',
   },
 ];
 
-const LinkedInIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
-const TwitterIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
-
-const InstagramIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-    <circle cx="12" cy="12" r="4" />
-    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const MailIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="4" width="20" height="16" rx="2" />
-    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-  </svg>
-);
-
-const PhoneIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.01 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-  </svg>
-);
-
-const MapPinIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 mt-0.5">
-    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z" />
-    <circle cx="12" cy="10" r="3" />
-  </svg>
-);
-
 export default function Footer() {
   return (
-    <footer className="bg-white text-gray-600 border-t border-gray-100 pb-0">
+    <footer style={{ background: 'var(--bg-void)', paddingTop: '80px' }}>
 
-      {/* Top emerald divider line */}
-      <div className="h-px bg-linear-to-r from-transparent via-emerald-400 to-transparent" />
-
-      {/* Main footer content */}
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-10 pb-0">
-
-        {/* Top grid: brand + links */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
-
-          {/* Brand column */}
-          <div className="lg:col-span-2 space-y-3">
-            <a href="/" className="flex items-center gap-2.5">
-              <img src={ZunekoLogo} alt="ZunekoLabs" className="w-9 h-9" />
-              <LogoText />
+      {/* CTA Band */}
+      <div style={{ maxWidth: '900px', margin: '0 auto', padding: '0 32px', marginBottom: '80px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.8, ease: EASE_SMOOTH }}
+          style={{
+            background: 'linear-gradient(135deg, var(--bg-surface), var(--bg-raised))',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: '16px',
+            padding: '60px 48px',
+            textAlign: 'center',
+          }}
+        >
+          <h2 style={{
+            fontFamily: 'var(--font-display)',
+            fontWeight: 700,
+            fontSize: 'clamp(32px, 4.5vw, 58px)',
+            color: 'var(--text-primary)',
+            lineHeight: 1.1,
+            marginBottom: '16px',
+          }}>
+            Ready to Transform Your Enterprise?
+          </h2>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '18px', color: 'var(--text-secondary)', marginBottom: '36px' }}>
+            Let's build something extraordinary together.
+          </p>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+            <motion.a
+              href="#contact"
+              whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(0,232,122,0.3)' }}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '14px 32px',
+                background: 'var(--accent-primary)',
+                color: 'var(--bg-void)',
+                borderRadius: '6px',
+                fontFamily: 'var(--font-heading)',
+                fontWeight: 600,
+                fontSize: '15px',
+                textDecoration: 'none',
+                transition: 'all 0.3s',
+              }}
+            >
+              Start a Project <ArrowRight size={16} />
+            </motion.a>
+            <a
+              href="mailto:sales@zuneko.ai"
+              style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.25s' }}
+              onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent-primary)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            >
+              sales@zuneko.ai
             </a>
-            <p className="text-gray-500 text-base leading-relaxed max-w-xs">
-              Transforming businesses through intelligent automation and cutting-edge AI solutions. Your partner in digital innovation and growth.
-            </p>
+          </div>
+        </motion.div>
+      </div>
 
-            {/* Contact info */}
-            <div className="space-y-2 pt-0">
-              <a href="mailto:sales@zuneko.ai" className="flex items-center gap-2.5 text-[1.05rem] text-gray-600 hover:text-emerald-600 transition-colors group">
-                <span className="text-emerald-500 group-hover:text-emerald-600 transition-colors"><MailIcon /></span>
-                sales@zuneko.ai
-              </a>
-              <a href="tel:+913340692109" className="flex items-center gap-2.5 text-[1.05rem] text-gray-600 hover:text-emerald-600 transition-colors group">
-                <span className="text-emerald-500 group-hover:text-emerald-600 transition-colors"><PhoneIcon /></span>
-                033 4069 2109
-              </a>
-              <div className="flex items-start gap-2.5 text-[1.05rem] text-gray-600">
-                <span className="text-emerald-500 mt-0.5"><MapPinIcon /></span>
-                <span>DH6/27, Action Area 1D,<br />New Town, Kolkata – 700156</span>
+      {/* Main footer body */}
+      <div style={{ maxWidth: '1152px', margin: '0 auto', padding: '0 32px 64px' }}>
+        {/* Top row: logo + links */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr 1fr 1fr',
+          gap: '48px',
+          paddingBottom: '48px',
+          borderBottom: '1px solid var(--border-subtle)',
+          marginBottom: '48px',
+        }} className="footer-grid">
+          {/* Logo + about */}
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(0,232,122,0.2)' }}>
+                <img src={ZunekoLogo} alt="ZunekoLabs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
+              <div>
+                <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 700, fontSize: '14px', color: 'var(--text-primary)', lineHeight: 1 }}>ZUNEKO</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '0.15em', color: 'var(--accent-primary)' }}>LABS</div>
+              </div>
+            </div>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '20px', maxWidth: '280px' }}>
+              Enterprise AI automation, computer vision, and digital transformation. A vertical of Emdee Digitronics.
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <Mail size={13} style={{ color: 'var(--text-tertiary)' }} />
+              <a href="mailto:info@zuneko.ai" style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-tertiary)', textDecoration: 'none' }}>info@zuneko.ai</a>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <MapPin size={13} style={{ color: 'var(--text-tertiary)' }} />
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--text-tertiary)' }}>Pune & Kolkata, India</span>
             </div>
           </div>
 
-          {/* Links columns */}
-          <div className="lg:col-span-3 grid grid-cols-3 gap-8">
-            {Object.entries(footerLinks).map(([category, links]) => (
-              <div key={category}>
-                <h4 className="text-gray-900 font-bold text-sm tracking-widest uppercase mb-3">
-                  {category}
-                </h4>
-                <ul className="space-y-2">
-                  {links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="text-[1.05rem] text-gray-600 hover:text-emerald-600 transition-colors hover:translate-x-0.5 inline-block duration-200"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {/* Link columns */}
+          {Object.entries(FOOTER_LINKS).map(([title, links]) => (
+            <div key={title}>
+              <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-tertiary)', letterSpacing: '0.15em', marginBottom: '20px', textTransform: 'uppercase' }}>
+                {title}
+              </h4>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {links.map(link => (
+                  <li key={link}>
+                    <a
+                      href="#"
+                      style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: 'var(--text-secondary)', textDecoration: 'none', transition: 'color 0.2s' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent-primary)')}
+                      onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+                    >
+                      {link}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Divider */}
-        <div className="h-px bg-gray-200 mb-5" />
-
-        {/* Office locations with maps */}
-        <div className="mb-3">
-          <h4 className="text-gray-900 font-bold text-sm tracking-widest uppercase mb-4 flex items-center gap-2">
-            <span className="w-6 h-px bg-emerald-500 inline-block" />
-            Our Offices
-            <span className="w-6 h-px bg-emerald-500 inline-block" />
+        {/* Office cards */}
+        <div style={{ marginBottom: '48px' }}>
+          <h4 style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-tertiary)', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '20px' }}>
+            OUR OFFICES
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {offices.map((office) => (
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }} className="offices-grid">
+            {OFFICES.map(office => (
               <div
-                key={office.title}
-                className="rounded-2xl overflow-hidden border border-gray-200 hover:border-emerald-300 transition-colors duration-300 bg-gray-50 group shadow-sm hover:shadow-md"
+                key={office.name}
+                style={{
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: '10px',
+                  overflow: 'hidden',
+                }}
               >
-                {/* Map iframe */}
-                <div className="relative h-32 overflow-hidden">
+                <div style={{ height: '140px', background: 'var(--bg-raised)', position: 'relative', overflow: 'hidden' }}>
                   <iframe
-                    src={office.mapSrc}
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(office.address)}&output=embed&zoom=14`}
                     width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
+                    height="140"
+                    style={{ border: 'none', opacity: 0.7, pointerEvents: 'none' }}
+                    title={office.name}
                     loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="grayscale group-hover:grayscale-0 transition-all duration-500"
-                    title={office.title}
                   />
-                  <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-black/5 rounded-t-2xl" />
                 </div>
-                {/* Office info */}
-                <div className="px-4 py-3">
-                  <p className="text-emerald-600 font-bold text-[1.05rem] mb-1">{office.title}</p>
-                  <p className="text-gray-600 text-base leading-relaxed flex items-start gap-2">
-                    <span className="text-emerald-500 mt-0.5 shrink-0"><MapPinIcon /></span>
+                <div style={{ padding: '16px 20px' }}>
+                  <div style={{ fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '15px', color: 'var(--accent-primary)', marginBottom: '6px' }}>
+                    {office.name}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
                     {office.address}
-                  </p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Bottom bar — copyright | socials | links */}
-        <div className="h-px bg-gray-200 mb-3" />
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-base text-gray-500 py-3 pb-5">
-          <p>© 2026 ZunekoLabs. All rights reserved.</p>
+        {/* Bottom bar */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '16px',
+          paddingTop: '24px',
+          borderTop: '1px solid var(--border-subtle)',
+        }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-tertiary)' }}>
+            © 2026 ZunekoLabs. All rights reserved. A vertical of Emdee Digitronics.
+          </span>
 
-          {/* Socials centered */}
-          <div className="flex items-center gap-2">
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
             {[
-              { icon: <LinkedInIcon />, href: "#", label: "LinkedIn" },
-              { icon: <TwitterIcon />, href: "#", label: "Twitter" },
-              { icon: <InstagramIcon />, href: "#", label: "Instagram" },
-            ].map(({ icon, href, label }) => (
-              <a
+              { Icon: Linkedin, label: 'LinkedIn' },
+              { Icon: Twitter, label: 'X / Twitter' },
+              { Icon: Instagram, label: 'Instagram' },
+            ].map(({ Icon, label }) => (
+              <motion.a
                 key={label}
-                href={href}
+                href="#"
+                whileHover={{ scale: 1.1, color: 'var(--accent-primary)' }}
+                style={{ color: 'var(--text-tertiary)', display: 'flex', transition: 'color 0.25s' }}
                 aria-label={label}
-                className="w-9 h-9 rounded-md bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 border border-gray-200 hover:border-emerald-300 flex items-center justify-center text-gray-500 transition-all duration-200"
+                transition={{ duration: 0.2 }}
               >
-                {icon}
-              </a>
+                <Icon size={18} />
+              </motion.a>
             ))}
-          </div>
-
-          <div className="flex items-center gap-5">
-            <a href="#" className="hover:text-emerald-600 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-emerald-600 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-emerald-600 transition-colors">Cookie Policy</a>
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; }
+          .footer-grid > div:first-child { grid-column: span 2; }
+          .offices-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 480px) {
+          .footer-grid { grid-template-columns: 1fr !important; }
+          .footer-grid > div:first-child { grid-column: span 1; }
+        }
+      `}</style>
     </footer>
   );
 }
