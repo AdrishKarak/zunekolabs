@@ -12,7 +12,6 @@ const STEPS = [
 ];
 
 function StepCard({ step, index }: { step: typeof STEPS[0]; index: number }) {
-  const Icon = step.icon;
   const isLeft = step.side === 'left';
 
   return (

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+
 import { motion } from 'framer-motion';
 import { useCountUp } from '../hooks/useCountUp';
 

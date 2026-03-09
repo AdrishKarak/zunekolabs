@@ -168,7 +168,7 @@ function DropdownItem({ item, delay }: { item: { label: string; icon: React.Reac
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -183,7 +183,6 @@ export default function Navbar() {
 
   const closeMobile = () => {
     setMobileOpen(false);
-    setMobileExpanded(null);
   };
 
   return (
