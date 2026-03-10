@@ -8,9 +8,9 @@ const EASE_SMOOTH = [0.16, 1, 0.3, 1] as const;
 const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: string }[]> = {
   Services: [
     { label: 'Artificial Intelligence', icon: <Cpu size={14} />,        href: '/services/aiml/artificial-intelligence' },
-    { label: 'ERP Solutions',           icon: <BarChart3 size={14} />,   href: '#' },
-    { label: 'Web Development',         icon: <Globe size={14} />,       href: '#' },
-    { label: 'App Development',         icon: <Smartphone size={14} />,  href: '#' },
+    { label: 'Gen AI',           icon: <BarChart3 size={14} />,   href: '/services/aiml/genai' },
+    { label: 'ML Application Development',         icon: <Globe size={14} />,       href: '/services/aiml/ml' },
+    { label: 'Agentic AI Development',         icon: <Smartphone size={14} />,  href: '/services/aiml/agenticai' },
   ],
   Works: [
     { label: 'Case Studies',  icon: <Briefcase size={14} />,   href: '#' },

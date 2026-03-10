@@ -11,6 +11,9 @@ import ScrollProgressBar from './components/ui/ScrollProgressBar';
 import CustomCursor from './components/ui/CustomCursor';
 import PageLoadOverlay from './components/ui/PageLoadOverlay';
 import ArtificialIntelligence from './service/AIML/pages/artificialintelligence';
+import GenAI from './service/AIML/pages/genai';
+import AgenticAI from './service/AIML/pages/agenticai';
+import ML from './service/AIML/pages/Machinelearning';
 
 export default function App() {
   useEffect(() => {
@@ -61,6 +64,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/services/aiml/artificial-intelligence" element={<ArtificialIntelligence />} />
+            <Route path="/services/aiml/genai" element={<GenAI />} />
+            <Route path="/services/aiml/agenticai" element={<AgenticAI />} />
+            <Route path="/services/aiml/ml" element={<ML />} />
           </Routes>
         </main>
 
