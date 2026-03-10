@@ -14,6 +14,8 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
     { label: 'Retrieval-Augmented Generation',    icon: <Cpu size={14} />,        href: '/services/aiml/rag' },
     { label: 'Natural Language Processing',       icon: <Globe size={14} />,       href: '/services/aiml/nlp' },
     { label: 'Data Analysis & Visualization',     icon: <BarChart3 size={14} />,   href: '/services/aiml/data-analysis' },
+    { label: 'Custom Software as a Service',      icon: <Cpu size={14} />,         href: '/service/customsaaas' },
+    { label: 'Core System Message',               icon: <Globe size={14} />,       href: '/service/coresystem' },
   ],
   Works: [
     { label: 'Case Studies',  icon: <Briefcase size={14} />,    href: '/works/case-studies' },

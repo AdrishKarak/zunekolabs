@@ -19,6 +19,8 @@ import NLP from './service/AIML/pages/naturalLP';
 import DATAANALYSIS from './service/AIML/pages/Dataanalysis';
 import CaseStudy from './Works/casestudy';
 import Projects from './Works/projects';
+import { CustomSaaSPage } from './service/AIML/pages/CustomSaaSPage';
+import { CoreSystemsPage } from './service/AIML/pages/coresystemmessage';
 
 export default function App() {
   useEffect(() => {
@@ -77,6 +79,8 @@ export default function App() {
             <Route path="/services/aiml/data-analysis" element={<DATAANALYSIS />} />
             <Route path="/works/case-studies" element={<CaseStudy />} />
             <Route path="/works/projects" element={<Projects />} />
+            <Route path="/service/customsaaas" element={<CustomSaaSPage />} />
+            <Route path="/service/coresystem" element={<CoreSystemsPage />} />
           </Routes>
         </main>
 
