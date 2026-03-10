@@ -11,6 +11,9 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
     { label: 'Gen AI',           icon: <BarChart3 size={14} />,   href: '/services/aiml/genai' },
     { label: 'ML Application Development',         icon: <Globe size={14} />,       href: '/services/aiml/ml' },
     { label: 'Agentic AI Development',         icon: <Smartphone size={14} />,  href: '/services/aiml/agenticai' },
+    { label: 'Retrieval-Augmented Generation', icon: <Cpu size={14} />,        href: '/services/aiml/rag' },
+    { label: 'Natural Language Processing',    icon: <Globe size={14} />,       href: '/services/aiml/nlp' },
+    { label: 'Data Analysis & Visualization', icon: <BarChart3 size={14} />,   href: '/services/aiml/data-analysis' },
   ],
   Works: [
     { label: 'Case Studies',  icon: <Briefcase size={14} />,   href: '#' },

@@ -14,6 +14,9 @@ import ArtificialIntelligence from './service/AIML/pages/artificialintelligence'
 import GenAI from './service/AIML/pages/genai';
 import AgenticAI from './service/AIML/pages/agenticai';
 import ML from './service/AIML/pages/Machinelearning';
+import RAG from './service/AIML/pages/RAAG';
+import NLP from './service/AIML/pages/naturalLP';
+import DATAANALYSIS from './service/AIML/pages/Dataanalysis';
 
 export default function App() {
   useEffect(() => {
@@ -67,6 +70,9 @@ export default function App() {
             <Route path="/services/aiml/genai" element={<GenAI />} />
             <Route path="/services/aiml/agenticai" element={<AgenticAI />} />
             <Route path="/services/aiml/ml" element={<ML />} />
+            <Route path="/services/aiml/rag" element={<RAG />} />
+            <Route path="/services/aiml/nlp" element={<NLP />} />
+            <Route path="/services/aiml/data-analysis" element={<DATAANALYSIS />} />
           </Routes>
         </main>
 
