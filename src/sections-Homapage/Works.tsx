@@ -11,7 +11,7 @@ const SERVICES = [
     desc: 'End-to-end workflow automation powered by custom AI models and agent systems. Reduce manual overhead by 80%.',
     stat: '80% overhead reduction',
     tag: 'Core Service',
-    color: '#00e87a',
+    color: '#4ade80',
   },
   {
     icon: Eye,
@@ -19,7 +19,7 @@ const SERVICES = [
     desc: 'Real-time visual intelligence: defect detection, OCR, object tracking, and video analytics at production scale.',
     stat: '99.2% accuracy',
     tag: 'Vision AI',
-    color: '#00e87a',
+    color: '#4ade80',
   },
   {
     icon: Brain,
@@ -35,7 +35,7 @@ const SERVICES = [
     desc: 'Full-cycle ERP implementation, customization, and migration for enterprise-scale operations.',
     stat: '10,000+ users onboarded',
     tag: 'Enterprise',
-    color: '#00b85e',
+    color: '#22c55e',
   },
   {
     icon: Code2,
@@ -43,7 +43,7 @@ const SERVICES = [
     desc: 'Bespoke Python/React applications engineered for complex enterprise workflows and edge cases.',
     stat: 'Built to scale',
     tag: 'Development',
-    color: '#00e87a',
+    color: '#4ade80',
   },
   {
     icon: TrendingUp,
@@ -125,7 +125,7 @@ function StackCard({
         borderRadius: '16px',
         overflow: 'hidden',
         background: 'var(--bg-surface)',
-        border: `1px solid ${hovered ? service.color + '55' : 'rgba(0,232,122,0.1)'}`,
+        border: `1px solid ${hovered ? service.color + '55' : 'rgba(34,197,94,0.1)'}`,
         boxShadow: hovered
           ? `0 24px 60px rgba(0,0,0,0.5), 0 0 40px ${service.color}18`
           : '0 8px 32px rgba(0,0,0,0.3)',
@@ -183,7 +183,7 @@ function StackCard({
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
             <motion.div
               animate={{
-                background: hovered ? `${service.color}22` : 'rgba(0,232,122,0.08)',
+                background: hovered ? `${service.color}22` : 'rgba(34,197,94,0.08)',
                 boxShadow: hovered ? `0 0 20px ${service.color}33` : 'none',
               }}
               transition={{ duration: 0.3 }}
@@ -354,7 +354,7 @@ export function Works() {
                   <polygon
                     key={`${row}-${col}`}
                     points={`${20+col*40},${10+row*34} ${40+col*40},${10+row*34} ${50+col*40},${27+row*34} ${40+col*40},${44+row*34} ${20+col*40},${44+row*34} ${10+col*40},${27+row*34}`}
-                    fill="none" stroke="#00e87a" strokeWidth="1"
+                    fill="none" stroke="#4ade80" strokeWidth="1"
                   />
                 ))
               )}
@@ -371,7 +371,7 @@ export function Works() {
             </span>
             <div style={{
               flex: 1, maxWidth: '200px', height: '2px',
-              background: 'rgba(0,232,122,0.1)', borderRadius: '2px', overflow: 'hidden',
+              background: 'rgba(34,197,94,0.1)', borderRadius: '2px', overflow: 'hidden',
             }}>
               <motion.div style={{
                 height: '100%',

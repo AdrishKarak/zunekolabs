@@ -33,7 +33,7 @@ export default function PageLoadOverlay({ onComplete }: PageLoadOverlayProps) {
           style={{
             position: 'fixed',
             inset: 0,
-            background: '#030d07',
+            background: '#000000',
             zIndex: 99998,
             display: 'flex',
             alignItems: 'center',
@@ -54,8 +54,8 @@ export default function PageLoadOverlay({ onComplete }: PageLoadOverlayProps) {
               height: '64px',
               borderRadius: '14px',
               overflow: 'hidden',
-              boxShadow: '0 0 40px rgba(0,232,122,0.3)',
-              border: '1px solid rgba(0,232,122,0.3)',
+              boxShadow: '0 0 40px rgba(34,197,94,0.3)',
+              border: '1px solid rgba(34,197,94,0.3)',
             }}>
               <img src={ZunekoLogo} alt="ZunekoLabs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>

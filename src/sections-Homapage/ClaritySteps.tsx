@@ -55,7 +55,7 @@ function StepCard({ step, index }: { step: typeof STEPS[0]; index: number }) {
               height: '14px',
               borderRadius: '50%',
               background: 'var(--accent-primary)',
-              boxShadow: '0 0 20px rgba(0,232,122,0.6)',
+              boxShadow: '0 0 20px rgba(34,197,94,0.6)',
               flexShrink: 0,
             }}
           />
@@ -99,7 +99,7 @@ function StepContentCard({ step }: { step: typeof STEPS[0] }) {
           fontFamily: 'var(--font-mono)',
           fontSize: '10px',
           color: 'var(--accent-secondary)',
-          border: '1px solid rgba(0,184,94,0.25)',
+          border: '1px solid rgba(34,197,94,0.25)',
           padding: '3px 10px',
           borderRadius: '100px',
         }}>{step.duration}</span>
@@ -150,7 +150,7 @@ export function ClaritySteps() {
             left: '50%',
             transform: 'translateX(-50%)',
             width: '2px',
-            background: 'linear-gradient(to bottom, var(--accent-primary), rgba(0,232,122,0.05))',
+            background: 'linear-gradient(to bottom, var(--accent-primary), rgba(34,197,94,0.05))',
             zIndex: 0,
           }} />
 

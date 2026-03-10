@@ -38,11 +38,11 @@ function CountUpStat({ end, suffix, label }: { end: number; suffix: string; labe
         {count}{suffix}
       </span>
       <span style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '11px',
+        fontFamily: 'var(--font-body)',
+        fontSize: '12px',
+        fontWeight: 500,
         color: 'var(--text-secondary)',
-        letterSpacing: '0.1em',
-        textTransform: 'uppercase',
+        letterSpacing: '0.02em',
       }}>
         {label}
       </span>
@@ -68,12 +68,12 @@ export function StatsCarousel() {
           {row1.map((item, i) => (
             <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
               <span style={{
-                fontFamily: 'var(--font-display)',
-                fontWeight: 600,
-                fontSize: '28px',
+                fontFamily: 'var(--font-body)',
+                fontWeight: i % 2 === 0 ? 500 : 400,
+                fontSize: '17px',
                 color: i % 2 === 0 ? 'var(--text-primary)' : 'var(--text-secondary)',
                 whiteSpace: 'nowrap',
-                padding: '0 16px',
+                padding: '0 20px',
               }}>{item}</span>
               <span style={{ color: 'var(--accent-primary)', fontSize: '16px' }}>✦</span>
             </span>
@@ -112,13 +112,13 @@ export function StatsCarousel() {
           {row2.map((item, i) => (
             <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
               <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '12px',
-                color: 'var(--text-secondary)',
-                letterSpacing: '0.1em',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 400,
+                fontSize: '13px',
+                color: 'var(--text-tertiary)',
+                letterSpacing: '0.03em',
                 whiteSpace: 'nowrap',
-                padding: '0 16px',
-                textTransform: 'uppercase',
+                padding: '0 20px',
               }}>{item}</span>
               <span style={{ color: 'var(--accent-primary)', fontSize: '12px' }}>✦</span>
             </span>

@@ -161,7 +161,7 @@ export default function HeroSection() {
       {/* Gradient overlays */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(3,13,7,0.75) 0%, rgba(3,13,7,0.55) 50%, rgba(3,13,7,0.92) 100%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.92) 100%)',
       }} />
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1,

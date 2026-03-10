@@ -55,7 +55,7 @@ function ParticleCanvas() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0,232,122,${p.opacity})`;
+        ctx.fillStyle = `rgba(34,197,94,${p.opacity})`;
         ctx.fill();
 
         for (let j = i + 1; j < particles.length; j++) {
@@ -67,7 +67,7 @@ function ParticleCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(0,232,122,${0.12 * (1 - dist / 120)})`;
+            ctx.strokeStyle = `rgba(34,197,94,${0.12 * (1 - dist / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -161,13 +161,13 @@ export default function HeroSection() {
         position: 'absolute',
         inset: 0,
         zIndex: 1,
-        background: 'linear-gradient(to bottom, rgba(3,13,7,0.75) 0%, rgba(3,13,7,0.55) 50%, rgba(3,13,7,0.92) 100%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.92) 100%)',
       }} />
       <div style={{
         position: 'absolute',
         inset: 0,
         zIndex: 1,
-        background: 'radial-gradient(ellipse 80% 60% at 30% 50%, rgba(0,232,122,0.06) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse 80% 60% at 30% 50%, rgba(34,197,94,0.06) 0%, transparent 70%)',
       }} />
 
       {/* Particles */}
@@ -198,7 +198,7 @@ export default function HeroSection() {
             alignItems: 'center',
             gap: '8px',
             border: '1px solid var(--border-bright)',
-            background: 'rgba(0,232,122,0.08)',
+            background: 'rgba(34,197,94,0.08)',
             padding: '6px 16px',
             borderRadius: '100px',
             marginBottom: '32px',
@@ -249,7 +249,7 @@ export default function HeroSection() {
               <motion.path
                 d="M 0 8 Q 100 2 200 8 Q 300 14 400 8"
                 fill="none"
-                stroke="#00e87a"
+                stroke="#4ade80"
                 strokeWidth="2.5"
                 strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0 }}
@@ -290,7 +290,7 @@ export default function HeroSection() {
         >
           <motion.a
             href="#contact"
-            whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(0,232,122,0.35)', backgroundColor: '#1affa0' }}
+            whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(34,197,94,0.35)', backgroundColor: '#1affa0' }}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -311,7 +311,7 @@ export default function HeroSection() {
           </motion.a>
           <motion.a
             href="#works"
-            whileHover={{ borderColor: 'var(--border-bright)', backgroundColor: 'rgba(0,232,122,0.06)' }}
+            whileHover={{ borderColor: 'var(--border-bright)', backgroundColor: 'rgba(34,197,94,0.06)' }}
             style={{
               padding: '14px 32px',
               borderRadius: '6px',

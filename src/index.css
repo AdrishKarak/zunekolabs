@@ -1,26 +1,46 @@
-@import "tailwindcss";
+/*
+ * ZUNEKO LABS — Global Design System
+ * Enterprise-grade. Two fonts. Refined palette.
+ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,600,700&f[]=satoshi@400,500,700&display=swap');
+/* Fonts: Cormorant Garamond (editorial display) + DM Sans (clean modern UI) */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  --bg-void: #030d07;
-  --bg-deep: #061a0e;
-  --bg-surface: #0b2e18;
-  --bg-raised: #0f3d20;
-  --accent-primary: #00e87a;
-  --accent-secondary: #00b85e;
-  --accent-glow: rgba(0, 232, 122, 0.15);
-  --border-subtle: rgba(0, 232, 122, 0.12);
-  --border-bright: rgba(0, 232, 122, 0.45);
-  --text-primary: #f0faf4;
-  --text-secondary: #8ab59a;
-  --text-tertiary: #4d7a5e;
-  --gold: #c9a84c;
+  /* ── PALETTE: Pure black base. Green as a sharp, precise accent only. ─────
+   * Inspired by: Linear, Vercel, Stripe dark, Bloomberg Terminal refinement.
+   * Rule: backgrounds and text are 100% neutral. Green touches ONLY elements
+   * that need to call attention — accent lines, badges, CTAs, active states.
+   * Nothing about this system should feel greenish. It should feel black.
+   * ─────────────────────────────────────────────────────────────────────── */
+
+  --bg-void:      #000000;   /* Absolute black — outermost layer */
+  --bg-deep:      #080808;   /* Section backgrounds — still black */
+  --bg-surface:   #111111;   /* Card / panel backgrounds — dark neutral */
+  --bg-raised:    #1a1a1a;   /* Hover states / elevated elements */
+
+  /* Green — confident, direct. Used only where precision matters. */
+  --accent-primary:   #22c55e;           /* Green-500: the main accent */
+  --accent-secondary: #16a34a;           /* Green-600: supporting / hover */
+  --accent-dim:       #14532d;           /* Near-black green for borders only */
+  --accent-glow:      rgba(34,197,94,0.07);
+
+  /* Borders: neutral by default, green only when intentional */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-bright: rgba(34, 197, 94, 0.30);
+
+  /* Text: pure neutral — zero green cast */
+  --text-primary:   #ffffff;   /* Pure white — maximum contrast on black */
+  --text-secondary: #a1a1aa;   /* Neutral zinc-400 gray */
+  --text-tertiary:  #52525b;   /* Neutral zinc-600 — placeholder / metadata */
+  --gold:           #d4a853;   /* Warm gold — occasional premium highlight */
+
+  /* Typography — 2 fonts only */
   --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-heading: 'Cabinet Grotesk', system-ui, sans-serif;
-  --font-body: 'Satoshi', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:    'DM Sans', system-ui, -apple-system, sans-serif;
+
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
 }
@@ -40,83 +60,72 @@ body {
   background-color: var(--bg-void);
   color: var(--text-primary);
   font-family: var(--font-body);
+  font-size: 16px;
   line-height: 1.6;
+  font-weight: 400;
   overflow-x: hidden;
-  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@media (pointer: coarse) {
-  body { cursor: auto; }
-}
+#root { min-height: 100vh; }
 
-#root {
-  min-height: 100vh;
-}
-
-/* --- Custom scrollbar --- */
-::-webkit-scrollbar { width: 4px; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg-void); }
-::-webkit-scrollbar-thumb { background: var(--accent-secondary); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-secondary); }
 
-/* --- Marquee animation --- */
-@keyframes marquee-left {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes marquee-right {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
-.marquee-left { animation: marquee-left 30s linear infinite; }
-.marquee-right { animation: marquee-right 30s linear infinite; }
+/* ── Marquee ── */
+@keyframes marquee-left  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.marquee-left  { animation: marquee-left  32s linear infinite; }
+.marquee-right { animation: marquee-right 32s linear infinite; }
 
-/* --- Pulse dot --- */
+/* ── Pulse indicator ── */
 @keyframes pulse-dot {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%       { transform: scale(1.4); opacity: 0.5; }
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.3); }
 }
-.pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
+.pulse-dot { animation: pulse-dot 2.5s ease-in-out infinite; }
 
-/* --- Bounce scroll indicator --- */
+/* ── Scroll chevron ── */
 @keyframes bounce-y {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(8px); }
+  50%       { transform: translateY(7px); }
 }
-.bounce-y { animation: bounce-y 1.5s ease-in-out infinite; }
+.bounce-y { animation: bounce-y 1.8s ease-in-out infinite; }
 
-/* --- Page load --- */
-@keyframes slideUp {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-100%); }
-}
-
-/* --- Grain texture --- */
+/* ── Grain texture (very subtle) ── */
 .grain-texture {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
 }
 
-/* --- Font helpers --- */
+/* ── Font utilities ── */
 .font-display  { font-family: var(--font-display); }
 .font-heading  { font-family: var(--font-heading); }
 .font-body     { font-family: var(--font-body); }
-.font-mono     { font-family: var(--font-mono); }
+.font-mono     { font-family: var(--font-body); }   /* intentional: no robotic mono */
 .text-accent   { color: var(--accent-primary); }
 .text-void     { color: var(--bg-void); }
 
-/* --- Dialogue line drawing animation --- */
-@keyframes drawLine {
-  from { height: 0; }
-  to   { height: 100%; }
+/* ── Section label styling (replaces JetBrains Mono labels) ── */
+.section-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-/* --- Reduced motion --- */
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

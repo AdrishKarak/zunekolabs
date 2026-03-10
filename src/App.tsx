@@ -8,7 +8,7 @@ import HomePage from './pages/HomePage';
 
 import GrainOverlay from './components/ui/GrainOverlay';
 import ScrollProgressBar from './components/ui/ScrollProgressBar';
-import CustomCursor from './components/ui/CustomCursor';
+
 import PageLoadOverlay from './components/ui/PageLoadOverlay';
 import ArtificialIntelligence from './service/AIML/pages/artificialintelligence';
 import GenAI from './service/AIML/pages/genai';
@@ -52,7 +52,7 @@ export default function App() {
     <BrowserRouter>
       <GrainOverlay />
       <ScrollProgressBar />
-      <CustomCursor />
+
       <PageLoadOverlay />
 
       <div style={{
