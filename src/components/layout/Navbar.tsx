@@ -16,8 +16,8 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
     { label: 'Data Analysis & Visualization',     icon: <BarChart3 size={14} />,   href: '/services/aiml/data-analysis' },
   ],
   Works: [
-    { label: 'Case Studies',  icon: <Briefcase size={14} />,    href: '#' },
-    { label: 'Our Projects',  icon: <Lightbulb size={14} />,    href: '#' },
+    { label: 'Case Studies',  icon: <Briefcase size={14} />,    href: '/works/case-studies' },
+    { label: 'Our Projects',  icon: <Lightbulb size={14} />,    href: '/works/projects' },
   ],
   Careers: [
     { label: 'Open Roles',   icon: <Users size={14} />,         href: '#' },

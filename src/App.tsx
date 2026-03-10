@@ -17,6 +17,8 @@ import ML from './service/AIML/pages/Machinelearning';
 import RAG from './service/AIML/pages/RAAG';
 import NLP from './service/AIML/pages/naturalLP';
 import DATAANALYSIS from './service/AIML/pages/Dataanalysis';
+import CaseStudy from './Works/casestudy';
+import Projects from './Works/projects';
 
 export default function App() {
   useEffect(() => {
@@ -73,6 +75,8 @@ export default function App() {
             <Route path="/services/aiml/rag" element={<RAG />} />
             <Route path="/services/aiml/nlp" element={<NLP />} />
             <Route path="/services/aiml/data-analysis" element={<DATAANALYSIS />} />
+            <Route path="/works/case-studies" element={<CaseStudy />} />
+            <Route path="/works/projects" element={<Projects />} />
           </Routes>
         </main>
 

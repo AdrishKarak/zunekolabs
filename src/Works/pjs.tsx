@@ -1,0 +1,662 @@
+import { useRef, useState } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+const GLOBAL_STYLES = `
+  @keyframes op-scanline {
+    0%   { transform: translateY(-100%); opacity: 0; }
+    8%   { opacity: 0.7; }
+    92%  { opacity: 0.7; }
+    100% { transform: translateY(3000%); opacity: 0; }
+  }
+  .op-scanline-el { animation: op-scanline 3.2s ease-in-out infinite; }
+
+  @keyframes op-pulse {
+    0%,100% { transform: scale(1);    opacity: 0.45; }
+    50%      { transform: scale(1.18); opacity: 0.15; }
+  }
+  .op-pulse-ring { animation: op-pulse 2.6s ease-in-out infinite; }
+
+  @keyframes op-dot-blink {
+    0%,100% { opacity:0.9; } 50% { opacity:0.3; }
+  }
+  .op-dot { animation: op-dot-blink 1.8s ease-in-out infinite; }
+
+  .op-card-hover { transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s; }
+  .op-card-hover:hover { transform: translateY(-5px); }
+`;
+
+/* ─── Reveal helpers ─────────────────────────────────────────── */
+function RevealClip({ children, delay = 0, style = {} }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
+  return (
+    <motion.div
+      initial={{ clipPath: 'inset(0 100% 0 0)' }}
+      whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.75, delay, ease: EASE }}
+      style={style}
+    >{children}</motion.div>
+  );
+}
+
+function FadeUp({ children, delay = 0, style = {} }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.62, delay, ease: EASE }}
+      style={style}
+    >{children}</motion.div>
+  );
+}
+
+function FadeIn({ children, delay = 0, style = {} }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.6, delay, ease: EASE }}
+      style={style}
+    >{children}</motion.div>
+  );
+}
+
+/* ─── Stat pill ──────────────────────────────────────────────── */
+function StatPill({ val, label, color, delay }: { val: string; label: string; color: string; delay: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.45, delay, ease: EASE }}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px 16px', borderRadius: 10, background: `${color}09`, border: `1px solid ${color}1a`, minWidth: 64, textAlign: 'center' }}
+    >
+      <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 18, color, lineHeight: 1, marginBottom: 3 }}>{val}</span>
+      <span style={{ fontFamily: 'var(--font-body)', fontSize: 10, color: 'var(--text-tertiary)', lineHeight: 1.3 }}>{label}</span>
+    </motion.div>
+  );
+}
+
+/* ─── Tag chip ───────────────────────────────────────────────── */
+function Tag({ label, color, delay }: { label: string; color: string; delay: number }) {
+  return (
+    <motion.span
+      initial={{ opacity: 0, y: 6 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.38, delay, ease: EASE }}
+      style={{ fontFamily: 'var(--font-mono)', fontSize: 10, padding: '3px 10px', borderRadius: 100, border: `1px solid ${color}1e`, color: 'var(--text-tertiary)', display: 'inline-block' }}
+    >{label}</motion.span>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD TYPES
+═══════════════════════════════════════════════════════════════ */
+
+/* ── FEATURED (full-width) card ── */
+function FeaturedCard({ p }: { p: typeof PROJECTS[0] }) {
+  const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      className="op-card-hover"
+      initial={{ opacity: 0, y: 52 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.78, ease: EASE }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderRadius: 20,
+        overflow: 'hidden',
+        background: 'var(--bg-surface)',
+        border: `1px solid ${hovered ? p.color + '28' : 'rgba(255,255,255,0.05)'}`,
+        boxShadow: hovered ? `0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px ${p.color}14` : '0 4px 22px rgba(0,0,0,0.22)',
+        position: 'relative',
+      }}
+    >
+      {/* Scanline on hover */}
+      {hovered && (
+        <div className="op-scanline-el" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg,transparent,${p.color}60,transparent)`, zIndex: 4, pointerEvents: 'none' }}/>
+      )}
+      <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, opacity: hovered ? 0.85 : 0.3, transition: 'opacity 0.3s' }}/>
+
+      <div style={{ padding: 36, display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 40, alignItems: 'center' }}>
+        {/* Left */}
+        <div>
+          <RevealClip delay={0.06} style={{ marginBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', color: p.color, border: `1px solid ${p.color}30`, padding: '2px 10px', borderRadius: 100 }}>{p.category}</span>
+              <span className="op-dot" style={{ width: 5, height: 5, borderRadius: '50%', background: p.color, display: 'inline-block' }}/>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', opacity: 0.6 }}>{p.scope}</span>
+            </div>
+          </RevealClip>
+
+          <div style={{ overflow: 'hidden', marginBottom: 6 }}>
+            <RevealClip delay={0.13}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px,2.6vw,34px)', color: 'var(--text-primary)', margin: 0, lineHeight: 1.1 }}>{p.title}</h2>
+            </RevealClip>
+          </div>
+
+          <FadeUp delay={0.19} style={{ marginBottom: 18 }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-tertiary)', margin: 0, letterSpacing: '0.05em' }}>{p.subtitle}</p>
+          </FadeUp>
+
+          <FadeUp delay={0.24} style={{ marginBottom: 22 }}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.78, margin: 0 }}>{p.desc}</p>
+          </FadeUp>
+
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {p.tags.map((t, i) => <Tag key={t} label={t} color={p.color} delay={0.28 + i * 0.05}/>)}
+          </div>
+        </div>
+
+        {/* Right: SVG + stats */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+          <motion.div
+            animate={{ opacity: hovered ? 1 : 0.5, scale: hovered ? 1.05 : 1 }}
+            transition={{ duration: 0.35 }}
+            style={{ width: '100%', maxWidth: 220, height: 130, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            {p.svg}
+          </motion.div>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {p.stats.map((s, i) => <StatPill key={i} val={s.val} label={s.label} color={p.color} delay={0.22 + i * 0.07}/>)}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── MEDIUM card ── */
+function MediumCard({ p, index }: { p: typeof PROJECTS[0]; index: number }) {
+  const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      className="op-card-hover"
+      initial={{ opacity: 0, y: 48 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.72, delay: index * 0.1, ease: EASE }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderRadius: 20,
+        overflow: 'hidden',
+        background: 'var(--bg-surface)',
+        border: `1px solid ${hovered ? p.color + '2a' : 'rgba(255,255,255,0.05)'}`,
+        boxShadow: hovered ? `0 20px 52px rgba(0,0,0,0.46)` : '0 4px 18px rgba(0,0,0,0.2)',
+        position: 'relative',
+      }}
+    >
+      {/* pulse ring */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            className="op-pulse-ring"
+            style={{ position: 'absolute', top: 20, right: 20, width: 44, height: 44, borderRadius: '50%', border: `1.5px solid ${p.color}`, pointerEvents: 'none', zIndex: 2 }}
+          />
+        )}
+      </AnimatePresence>
+
+      <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, opacity: hovered ? 0.75 : 0.28, transition: 'opacity 0.3s' }}/>
+
+      <div style={{ padding: 26 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 16, gap: 12 }}>
+          <div style={{ flex: 1 }}>
+            <RevealClip delay={index * 0.1 + 0.06} style={{ marginBottom: 8 }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', color: p.color, border: `1px solid ${p.color}28`, padding: '2px 9px', borderRadius: 100, display: 'inline-block' }}>{p.category}</span>
+            </RevealClip>
+            <div style={{ overflow: 'hidden', marginBottom: 4 }}>
+              <RevealClip delay={index * 0.1 + 0.13}>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 20, color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>{p.title}</h3>
+              </RevealClip>
+            </div>
+            <FadeUp delay={index * 0.1 + 0.19}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', margin: 0, letterSpacing: '0.05em' }}>{p.subtitle}</p>
+            </FadeUp>
+          </div>
+          <motion.div
+            animate={{ opacity: hovered ? 1 : 0.5, rotate: hovered ? 4 : 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ flexShrink: 0 }}
+          >
+            {p.svg}
+          </motion.div>
+        </div>
+
+        <FadeUp delay={index * 0.1 + 0.22} style={{ marginBottom: 18 }}>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.72, margin: 0 }}>{p.desc}</p>
+        </FadeUp>
+
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+          {p.stats.map((s, i) => <StatPill key={i} val={s.val} label={s.label} color={p.color} delay={index * 0.1 + 0.26 + i * 0.07}/>)}
+        </div>
+
+        <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+          {p.tags.map((t, i) => <Tag key={t} label={t} color={p.color} delay={index * 0.1 + 0.3 + i * 0.05}/>)}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── FLIP card (small) ── */
+function FlipCard({ p, index }: { p: typeof PROJECTS[0]; index: number }) {
+  const [flipped, setFlipped] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 42 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.68, delay: index * 0.1, ease: EASE }}
+      style={{ perspective: 1200, cursor: 'pointer' }}
+      onClick={() => setFlipped(f => !f)}
+    >
+      <motion.div
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.58, ease: EASE }}
+        style={{ position: 'relative', transformStyle: 'preserve-3d', minHeight: 320 }}
+      >
+        {/* Front */}
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', borderRadius: 20, overflow: 'hidden', background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.05)', padding: 26, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, marginBottom: 20, opacity: 0.5 }}/>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', color: p.color, border: `1px solid ${p.color}28`, padding: '2px 9px', borderRadius: 100, display: 'inline-block', marginBottom: 16, alignSelf: 'flex-start' }}>{p.category}</span>
+          <div style={{ marginBottom: 14 }}>{p.svg}</div>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, color: 'var(--text-primary)', margin: '0 0 4px', lineHeight: 1.2 }}>{p.title}</h3>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', margin: '0 0 16px' }}>{p.subtitle}</p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
+            {p.stats.map((s, i) => <StatPill key={i} val={s.val} label={s.label} color={p.color} delay={0}/>)}
+          </div>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: p.color, opacity: 0.45, margin: '14px 0 0', letterSpacing: '0.1em' }}>TAP TO READ MORE →</p>
+        </div>
+
+        {/* Back */}
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', borderRadius: 20, overflow: 'hidden', background: `linear-gradient(140deg,var(--bg-surface),${p.color}0a)`, border: `1px solid ${p.color}28`, padding: 26, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, marginBottom: 16, opacity: 0.7 }}/>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', color: p.color, marginBottom: 10, display: 'block' }}>{p.category}</span>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: 'var(--text-primary)', margin: '0 0 12px', lineHeight: 1.2 }}>{p.title}</h3>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.72, margin: '0 0 14px', flex: 1 }}>{p.desc}</p>
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 14 }}>
+            {p.tags.map((t, i) => <Tag key={t} label={t} color={p.color} delay={0}/>)}
+          </div>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: p.color, opacity: 0.45, margin: 0, letterSpacing: '0.1em' }}>TAP TO FLIP BACK ←</p>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ── PRANISHAKTI — redesigned as full-width horizontal showcase ── */
+function PranishaktiCard({ p }: { p: typeof PROJECTS[0] }) {
+  const [hovered, setHovered] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  const deliverables = [
+    { icon: '🖥', label: 'Full IT Infrastructure', sub: 'Hardware, network & support' },
+    { icon: '⚙️', label: 'Custom ERP', sub: 'Inventory, vaccines, insurance, PM' },
+    { icon: '👥', label: 'IT Manpower', sub: 'On-site team placement' },
+    { icon: '🏛', label: 'E-Governance', sub: 'Digital workflows, state-wide' },
+  ];
+
+  return (
+    <motion.div
+      ref={ref}
+      className="op-card-hover"
+      initial={{ opacity: 0, y: 48 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.78, ease: EASE }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderRadius: 20,
+        overflow: 'hidden',
+        background: 'var(--bg-surface)',
+        border: `1px solid ${hovered ? p.color + '28' : 'rgba(255,255,255,0.05)'}`,
+        boxShadow: hovered ? `0 22px 60px rgba(0,0,0,0.48), 0 0 0 1px ${p.color}12` : '0 4px 22px rgba(0,0,0,0.22)',
+        position: 'relative',
+      }}
+    >
+      <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, opacity: hovered ? 0.8 : 0.3, transition: 'opacity 0.3s' }}/>
+
+      <div style={{ padding: '30px 36px' }}>
+        {/* Top row: badge + title + scope */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+          <div>
+            <RevealClip delay={0.06} style={{ marginBottom: 10 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.18em', color: p.color, border: `1px solid ${p.color}30`, padding: '2px 10px', borderRadius: 100 }}>{p.category}</span>
+                <span className="op-dot" style={{ width: 5, height: 5, borderRadius: '50%', background: p.color, display: 'inline-block' }}/>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', opacity: 0.6 }}>Govt. of West Bengal</span>
+              </div>
+            </RevealClip>
+            <div style={{ overflow: 'hidden', marginBottom: 4 }}>
+              <RevealClip delay={0.13}>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(20px,2.2vw,28px)', color: 'var(--text-primary)', margin: 0, lineHeight: 1.1 }}>
+                  Pranishakti / ARD
+                </h2>
+              </RevealClip>
+            </div>
+            <FadeUp delay={0.19}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-tertiary)', margin: 0, letterSpacing: '0.05em' }}>
+                Animal Resources Department — End-to-end digital transformation
+              </p>
+            </FadeUp>
+          </div>
+
+          {/* SVG */}
+          <motion.div
+            animate={{ opacity: hovered ? 1 : 0.55, scale: hovered ? 1.04 : 1 }}
+            transition={{ duration: 0.32 }}
+          >
+            {p.svg}
+          </motion.div>
+        </div>
+
+        {/* Description */}
+        <FadeUp delay={0.22} style={{ marginBottom: 28 }}>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.78, margin: 0, maxWidth: 760 }}>
+            {p.desc}
+          </p>
+        </FadeUp>
+
+        {/* Deliverables grid — 4 tiles */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, marginBottom: 24 }}>
+          {deliverables.map((d, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 18 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.48, delay: 0.26 + i * 0.08, ease: EASE }}
+              style={{ padding: '16px 14px', borderRadius: 12, background: `${p.color}07`, border: `1px solid ${p.color}18`, display: 'flex', flexDirection: 'column', gap: 6 }}
+            >
+              <span style={{ fontSize: 20 }}>{d.icon}</span>
+              <span style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 13, color: 'var(--text-primary)', lineHeight: 1.3 }}>{d.label}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', opacity: 0.75 }}>{d.sub}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Stats + tags row */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 14 }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {p.stats.map((s, i) => <StatPill key={i} val={s.val} label={s.label} color={p.color} delay={0.38 + i * 0.07}/>)}
+          </div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+            {p.tags.map((t, i) => <Tag key={t} label={t} color={p.color} delay={0.42 + i * 0.05}/>)}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ─── Data ───────────────────────────────────────────────────── */
+const PROJECTS = [
+  {
+    id: 'banglar',
+    category: 'SOFTWARE',
+    scope: 'State-wide · WB',
+    title: 'Banglar Shiksha SMS',
+    subtitle: 'School Management Software — Govt. of West Bengal',
+    size: 'featured',
+    color: '#00e87a',
+    stats: [
+      { val: '1.9Cr', label: 'Students' },
+      { val: '97K', label: 'Schools' },
+      { val: '4.7L', label: 'Faculty' },
+      { val: '500+', label: 'Smart Classes' },
+    ],
+    desc: 'We built the software the entire public primary education system of West Bengal runs on. Banglar Shiksha digitalises academic & administrative workflows — e-books, exams, attendance, MIS reporting — serving as the state-wide digital backbone of primary education.',
+    tags: ['EdTech', 'E-Governance', 'SaaS', 'State-Wide'],
+    svg: (
+      <svg viewBox="0 0 100 72" fill="none" style={{ width: '100%', height: '100%' }}>
+        <rect x="8" y="8" width="84" height="56" rx="4" stroke="#00e87a" strokeWidth="1.2" opacity="0.35"/>
+        <line x1="8" y1="20" x2="92" y2="20" stroke="#00e87a" strokeWidth="0.7" opacity="0.15"/>
+        {[0,1,2,3,4].map(col=>[0,1,2,3].map(row=>(
+          <rect key={`${col}-${row}`} x={14+col*16} y={26+row*10} width="10" height="6" rx="1.5" fill="#00e87a" opacity={0.06+row*0.06+col*0.02}/>
+        )))}
+        <rect x="14" y="26" width="28" height="6" rx="1.5" fill="#00e87a" opacity="0.42"/>
+        <rect x="14" y="36" width="20" height="6" rx="1.5" fill="#00e87a" opacity="0.3"/>
+        <circle cx="78" cy="14" r="3" fill="#00e87a" opacity="0.6"/>
+        <circle cx="86" cy="14" r="3" fill="#00e87a" opacity="0.35"/>
+        <path d="M60 52 L68 44 L76 50 L84 42" stroke="#00e87a" strokeWidth="1.3" strokeLinecap="round" fill="none" opacity="0.55"/>
+        {[60,68,76,84].map((x,i)=><circle key={i} cx={x} cy={[52,44,50,42][i]} r="2" fill="#00e87a" opacity={0.4+i*0.1}/>)}
+      </svg>
+    ),
+  },
+  {
+    id: 'aadhaar',
+    category: 'DATA SERVICES',
+    scope: '4 states · UIDAI / ECI',
+    title: 'Aadhaar & Digital Identity',
+    subtitle: 'ECI, UIDAI & large-scale digitisation',
+    size: 'medium',
+    color: '#00c96a',
+    stats: [
+      { val: '200M+', label: 'Records digitised' },
+      { val: '20M+', label: 'Aadhaar enrolments' },
+      { val: '3,500+', label: 'BSK centres' },
+    ],
+    desc: "Ran India's 11th largest Aadhaar enrolment drive across 4 states & 1,200+ centres. Digitised 200M+ unique records — land deeds, high court docs, electoral rolls, ration cards, census. Manages the complete UIDAI ecosystem in West Bengal.",
+    tags: ['UIDAI', 'Digitisation', 'Identity', 'Scale'],
+    svg: (
+      <svg viewBox="0 0 80 80" fill="none" width={56} height={56}>
+        <circle cx="40" cy="32" r="14" stroke="#00c96a" strokeWidth="1.3" opacity="0.6"/>
+        <circle cx="40" cy="32" r="8" stroke="#00c96a" strokeWidth="1" opacity="0.4"/>
+        <circle cx="40" cy="32" r="3" fill="#00c96a" opacity="0.8"/>
+        <path d="M20 56 C20 44 60 44 60 56" stroke="#00c96a" strokeWidth="1.4" strokeLinecap="round" fill="none" opacity="0.6"/>
+        <line x1="8" y1="20" x2="18" y2="20" stroke="#00c96a" strokeWidth="1.2" strokeLinecap="round" opacity="0.4"/>
+        <line x1="8" y1="32" x2="14" y2="32" stroke="#00c96a" strokeWidth="1.2" strokeLinecap="round" opacity="0.3"/>
+        <line x1="8" y1="44" x2="18" y2="44" stroke="#00c96a" strokeWidth="1.2" strokeLinecap="round" opacity="0.4"/>
+        <line x1="62" y1="20" x2="72" y2="20" stroke="#00c96a" strokeWidth="1.2" strokeLinecap="round" opacity="0.4"/>
+        <line x1="66" y1="32" x2="72" y2="32" stroke="#00c96a" strokeWidth="1.2" strokeLinecap="round" opacity="0.3"/>
+        <line x1="62" y1="44" x2="72" y2="44" stroke="#00c96a" strokeWidth="1.2" strokeLinecap="round" opacity="0.4"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'surveillance',
+    category: 'SECURITY & COMPUTER VISION',
+    scope: 'WB State-wide · EDPL',
+    title: 'Surveillance & Video Analytics',
+    subtitle: 'CCTV, ANPR & facial recognition at scale',
+    size: 'medium',
+    color: '#00e87a',
+    stats: [
+      { val: '250+', label: 'Police stations' },
+      { val: '750+', label: 'Schools' },
+      { val: '4K+', label: 'Cameras' },
+      { val: '25', label: 'RTOs with ANPR' },
+    ],
+    desc: 'Deploys and manages surveillance across 250+ WBP police stations, 750+ schools, public spaces and govt. offices. ANPR at 25 RTOs, facial recognition at 100+ schools, CCTV video analytics at AIIMS Patna. Full city & traffic surveillance stack.',
+    tags: ['CCTV', 'ANPR', 'Facial Recognition', 'Video Analytics'],
+    svg: (
+      <svg viewBox="0 0 80 80" fill="none" width={56} height={56}>
+        <path d="M10 30 L24 24 L36 30 L36 54 L10 54 Z" stroke="#00e87a" strokeWidth="1.3" fill="none" opacity="0.6"/>
+        <circle cx="48" cy="38" r="18" stroke="#00e87a" strokeWidth="1" opacity="0.2"/>
+        <circle cx="48" cy="38" r="11" stroke="#00e87a" strokeWidth="1.2" opacity="0.4"/>
+        <circle cx="48" cy="38" r="5" stroke="#00e87a" strokeWidth="1.4" opacity="0.7"/>
+        <circle cx="48" cy="38" r="2" fill="#00e87a" opacity="0.9"/>
+        <line x1="36" y1="30" x2="40" y2="34" stroke="#00e87a" strokeWidth="1.2" opacity="0.5"/>
+        <line x1="14" y1="34" x2="32" y2="34" stroke="#00e87a" strokeWidth="0.8" opacity="0.3"/>
+        <line x1="14" y1="40" x2="32" y2="40" stroke="#00e87a" strokeWidth="0.8" opacity="0.25"/>
+        <line x1="14" y1="46" x2="32" y2="46" stroke="#00e87a" strokeWidth="0.8" opacity="0.2"/>
+      </svg>
+    ),
+  },
+  {
+    id: 'pranishakti',
+    category: 'DIGITAL TRANSFORMATION',
+    scope: 'Govt. of West Bengal',
+    title: 'Pranishakti / ARD',
+    subtitle: 'Animal Resources Dept. — Full IT & ERP deployment',
+    size: 'pranishakti',
+    color: '#00c96a',
+    stats: [
+      { val: 'Full Stack', label: 'IT Infrastructure' },
+      { val: 'Custom', label: 'E-Gov ERP' },
+      { val: 'On-site', label: 'IT Manpower' },
+    ],
+    desc: 'End-to-end digital transformation of the Animal Resources Department, Govt. of West Bengal. Covers complete IT infrastructure provisioning, a custom-built e-governance ERP system (inventory management, vaccination records, cattle insurance, project tracking), and permanent on-site IT manpower placement.',
+    tags: ['Infrastructure', 'ERP', 'IT Manpower', 'E-Governance', 'WB Govt'],
+    svg: (
+      <svg viewBox="0 0 80 80" fill="none" width={72} height={72}>
+        {/* Govt building silhouette */}
+        <rect x="10" y="36" width="60" height="30" rx="2" stroke="#00c96a" strokeWidth="1.3" opacity="0.55"/>
+        <path d="M10 36 L40 14 L70 36" stroke="#00c96a" strokeWidth="1.4" fill="none" strokeLinejoin="round" opacity="0.7"/>
+        <circle cx="40" cy="18" r="3.5" fill="#00c96a" opacity="0.55"/>
+        {/* Columns */}
+        <rect x="17" y="42" width="6" height="20" rx="1" stroke="#00c96a" strokeWidth="1" opacity="0.4"/>
+        <rect x="29" y="42" width="6" height="20" rx="1" stroke="#00c96a" strokeWidth="1" opacity="0.4"/>
+        <rect x="45" y="42" width="6" height="20" rx="1" stroke="#00c96a" strokeWidth="1" opacity="0.4"/>
+        <rect x="57" y="42" width="6" height="20" rx="1" stroke="#00c96a" strokeWidth="1" opacity="0.4"/>
+        {/* Door */}
+        <rect x="33" y="52" width="14" height="14" rx="1.5" stroke="#00c96a" strokeWidth="1.3" opacity="0.65"/>
+        <circle cx="40" cy="60" r="1.5" fill="#00c96a" opacity="0.5"/>
+        {/* ERP nodes above */}
+        <circle cx="20" cy="8" r="5" stroke="#00c96a" strokeWidth="1.1" opacity="0.5"/>
+        <circle cx="40" cy="5" r="5" stroke="#00c96a" strokeWidth="1.2" opacity="0.65"/>
+        <circle cx="60" cy="8" r="5" stroke="#00c96a" strokeWidth="1.1" opacity="0.5"/>
+        <line x1="25" y1="8" x2="35" y2="6" stroke="#00c96a" strokeWidth="0.8" opacity="0.3"/>
+        <line x1="45" y1="6" x2="55" y2="8" stroke="#00c96a" strokeWidth="0.8" opacity="0.3"/>
+        <text x="40" y="7" textAnchor="middle" fill="#00c96a" fontSize="4.5" fontFamily="monospace" opacity="0.7">ERP</text>
+      </svg>
+    ),
+  },
+  {
+    id: 'tatapower',
+    category: 'OCR + BILLING AUTOMATION',
+    scope: 'WB · JK · Odisha · Bihar',
+    title: 'Tata Power — Spot Billing',
+    subtitle: 'OCR-enabled door-to-door billing for 5 DISCOMs',
+    size: 'featured',
+    color: '#00e87a',
+    stats: [
+      { val: '4Cr+', label: 'Consumers billed' },
+      { val: '5', label: 'DISCOMs' },
+      { val: '4 States', label: 'Coverage' },
+    ],
+    desc: 'Full-stack spot-billing system for 4 crore+ consumers across 5 DISCOMs. OCR/image-based meter capture, GPS+time-stamped validation, instant Bluetooth bill printing, route-file provisioning, anomaly detection (zero-use/tamper flags), door-to-door billing, payment collection, daily MIS uploads, and DISCOM server reconciliation.',
+    tags: ['OCR', 'Utility Billing', 'GPS', 'Anomaly Detection', 'DISCOMs'],
+    svg: (
+      <svg viewBox="0 0 100 72" fill="none" style={{ width: '100%', height: '100%' }}>
+        <path d="M50 8 L60 28 L50 28 L60 52 L38 30 L50 30 L38 8 Z" stroke="#00e87a" strokeWidth="1.4" fill="none" strokeLinejoin="round" opacity="0.8"/>
+        {[0,1,2].map(i=><circle key={i} cx={20+i*30} cy={62} r={3} stroke="#00e87a" strokeWidth="1.1" opacity={0.4+i*0.1}/>)}
+        <line x1="23" y1="62" x2="47" y2="62" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="2 2"/>
+        <line x1="53" y1="62" x2="77" y2="62" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="2 2"/>
+        <rect x="8" y="16" width="18" height="24" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.35"/>
+        <rect x="74" y="16" width="18" height="24" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.35"/>
+        <line x1="10" y1="22" x2="24" y2="22" stroke="#00e87a" strokeWidth="0.8" opacity="0.3"/>
+        <line x1="10" y1="27" x2="24" y2="27" stroke="#00e87a" strokeWidth="0.8" opacity="0.25"/>
+        <line x1="10" y1="32" x2="20" y2="32" stroke="#00e87a" strokeWidth="0.8" opacity="0.2"/>
+        <line x1="76" y1="22" x2="90" y2="22" stroke="#00e87a" strokeWidth="0.8" opacity="0.3"/>
+        <line x1="76" y1="27" x2="90" y2="27" stroke="#00e87a" strokeWidth="0.8" opacity="0.25"/>
+        <line x1="76" y1="32" x2="86" y2="32" stroke="#00e87a" strokeWidth="0.8" opacity="0.2"/>
+      </svg>
+    ),
+  },
+];
+
+/* ─── Page ───────────────────────────────────────────────────── */
+export function OurProjectsPage() {
+  const featured = PROJECTS.filter(p => p.size === 'featured');
+  const medium   = PROJECTS.filter(p => p.size === 'medium');
+  const pranic   = PROJECTS.find(p => p.size === 'pranishakti')!;
+
+  return (
+    <section id="projects" style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden', minHeight: '100vh' }}>
+      <style>{GLOBAL_STYLES}</style>
+      <div style={{ maxWidth: 1180, margin: '0 auto' }}>
+
+        {/* ── Section Header ── */}
+        <div style={{ marginBottom: 80 }}>
+          <RevealClip delay={0} style={{ marginBottom: 18 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--accent-primary)', letterSpacing: '0.22em' }}>OUR PROJECTS</span>
+              <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg,rgba(0,232,122,0.35),transparent)' }}/>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-tertiary)', opacity: 0.45 }}>Emdee × Zuneko</span>
+            </div>
+          </RevealClip>
+
+          <div style={{ overflow: 'hidden', marginBottom: 4 }}>
+            <RevealClip delay={0.08}>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(38px,5vw,70px)', color: 'var(--text-primary)', lineHeight: 1.04, margin: 0 }}>Enterprise scale.</h1>
+            </RevealClip>
+          </div>
+          <div style={{ overflow: 'hidden', marginBottom: 22 }}>
+            <RevealClip delay={0.17}>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(38px,5vw,70px)', color: 'var(--accent-primary)', lineHeight: 1.04, margin: 0 }}>Government trust.</h1>
+            </RevealClip>
+          </div>
+
+          <FadeUp delay={0.26}>
+            <p style={{ fontFamily: 'var(--font-body)', fontSize: 16, color: 'var(--text-secondary)', lineHeight: 1.78, maxWidth: 580, margin: 0 }}>
+              From state-wide education infrastructure to utility billing for crores of consumers — the work Emdee Digitronics and Zuneko Labs have delivered across India.
+            </p>
+          </FadeUp>
+        </div>
+
+        {/* ── Row 1: Banglar Shiksha (featured, full width) ── */}
+        <div style={{ marginBottom: 16 }}>
+          <FeaturedCard p={featured[0]}/>
+        </div>
+
+        {/* ── Row 2: Two medium cards ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+          {medium.map((p, i) => <MediumCard key={p.id} p={p} index={i}/>)}
+        </div>
+
+        {/* ── Row 3: Pranishakti (full width redesigned) ── */}
+        <div style={{ marginBottom: 16 }}>
+          <PranishaktiCard p={pranic}/>
+        </div>
+
+        {/* ── Row 4: Tata Power (featured, full width) ── */}
+        <div>
+          <FeaturedCard p={featured[1]}/>
+        </div>
+
+        {/* ── Footer note ── */}
+        <FadeIn delay={0.2} style={{ marginTop: 64, paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-tertiary)', margin: 0 }}>
+            Projects delivered by <span style={{ color: 'var(--accent-primary)' }}>Emdee Digitronics</span> and its AI division <span style={{ color: 'var(--accent-primary)' }}>Zuneko Labs</span>.
+          </p>
+          <a
+            href="#case-studies"
+            style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-primary)', border: '1px solid rgba(0,232,122,0.3)', padding: '8px 20px', borderRadius: 6, textDecoration: 'none', transition: 'background 0.2s,color 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent-primary)'; e.currentTarget.style.color = '#000'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--accent-primary)'; }}
+          >View AI Case Studies →</a>
+        </FadeIn>
+      </div>
+
+      <style>{`
+        @media(max-width:780px){
+          #projects .grid2{grid-template-columns:1fr!important}
+          #projects .pranic-grid{grid-template-columns:1fr 1fr!important}
+        }
+        @media(max-width:520px){
+          #projects .pranic-grid{grid-template-columns:1fr!important}
+        }
+      `}</style>
+    </section>
+  );
+}
