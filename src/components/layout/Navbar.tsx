@@ -3,10 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { useLocation } from 'react-router-dom';
 
-
 import { Menu, X, ArrowRight, Cpu, BarChart3, Briefcase, Lightbulb, GraduationCap, Users, MapPin, Eye, Brain, Globe, Smartphone } from 'lucide-react';
 
 import ZunekoLogo from '../../assets/Zuneko.svg';
+import { ServicesMegaDropdown } from './dropdown';
+
+// ── ADDITION 1: import the mega dropdown ──────────────────────────
+
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -28,8 +31,6 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
     { label: 'API Integration',             icon: <Smartphone size={14} />,  href: '/service/apiintegration' },
     { label: 'HITL Design',             icon: <Smartphone size={14} />,  href: '/service/hitldesign' },
     { label: 'AI-Native Product Development',             icon: <Smartphone size={14} />,  href: '/service/ainativeproduct' },
-    // ... existing sub-services or categorized ones can follow if needed 
-    // but for now let's focus on these 4 as major ones
   ],
   Works: [
     { label: 'Case Studies',  icon: <Briefcase size={14} />,    href: '/works/case-studies' },
@@ -141,7 +142,8 @@ function NavLink({ label, scrolled, isHome }: { label: string; scrolled: boolean
         />
       </a>
 
-      {hasDropdown && (
+      {/* Only show old flat dropdown for Works & Careers — Services uses the mega panel */}
+      {hasDropdown && label !== 'Services' && (
         <AnimatePresence>
           {dropdownOpen && (
             <motion.div
@@ -173,6 +175,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  // ── ADDITION 2: state + ref for the mega dropdown ─────────────
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const megaTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const openServices  = () => { clearTimeout(megaTimeout.current); setServicesOpen(true); };
+  const closeServices = () => { megaTimeout.current = setTimeout(() => setServicesOpen(false), 130); };
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -237,7 +245,16 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <nav style={{ display: 'flex', gap: '36px', alignItems: 'center' }} className="hidden lg:flex">
-            {NAV_LINKS.map(link => <NavLink key={link} label={link} scrolled={scrolled} isHome={isHome} />)}
+            {NAV_LINKS.map(link =>
+              // ── ADDITION 3: wrap only the Services link with hover handlers ──
+              link === 'Services' ? (
+                <div key={link} onMouseEnter={openServices} onMouseLeave={closeServices}>
+                  <NavLink label={link} scrolled={scrolled} isHome={isHome} />
+                </div>
+              ) : (
+                <NavLink key={link} label={link} scrolled={scrolled} isHome={isHome} />
+              )
+            )}
           </nav>
 
           {/* Right side */}
@@ -290,6 +307,23 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+
+        {/* ── ADDITION 3 cont: mega dropdown anchored to header, centered ── */}
+        <div
+          onMouseEnter={openServices}
+          onMouseLeave={closeServices}
+          style={{
+            position: 'absolute',
+            top: '68px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 1001,
+            pointerEvents: servicesOpen ? 'auto' : 'none',
+          }}
+        >
+          <ServicesMegaDropdown visible={servicesOpen} />
+        </div>
+
       </motion.header>
 
       {/* Mobile Menu */}

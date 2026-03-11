@@ -9,8 +9,9 @@ const STYLES = `
   .saas-card {
     transition: transform 0.28s cubic-bezier(0.16,1,0.3,1),
                 border-color 0.28s,
-                background 0.28s;
-    border: 1px solid rgba(255,255,255,0.05);
+                background 0.28s,
+                box-shadow 0.28s;
+    border: 1px solid rgba(10,60,35,0.18);
     position: relative;
   }
   .saas-card::before, .saas-card::after {
@@ -20,7 +21,7 @@ const STYLES = `
     height: 2px;
     background: var(--accent-primary);
     transition: width 0.28s cubic-bezier(0.16,1,0.3,1);
-    opacity: 0.55;
+    opacity: 0.45;
   }
   .saas-card::before { top: -1px; left: 0; }
   .saas-card::after  { bottom: -1px; right: 0; }
@@ -28,53 +29,151 @@ const STYLES = `
   .saas-card:hover::after { width: 100%; }
   .saas-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(0,232,122,0.14);
+    border-color: rgba(10,60,35,0.35);
+    background: rgba(10,60,35,0.04) !important;
+    box-shadow:
+      0 8px 24px rgba(10,60,35,0.1),
+      0 2px 8px rgba(10,60,35,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.6);
   }
 
   /* Cross-fade + scale for toggle tabs */
   .saas-tab {
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.06);
+    border: 1px solid rgba(10,60,35,0.18);
   }
   .saas-tab.active {
     background: rgba(0,232,122,0.1);
-    border-color: rgba(0,232,122,0.3);
+    border-color: rgba(10,60,35,0.4);
     color: var(--accent-primary);
+    box-shadow: 0 2px 8px rgba(10,60,35,0.08), inset 0 1px 0 rgba(255,255,255,0.5);
   }
   .saas-tab:not(.active):hover {
-    border-color: rgba(255,255,255,0.12);
+    border-color: rgba(10,60,35,0.28);
     color: var(--text-primary);
+    background: rgba(10,60,35,0.03);
+    box-shadow: 0 2px 6px rgba(10,60,35,0.07);
   }
 
   /* Checklist row */
   .saas-check-row {
-    transition: padding-left 0.22s, background 0.22s;
+    transition: padding-left 0.22s, background 0.22s, border-color 0.22s;
     padding-left: 0;
     border-radius: 8px;
+    border-bottom: 1px solid rgba(10,60,35,0.12) !important;
   }
   .saas-check-row:hover {
     padding-left: 8px;
-    background: rgba(0,232,122,0.04);
+    background: rgba(255,255,255,0.025);
+    border-bottom-color: rgba(10,60,35,0.25) !important;
   }
 
   /* Arch pillar hover */
   .saas-pillar {
-    transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), border-color 0.25s, background 0.25s;
-    border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.25s cubic-bezier(0.16,1,0.3,1),
+                border-color 0.25s,
+                background 0.25s,
+                box-shadow 0.25s;
+    border: 1px solid rgba(10,60,35,0.18);
   }
   .saas-pillar:hover {
     transform: translateY(-8px);
-    border-color: rgba(0,232,122,0.22);
-    background: rgba(255,255,255,0.02) !important;
+    border-color: rgba(10,60,35,0.35);
+    background: rgba(10,60,35,0.04) !important;
+    box-shadow:
+      0 10px 28px rgba(10,60,35,0.12),
+      0 3px 8px rgba(10,60,35,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+
+  /* Deliverable mini-card hover */
+  .saas-deliverable {
+    transition: transform 0.22s cubic-bezier(0.16,1,0.3,1),
+                border-color 0.22s,
+                background 0.22s,
+                box-shadow 0.22s;
+    border: 1px solid rgba(10,60,35,0.18);
+  }
+  .saas-deliverable:hover {
+    transform: translateY(-3px);
+    border-color: rgba(10,60,35,0.35);
+    background: rgba(10,60,35,0.04) !important;
+    box-shadow:
+      0 6px 16px rgba(10,60,35,0.09),
+      0 1px 4px rgba(10,60,35,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.5);
   }
 
   /* CTA button */
   .saas-cta-btn {
-    transition: background 0.22s, color 0.22s, transform 0.22s;
+    transition: background 0.22s, color 0.22s, transform 0.22s, box-shadow 0.22s;
   }
   .saas-cta-btn:hover {
     transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(10,60,35,0.09), 0 1px 4px rgba(10,60,35,0.06);
+  }
+
+  /* Tag/pill hover */
+  .saas-pill {
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    border: 1px solid rgba(10,60,35,0.22);
+    cursor: default;
+  }
+  .saas-pill:hover {
+    background: rgba(77,232,168,0.08);
+    border-color: rgba(10,60,35,0.45);
+    color: #c8f0dc;
+  }
+
+  /* Phase card (accordion) */
+  .saas-phase {
+    transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+    border: 1px solid rgba(10,60,35,0.18);
+  }
+  .saas-phase:hover {
+    border-color: rgba(10,60,35,0.3);
+    box-shadow:
+      0 4px 14px rgba(10,60,35,0.09),
+      0 1px 4px rgba(10,60,35,0.05),
+      inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+
+  /* CTA block */
+  .saas-cta-block {
+    transition: border-color 0.28s, box-shadow 0.28s;
+    border: 1px solid rgba(10,60,35,0.18);
+  }
+  .saas-cta-block:hover {
+    border-color: rgba(10,60,35,0.3);
+    box-shadow:
+      0 8px 24px rgba(10,60,35,0.1),
+      0 2px 8px rgba(0,0,0,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+
+  /* Stack row hover */
+  .saas-stack-row {
+    transition: background 0.18s, padding-left 0.2s;
+    border-bottom: 1px solid rgba(10,60,35,0.12);
+    border-radius: 6px;
+    padding-left: 0;
+  }
+  .saas-stack-row:hover {
+    background: rgba(10,60,35,0.03);
+    padding-left: 6px;
+  }
+
+  /* Stack badge */
+  .saas-stack-badge {
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    border: 1px solid rgba(10,60,35,0.18);
+    background: rgba(10,60,35,0.03);
+  }
+  .saas-stack-badge:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(10,60,35,0.28);
+    color: var(--text-primary);
   }
 `;
 
@@ -177,49 +276,35 @@ function HeroSection() {
             </FadeUp>
           </div>
 
-          {/* Hero SVG — multi-tenant visual */}
           <FadeIn delay={0.32}>
             <svg viewBox="0 0 340 220" fill="none" style={{ width: '100%', maxWidth: 360 }}>
-              {/* Central platform */}
-              <rect x="120" y="80" width="100" height="60" rx="8" stroke="#00e87a" strokeWidth="1.4" opacity="0.7"/>
-              <line x1="130" y1="96" x2="210" y2="96" stroke="#00e87a" strokeWidth="0.8" opacity="0.35"/>
-              <line x1="130" y1="106" x2="195" y2="106" stroke="#00e87a" strokeWidth="0.8" opacity="0.25"/>
-              <line x1="130" y1="116" x2="200" y2="116" stroke="#00e87a" strokeWidth="0.8" opacity="0.2"/>
-              <text x="170" y="92" textAnchor="middle" fill="#00e87a" fontSize="7" fontFamily="monospace" opacity="0.65">PLATFORM</text>
-
-              {/* Tenant A */}
-              <rect x="16" y="28" width="72" height="44" rx="6" stroke="#00e87a" strokeWidth="1.1" opacity="0.45"/>
-              <text x="52" y="48" textAnchor="middle" fill="#00e87a" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant A</text>
-              <line x1="52" y1="52" x2="52" y2="60" stroke="#00e87a" strokeWidth="0.6" opacity="0.3"/>
-              <line x1="52" y1="60" x2="120" y2="98" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
-
-              {/* Tenant B */}
-              <rect x="252" y="28" width="72" height="44" rx="6" stroke="#00e87a" strokeWidth="1.1" opacity="0.45"/>
-              <text x="288" y="48" textAnchor="middle" fill="#00e87a" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant B</text>
-              <line x1="288" y1="52" x2="288" y2="60" stroke="#00e87a" strokeWidth="0.6" opacity="0.3"/>
-              <line x1="288" y1="60" x2="220" y2="98" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
-
-              {/* Tenant C */}
-              <rect x="16" y="148" width="72" height="44" rx="6" stroke="#00e87a" strokeWidth="1.1" opacity="0.45"/>
-              <text x="52" y="168" textAnchor="middle" fill="#00e87a" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant C</text>
-              <line x1="52" y1="148" x2="52" y2="140" stroke="#00e87a" strokeWidth="0.6" opacity="0.3"/>
-              <line x1="52" y1="140" x2="120" y2="122" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
-
-              {/* Tenant D */}
-              <rect x="252" y="148" width="72" height="44" rx="6" stroke="#00e87a" strokeWidth="1.1" opacity="0.45"/>
-              <text x="288" y="168" textAnchor="middle" fill="#00e87a" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant D</text>
-              <line x1="288" y1="148" x2="288" y2="140" stroke="#00e87a" strokeWidth="0.6" opacity="0.3"/>
-              <line x1="288" y1="140" x2="220" y2="122" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
-
-              {/* Data isolation indicators */}
-              <circle cx="52" cy="50" r="3" fill="#00e87a" opacity="0.3"/>
-              <circle cx="288" cy="50" r="3" fill="#00e87a" opacity="0.3"/>
-              <circle cx="52" cy="170" r="3" fill="#00e87a" opacity="0.3"/>
-              <circle cx="288" cy="170" r="3" fill="#00e87a" opacity="0.3"/>
-              <circle cx="170" cy="110" r="5" fill="#00e87a" opacity="0.6"/>
-
-              {/* Annotations */}
-              <text x="170" y="205" textAnchor="middle" fill="#00e87a" fontSize="6" fontFamily="monospace" opacity="0.35">Isolated · Scalable · Configurable</text>
+              <rect x="120" y="80" width="100" height="60" rx="8" stroke="#1a6e42" strokeWidth="1.4" opacity="0.7"/>
+              <line x1="130" y1="96" x2="210" y2="96" stroke="#1a6e42" strokeWidth="0.8" opacity="0.35"/>
+              <line x1="130" y1="106" x2="195" y2="106" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25"/>
+              <line x1="130" y1="116" x2="200" y2="116" stroke="#1a6e42" strokeWidth="0.8" opacity="0.2"/>
+              <text x="170" y="92" textAnchor="middle" fill="#1a6e42" fontSize="7" fontFamily="monospace" opacity="0.65">PLATFORM</text>
+              <rect x="16" y="28" width="72" height="44" rx="6" stroke="#1a6e42" strokeWidth="1.1" opacity="0.45"/>
+              <text x="52" y="48" textAnchor="middle" fill="#1a6e42" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant A</text>
+              <line x1="52" y1="52" x2="52" y2="60" stroke="#1a6e42" strokeWidth="0.6" opacity="0.3"/>
+              <line x1="52" y1="60" x2="120" y2="98" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
+              <rect x="252" y="28" width="72" height="44" rx="6" stroke="#1a6e42" strokeWidth="1.1" opacity="0.45"/>
+              <text x="288" y="48" textAnchor="middle" fill="#1a6e42" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant B</text>
+              <line x1="288" y1="52" x2="288" y2="60" stroke="#1a6e42" strokeWidth="0.6" opacity="0.3"/>
+              <line x1="288" y1="60" x2="220" y2="98" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
+              <rect x="16" y="148" width="72" height="44" rx="6" stroke="#1a6e42" strokeWidth="1.1" opacity="0.45"/>
+              <text x="52" y="168" textAnchor="middle" fill="#1a6e42" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant C</text>
+              <line x1="52" y1="148" x2="52" y2="140" stroke="#1a6e42" strokeWidth="0.6" opacity="0.3"/>
+              <line x1="52" y1="140" x2="120" y2="122" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
+              <rect x="252" y="148" width="72" height="44" rx="6" stroke="#1a6e42" strokeWidth="1.1" opacity="0.45"/>
+              <text x="288" y="168" textAnchor="middle" fill="#1a6e42" fontSize="6" fontFamily="monospace" opacity="0.5">Tenant D</text>
+              <line x1="288" y1="148" x2="288" y2="140" stroke="#1a6e42" strokeWidth="0.6" opacity="0.3"/>
+              <line x1="288" y1="140" x2="220" y2="122" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25" strokeDasharray="3 3"/>
+              <circle cx="52" cy="50" r="3" fill="#1a6e42" opacity="0.3"/>
+              <circle cx="288" cy="50" r="3" fill="#1a6e42" opacity="0.3"/>
+              <circle cx="52" cy="170" r="3" fill="#1a6e42" opacity="0.3"/>
+              <circle cx="288" cy="170" r="3" fill="#1a6e42" opacity="0.3"/>
+              <circle cx="170" cy="110" r="5" fill="#1a6e42" opacity="0.6"/>
+              <text x="170" y="205" textAnchor="middle" fill="#1a6e42" fontSize="6" fontFamily="monospace" opacity="0.35">Isolated · Scalable · Configurable</text>
             </svg>
           </FadeIn>
         </div>
@@ -240,7 +325,7 @@ function HeroSection() {
 }
 
 /* ═══════════════════════════════════════
-   SECTION 2 — TWO FLAVOURS (toggle)
+   SECTION 2 — TWO FLAVOURS
 ═══════════════════════════════════════ */
 const FLAVOURS = {
   client: {
@@ -290,9 +375,8 @@ function FlavoursSection() {
           </RevealClip>
         </div>
 
-        {/* Toggle */}
         <FadeUp delay={0.14} style={{ marginBottom: 48 }}>
-          <div style={{ display: 'inline-flex', gap: 6, padding: 5, borderRadius: 12, background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <div style={{ display: 'inline-flex', gap: 6, padding: 5, borderRadius: 12, background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.05)', boxShadow: '0 2px 8px rgba(10,60,35,0.07), inset 0 1px 0 rgba(255,255,255,0.5)' }}>
             {(['client', 'internal'] as const).map(key => (
               <button
                 key={key}
@@ -306,7 +390,6 @@ function FlavoursSection() {
           </div>
         </FadeUp>
 
-        {/* Content */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
@@ -322,7 +405,7 @@ function FlavoursSection() {
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                   <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', opacity: 0.55, letterSpacing: '0.14em', width: '100%', margin: '0 0 6px' }}>TYPICAL BUILDS</p>
                   {f.examples.map((e, i) => (
-                    <span key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, padding: '4px 11px', borderRadius: 100, border: '1px solid rgba(0,232,122,0.18)', color: 'var(--text-tertiary)' }}>{e}</span>
+                    <span key={i} className="saas-pill" style={{ fontFamily: 'var(--font-mono)', fontSize: 10, padding: '4px 11px', borderRadius: 100, color: 'var(--text-tertiary)' }}>{e}</span>
                   ))}
                 </div>
               </div>
@@ -331,7 +414,7 @@ function FlavoursSection() {
                   <div
                     key={i}
                     className="saas-check-row"
-                    style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 8px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}
+                    style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '11px 8px' }}
                   >
                     <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--accent-primary)', opacity: 0.7, flexShrink: 0, marginTop: 1 }}>→</span>
                     <span style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{p}</span>
@@ -351,92 +434,32 @@ function FlavoursSection() {
 ═══════════════════════════════════════ */
 const PILLARS = [
   {
-    icon: (
-      <svg viewBox="0 0 44 44" fill="none" width={36} height={36}>
-        <rect x="4" y="4" width="36" height="36" rx="5" stroke="#00e87a" strokeWidth="1.2" opacity="0.5"/>
-        <rect x="10" y="10" width="10" height="10" rx="2" stroke="#00e87a" strokeWidth="1" opacity="0.7"/>
-        <rect x="24" y="10" width="10" height="10" rx="2" stroke="#00e87a" strokeWidth="1" opacity="0.5"/>
-        <rect x="10" y="24" width="10" height="10" rx="2" stroke="#00e87a" strokeWidth="1" opacity="0.5"/>
-        <rect x="24" y="24" width="10" height="10" rx="2" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-        <line x1="20" y1="15" x2="24" y2="15" stroke="#00e87a" strokeWidth="0.8" opacity="0.3"/>
-        <line x1="15" y1="20" x2="15" y2="24" stroke="#00e87a" strokeWidth="0.8" opacity="0.3"/>
-      </svg>
-    ),
+    icon: (<svg viewBox="0 0 44 44" fill="none" width={36} height={36}><rect x="4" y="4" width="36" height="36" rx="5" stroke="#1a6e42" strokeWidth="1.2" opacity="0.5"/><rect x="10" y="10" width="10" height="10" rx="2" stroke="#1a6e42" strokeWidth="1" opacity="0.7"/><rect x="24" y="10" width="10" height="10" rx="2" stroke="#1a6e42" strokeWidth="1" opacity="0.5"/><rect x="10" y="24" width="10" height="10" rx="2" stroke="#1a6e42" strokeWidth="1" opacity="0.5"/><rect x="24" y="24" width="10" height="10" rx="2" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/><line x1="20" y1="15" x2="24" y2="15" stroke="#1a6e42" strokeWidth="0.8" opacity="0.3"/><line x1="15" y1="20" x2="15" y2="24" stroke="#1a6e42" strokeWidth="0.8" opacity="0.3"/></svg>),
     title: 'Multi-tenancy',
     desc: 'Row-level, schema-level or database-per-tenant isolation chosen by your data sensitivity and cost model.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 44 44" fill="none" width={36} height={36}>
-        <circle cx="22" cy="22" r="14" stroke="#00e87a" strokeWidth="1.2" opacity="0.45"/>
-        <circle cx="22" cy="22" r="8" stroke="#00e87a" strokeWidth="1.3" opacity="0.65"/>
-        <circle cx="22" cy="22" r="3" fill="#00e87a" opacity="0.8"/>
-        <path d="M22 8 L22 14" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-        <path d="M34 22 L28 22" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-        <path d="M22 36 L22 30" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-        <path d="M10 22 L16 22" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-      </svg>
-    ),
+    icon: (<svg viewBox="0 0 44 44" fill="none" width={36} height={36}><circle cx="22" cy="22" r="14" stroke="#1a6e42" strokeWidth="1.2" opacity="0.45"/><circle cx="22" cy="22" r="8" stroke="#1a6e42" strokeWidth="1.3" opacity="0.65"/><circle cx="22" cy="22" r="3" fill="#1a6e42" opacity="0.8"/><path d="M22 8 L22 14" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/><path d="M34 22 L28 22" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/><path d="M22 36 L22 30" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/><path d="M10 22 L16 22" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/></svg>),
     title: 'Security & Compliance',
     desc: 'RBAC, zero-trust networking, encrypted data at rest and in transit, full audit logging. SOC 2 / GDPR / HIPAA ready by design.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 44 44" fill="none" width={36} height={36}>
-        <rect x="6" y="18" width="14" height="20" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.4"/>
-        <rect x="24" y="12" width="14" height="26" rx="2" stroke="#00e87a" strokeWidth="1.2" opacity="0.65"/>
-        <path d="M8 28 L16 28" stroke="#00e87a" strokeWidth="0.7" opacity="0.3"/>
-        <path d="M8 32" stroke="#00e87a" strokeWidth="0.7"/>
-        <path d="M26 20 L34 20" stroke="#00e87a" strokeWidth="0.7" opacity="0.4"/>
-        <path d="M26 25 L34 25" stroke="#00e87a" strokeWidth="0.7" opacity="0.35"/>
-        <path d="M26 30 L30 30" stroke="#00e87a" strokeWidth="0.7" opacity="0.3"/>
-        <path d="M4 38 L40 38" stroke="#00e87a" strokeWidth="1.1" strokeLinecap="round" opacity="0.3"/>
-      </svg>
-    ),
+    icon: (<svg viewBox="0 0 44 44" fill="none" width={36} height={36}><rect x="6" y="18" width="14" height="20" rx="2" stroke="#1a6e42" strokeWidth="1.1" opacity="0.4"/><rect x="24" y="12" width="14" height="26" rx="2" stroke="#1a6e42" strokeWidth="1.2" opacity="0.65"/><path d="M8 28 L16 28" stroke="#1a6e42" strokeWidth="0.7" opacity="0.3"/><path d="M26 20 L34 20" stroke="#1a6e42" strokeWidth="0.7" opacity="0.4"/><path d="M26 25 L34 25" stroke="#1a6e42" strokeWidth="0.7" opacity="0.35"/><path d="M26 30 L30 30" stroke="#1a6e42" strokeWidth="0.7" opacity="0.3"/><path d="M4 38 L40 38" stroke="#1a6e42" strokeWidth="1.1" strokeLinecap="round" opacity="0.3"/></svg>),
     title: 'Scalable Infrastructure',
     desc: 'Stateless services, autoscaling compute, managed databases, CDN-first assets. Designed to handle 10× traffic without 10× cost.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 44 44" fill="none" width={36} height={36}>
-        <path d="M10 22 L17 22 L20 14 L24 30 L27 22 L34 22" stroke="#00e87a" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.75"/>
-        <circle cx="10" cy="22" r="2" fill="#00e87a" opacity="0.5"/>
-        <circle cx="34" cy="22" r="2" fill="#00e87a" opacity="0.5"/>
-        <line x1="6" y1="8" x2="6" y2="36" stroke="#00e87a" strokeWidth="0.7" opacity="0.2"/>
-        <line x1="6" y1="36" x2="38" y2="36" stroke="#00e87a" strokeWidth="0.7" opacity="0.2"/>
-      </svg>
-    ),
+    icon: (<svg viewBox="0 0 44 44" fill="none" width={36} height={36}><path d="M10 22 L17 22 L20 14 L24 30 L27 22 L34 22" stroke="#1a6e42" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.75"/><circle cx="10" cy="22" r="2" fill="#1a6e42" opacity="0.5"/><circle cx="34" cy="22" r="2" fill="#1a6e42" opacity="0.5"/><line x1="6" y1="8" x2="6" y2="36" stroke="#1a6e42" strokeWidth="0.7" opacity="0.2"/><line x1="6" y1="36" x2="38" y2="36" stroke="#1a6e42" strokeWidth="0.7" opacity="0.2"/></svg>),
     title: 'Observability',
     desc: 'Structured logging, distributed tracing, SLO dashboards and alerting. You always know exactly what your platform is doing.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 44 44" fill="none" width={36} height={36}>
-        <path d="M14 22 C14 16 20 12 26 14" stroke="#00e87a" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5"/>
-        <path d="M30 22 C30 28 24 32 18 30" stroke="#00e87a" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5"/>
-        <circle cx="14" cy="22" r="3" stroke="#00e87a" strokeWidth="1.1" opacity="0.7"/>
-        <circle cx="30" cy="22" r="3" stroke="#00e87a" strokeWidth="1.1" opacity="0.7"/>
-        <path d="M10 14 L18 14 L18 22" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="2 2"/>
-        <path d="M34 30 L26 30 L26 22" stroke="#00e87a" strokeWidth="0.8" opacity="0.25" strokeDasharray="2 2"/>
-      </svg>
-    ),
+    icon: (<svg viewBox="0 0 44 44" fill="none" width={36} height={36}><path d="M14 22 C14 16 20 12 26 14" stroke="#1a6e42" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5"/><path d="M30 22 C30 28 24 32 18 30" stroke="#1a6e42" strokeWidth="1.2" strokeLinecap="round" fill="none" opacity="0.5"/><circle cx="14" cy="22" r="3" stroke="#1a6e42" strokeWidth="1.1" opacity="0.7"/><circle cx="30" cy="22" r="3" stroke="#1a6e42" strokeWidth="1.1" opacity="0.7"/><path d="M10 14 L18 14 L18 22" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25" strokeDasharray="2 2"/><path d="M34 30 L26 30 L26 22" stroke="#1a6e42" strokeWidth="0.8" opacity="0.25" strokeDasharray="2 2"/></svg>),
     title: 'API-first Design',
     desc: 'Every feature is an endpoint. OpenAPI-documented, versioned, and ready to power mobile apps, partner integrations or your next product.',
   },
   {
-    icon: (
-      <svg viewBox="0 0 44 44" fill="none" width={36} height={36}>
-        <rect x="8" y="8" width="12" height="12" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.5"/>
-        <rect x="24" y="8" width="12" height="12" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.65"/>
-        <rect x="8" y="24" width="12" height="12" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.65"/>
-        <rect x="24" y="24" width="12" height="12" rx="2" stroke="#00e87a" strokeWidth="1.1" opacity="0.45"/>
-        <path d="M20 14 L24 14" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-        <path d="M14 20 L14 24" stroke="#00e87a" strokeWidth="1" opacity="0.35"/>
-        <path d="M20 30 L24 30" stroke="#00e87a" strokeWidth="1" opacity="0.25"/>
-        <path d="M30 20 L30 24" stroke="#00e87a" strokeWidth="1" opacity="0.25"/>
-        <circle cx="22" cy="22" r="2.5" fill="#00e87a" opacity="0.4"/>
-      </svg>
-    ),
+    icon: (<svg viewBox="0 0 44 44" fill="none" width={36} height={36}><rect x="8" y="8" width="12" height="12" rx="2" stroke="#1a6e42" strokeWidth="1.1" opacity="0.5"/><rect x="24" y="8" width="12" height="12" rx="2" stroke="#1a6e42" strokeWidth="1.1" opacity="0.65"/><rect x="8" y="24" width="12" height="12" rx="2" stroke="#1a6e42" strokeWidth="1.1" opacity="0.65"/><rect x="24" y="24" width="12" height="12" rx="2" stroke="#1a6e42" strokeWidth="1.1" opacity="0.45"/><path d="M20 14 L24 14" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/><path d="M14 20 L14 24" stroke="#1a6e42" strokeWidth="1" opacity="0.35"/><path d="M20 30 L24 30" stroke="#1a6e42" strokeWidth="1" opacity="0.25"/><path d="M30 20 L30 24" stroke="#1a6e42" strokeWidth="1" opacity="0.25"/><circle cx="22" cy="22" r="2.5" fill="#1a6e42" opacity="0.4"/></svg>),
     title: 'Modular Architecture',
     desc: 'Feature flags, pluggable billing plans, and per-tenant configuration let you ship one platform that adapts to every customer\'s needs.',
   },
@@ -447,7 +470,6 @@ function ArchitectureSection() {
     <section style={{ padding: '0 32px 100px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <SectionLabel text="ARCHITECTURE" />
-
         <div style={{ overflow: 'hidden', marginBottom: 10 }}>
           <RevealClip delay={0.06}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(26px,3vw,42px)', color: 'var(--text-primary)', lineHeight: 1.1, margin: 0 }}>
@@ -460,7 +482,6 @@ function ArchitectureSection() {
             Not bolt-ons. These are design decisions made at the start — before a line of product code is written.
           </p>
         </FadeUp>
-
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 14 }}>
           {PILLARS.map((p, i) => (
             <motion.div
@@ -487,30 +508,10 @@ function ArchitectureSection() {
    SECTION 4 — HOW WE BUILD
 ═══════════════════════════════════════ */
 const PHASES = [
-  {
-    num: '01', phase: 'Product Definition',
-    duration: '1–2 wks',
-    what: 'We run structured discovery to nail the core workflow, user types, tenancy model and business rules before any UI or API is designed.',
-    outputs: ['User journey maps', 'Tenancy & data model', 'Feature priority matrix', 'Build vs. buy decisions'],
-  },
-  {
-    num: '02', phase: 'Architecture & Design',
-    duration: '1–2 wks',
-    what: 'System design, API contracts, database schemas, auth model, infrastructure plan. All reviewed before the first PR is opened.',
-    outputs: ['System design doc', 'ERD & API spec', 'Auth architecture', 'IaC scaffolding'],
-  },
-  {
-    num: '03', phase: 'Iterative Build',
-    duration: 'Sprint cycles',
-    what: 'Two-week sprints. Working software every cycle. You see real progress — not Figma files — from week three.',
-    outputs: ['Feature increments', 'Integration tests', 'Preview environments', 'Sprint demos'],
-  },
-  {
-    num: '04', phase: 'Launch & Scale',
-    duration: 'Go-live +',
-    what: 'Production launch, monitoring, on-call support, and a roadmap for scaling from your first 10 tenants to 10,000.',
-    outputs: ['Production deployment', 'Runbooks & docs', 'Observability dashboards', 'Scaling playbook'],
-  },
+  { num: '01', phase: 'Product Definition', duration: '1–2 wks', what: 'We run structured discovery to nail the core workflow, user types, tenancy model and business rules before any UI or API is designed.', outputs: ['User journey maps', 'Tenancy & data model', 'Feature priority matrix', 'Build vs. buy decisions'] },
+  { num: '02', phase: 'Architecture & Design', duration: '1–2 wks', what: 'System design, API contracts, database schemas, auth model, infrastructure plan. All reviewed before the first PR is opened.', outputs: ['System design doc', 'ERD & API spec', 'Auth architecture', 'IaC scaffolding'] },
+  { num: '03', phase: 'Iterative Build', duration: 'Sprint cycles', what: 'Two-week sprints. Working software every cycle. You see real progress — not Figma files — from week three.', outputs: ['Feature increments', 'Integration tests', 'Preview environments', 'Sprint demos'] },
+  { num: '04', phase: 'Launch & Scale', duration: 'Go-live +', what: 'Production launch, monitoring, on-call support, and a roadmap for scaling from your first 10 tenants to 10,000.', outputs: ['Production deployment', 'Runbooks & docs', 'Observability dashboards', 'Scaling playbook'] },
 ];
 
 function PhaseCard({ p, index }: { p: typeof PHASES[0]; index: number }) {
@@ -523,7 +524,7 @@ function PhaseCard({ p, index }: { p: typeof PHASES[0]; index: number }) {
       transition={{ duration: 0.65, delay: index * 0.1, ease: EASE }}
     >
       <div
-        className="saas-card"
+        className="saas-card saas-phase"
         onClick={() => setOpen(o => !o)}
         style={{ padding: '24px 26px', borderRadius: 16, background: 'var(--bg-surface)', cursor: 'pointer' }}
       >
@@ -540,12 +541,11 @@ function PhaseCard({ p, index }: { p: typeof PHASES[0]; index: number }) {
           <motion.div
             animate={{ rotate: open ? 45 : 0 }}
             transition={{ duration: 0.28, ease: EASE }}
-            style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(0,232,122,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 4 }}
+            style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(0,232,122,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 4, boxShadow: '0 1px 4px rgba(10,60,35,0.06)' }}
           >
             <span style={{ color: 'var(--accent-primary)', fontSize: 18, lineHeight: 1, fontWeight: 300 }}>+</span>
           </motion.div>
         </div>
-
         <AnimatePresence initial={false}>
           {open && (
             <motion.div
@@ -559,7 +559,7 @@ function PhaseCard({ p, index }: { p: typeof PHASES[0]; index: number }) {
                 <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--accent-primary)', opacity: 0.6, letterSpacing: '0.14em', margin: '0 0 10px' }}>DELIVERABLES</p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {p.outputs.map((o, oi) => (
-                    <span key={oi} style={{ fontFamily: 'var(--font-mono)', fontSize: 10, padding: '4px 11px', borderRadius: 100, border: '1px solid rgba(0,232,122,0.16)', color: 'var(--text-tertiary)' }}>{o}</span>
+                    <span key={oi} className="saas-pill" style={{ fontFamily: 'var(--font-mono)', fontSize: 10, padding: '4px 11px', borderRadius: 100, color: 'var(--text-tertiary)' }}>{o}</span>
                   ))}
                 </div>
               </div>
@@ -576,14 +576,11 @@ function HowWeSection() {
     <section style={{ padding: '0 32px 100px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <SectionLabel text="HOW WE BUILD" />
-
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px 80px', alignItems: 'start', marginBottom: 48 }}>
           <div>
             <div style={{ overflow: 'hidden', marginBottom: 8 }}>
               <RevealClip delay={0.06}>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(26px,3vw,42px)', color: 'var(--text-primary)', lineHeight: 1.1, margin: 0 }}>
-                  Discovery first. Code second.
-                </h2>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(26px,3vw,42px)', color: 'var(--text-primary)', lineHeight: 1.1, margin: 0 }}>Discovery first. Code second.</h2>
               </RevealClip>
             </div>
             <FadeUp delay={0.17}>
@@ -598,7 +595,6 @@ function HowWeSection() {
             </p>
           </FadeUp>
         </div>
-
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
           {PHASES.map((p, i) => <PhaseCard key={i} p={p} index={i} />)}
         </div>
@@ -624,7 +620,6 @@ function TechSection() {
     <section style={{ padding: '0 32px 100px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <SectionLabel text="TECH STACK" />
-
         <div style={{ overflow: 'hidden', marginBottom: 52 }}>
           <RevealClip delay={0.06}>
             <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(26px,3vw,42px)', color: 'var(--text-primary)', lineHeight: 1.1, margin: 0 }}>
@@ -632,15 +627,17 @@ function TechSection() {
             </h2>
           </RevealClip>
         </div>
-
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {STACK_ROWS.map((row, ri) => (
             <FadeUp key={ri} delay={0.06 + ri * 0.07}>
-              <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: '0 32px', padding: '18px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', alignItems: 'center' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', opacity: 0.55, letterSpacing: '0.12em' }}>{row.label.toUpperCase()}</span>
+              <div
+                className="saas-stack-row"
+                style={{ display: 'grid', gridTemplateColumns: '140px 1fr', gap: '0 32px', padding: '18px 8px', alignItems: 'center' }}
+              >
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-primary)', opacity: 0.55, letterSpacing: '0.12em' }}>{row.label.toUpperCase()}</span>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {row.items.map((item, ii) => (
-                    <span key={ii} style={{ fontFamily: 'var(--font-body)', fontSize: 13.5, color: 'var(--text-secondary)', padding: '3px 10px', borderRadius: 6, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>{item}</span>
+                    <span key={ii} className="saas-stack-badge" style={{ fontFamily: 'var(--font-body)', fontSize: 13.5, color: 'var(--text-secondary)', padding: '3px 10px', borderRadius: 6 }}>{item}</span>
                   ))}
                 </div>
               </div>
@@ -669,7 +666,6 @@ function DeliverablesSection() {
     <section style={{ padding: '0 32px 100px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <SectionLabel text="DELIVERABLES" />
-
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px 80px', alignItems: 'start' }}>
           <div>
             <div style={{ overflow: 'hidden', marginBottom: 8 }}>
@@ -685,16 +681,16 @@ function DeliverablesSection() {
               </p>
             </FadeUp>
           </div>
-
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             {DELIVERABLES.map((d, i) => (
               <motion.div
                 key={i}
+                className="saas-deliverable"
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
                 transition={{ duration: 0.48, delay: i * 0.08, ease: EASE }}
-                style={{ padding: '18px 16px', borderRadius: 12, background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.05)' }}
+                style={{ padding: '18px 16px', borderRadius: 12, background: 'var(--bg-surface)' }}
               >
                 <p style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: 13, color: 'var(--text-primary)', margin: '0 0 5px', lineHeight: 1.35 }}>{d.label}</p>
                 <p style={{ fontFamily: 'var(--font-body)', fontSize: 12, color: 'var(--text-tertiary)', margin: 0, lineHeight: 1.6, opacity: 0.7 }}>{d.sub}</p>
@@ -715,7 +711,7 @@ function CTASection() {
     <section style={{ padding: '0 32px 120px' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <FadeUp delay={0}>
-          <div style={{ padding: '52px 56px', borderRadius: 20, background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }}>
+          <div className="saas-cta-block" style={{ padding: '52px 56px', borderRadius: 20, background: 'var(--bg-surface)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }}>
             <div>
               <div style={{ overflow: 'hidden', marginBottom: 8 }}>
                 <RevealClip delay={0.06}>
@@ -746,9 +742,6 @@ function CTASection() {
   );
 }
 
-/* ═══════════════════════════════════════
-   EXPORT
-═══════════════════════════════════════ */
 export function CustomSaaSPage() {
   return (
     <div style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
