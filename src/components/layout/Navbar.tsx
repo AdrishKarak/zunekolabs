@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+
 import { useLocation } from 'react-router-dom';
-import { Menu, X, ArrowRight, Cpu, BarChart3, Briefcase, Lightbulb, GraduationCap, Users, MapPin, Eye, Brain } from 'lucide-react';
+
+
+import { Menu, X, ArrowRight, Cpu, BarChart3, Briefcase, Lightbulb, GraduationCap, Users, MapPin, Eye, Brain, Globe, Smartphone } from 'lucide-react';
+
 import ZunekoLogo from '../../assets/Zuneko.svg';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -12,6 +16,18 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
     { label: 'Computer Vision Technology',        icon: <Eye size={14} />,        href: '/services/computer-vision-technology' },
     { label: 'Applied Artificial Intelligence',   icon: <Brain size={14} />,     href: '/services/applied-ai' },
     { label: 'Next-gen Enterprise Tech',          icon: <Cpu size={14} />,        href: '/services/enterprise-technology' },
+     { label: 'Artificial Intelligence',           icon: <Cpu size={14} />,        href: '/services/aiml/artificial-intelligence' },
+    { label: 'Gen AI',                            icon: <BarChart3 size={14} />,   href: '/services/aiml/genai' },
+    { label: 'ML Application Development',        icon: <Globe size={14} />,       href: '/services/aiml/ml' },
+    { label: 'Agentic AI Development',            icon: <Smartphone size={14} />,  href: '/services/aiml/agenticai' },
+    { label: 'Retrieval-Augmented Generation',    icon: <Cpu size={14} />,        href: '/services/aiml/rag' },
+    { label: 'Natural Language Processing',       icon: <Globe size={14} />,       href: '/services/aiml/nlp' },
+    { label: 'Data Analysis & Visualization',     icon: <BarChart3 size={14} />,   href: '/services/aiml/data-analysis' },
+    { label: 'Custom Software as a Service',      icon: <Cpu size={14} />,         href: '/service/customsaaas' },
+    { label: 'Core System Message',               icon: <Globe size={14} />,       href: '/service/coresystem' },
+    { label: 'API Integration',             icon: <Smartphone size={14} />,  href: '/service/apiintegration' },
+    { label: 'HITL Design',             icon: <Smartphone size={14} />,  href: '/service/hitldesign' },
+    { label: 'AI-Native Product Development',             icon: <Smartphone size={14} />,  href: '/service/ainativeproduct' },
     // ... existing sub-services or categorized ones can follow if needed 
     // but for now let's focus on these 4 as major ones
   ],
