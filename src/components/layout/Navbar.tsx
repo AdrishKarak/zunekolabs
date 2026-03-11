@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, Cpu, BarChart3, Briefcase, Lightbulb, GraduationCap, Users, MapPin, Eye, Brain } from 'lucide-react';
 import ZunekoLogo from '../../assets/Zuneko.svg';
 
@@ -28,7 +29,7 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
 const NAV_LINKS = ['About', 'Services', 'Works', 'Careers', 'Contact'];
 
 function getHref(label: string) {
-  return label === 'Contact' ? '#faq' : `#${label.toLowerCase()}`;
+  return label === 'Contact' ? '#faq' : `/#${label.toLowerCase()}`;
 }
 
 function DropdownItem({ item, delay }: { item: { label: string; icon: React.ReactNode; href: string }; delay: number }) {
@@ -63,11 +64,15 @@ function DropdownItem({ item, delay }: { item: { label: string; icon: React.Reac
   );
 }
 
-function NavLink({ label }: { label: string }) {
+function NavLink({ label, scrolled, isHome }: { label: string; scrolled: boolean; isHome: boolean }) {
   const [hovered, setHovered] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const hasDropdown = label in DROPDOWNS;
   const ref = useRef<HTMLDivElement>(null);
+
+  const isWhite = isHome && !scrolled;
+  const baseColor = isWhite ? 'rgba(255,255,255,0.9)' : 'var(--text-secondary)';
+  const activeColor = isWhite ? '#ffffff' : 'var(--text-primary)';
 
   return (
     <div
@@ -80,7 +85,13 @@ function NavLink({ label }: { label: string }) {
         href={getHref(label)}
         style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none', padding: '8px 0' }}
       >
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: '14px', fontWeight: 500, color: hovered ? 'var(--text-primary)' : 'var(--text-secondary)', transition: 'color 0.2s' }}>
+        <span style={{ 
+          fontFamily: 'var(--font-body)', 
+          fontSize: '14px', 
+          fontWeight: 500, 
+          color: hovered ? activeColor : baseColor, 
+          transition: 'color 0.2s' 
+        }}>
           {label}
         </span>
 
@@ -89,7 +100,7 @@ function NavLink({ label }: { label: string }) {
             animate={{ rotate: dropdownOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
             width="12" height="12" viewBox="0 0 24 24" fill="none"
-            stroke={hovered ? 'var(--text-primary)' : 'var(--text-secondary)'}
+            stroke={hovered ? activeColor : baseColor}
             strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
           >
             <polyline points="6 9 12 15 18 9" />
@@ -100,7 +111,17 @@ function NavLink({ label }: { label: string }) {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: hovered ? 1 : 0 }}
           transition={{ duration: 0.2, ease: EASE }}
-          style={{ position: 'absolute', bottom: '-3px', left: 0, right: 0, height: '1px', background: 'var(--accent-primary)', transformOrigin: 'center', opacity: 0.7, display: 'block' }}
+          style={{ 
+            position: 'absolute', 
+            bottom: '-3px', 
+            left: 0, 
+            right: 0, 
+            height: '1px', 
+            background: isWhite ? '#ffffff' : 'var(--accent-primary)', 
+            transformOrigin: 'center', 
+            opacity: 0.7, 
+            display: 'block' 
+          }}
         />
       </a>
 
@@ -134,6 +155,8 @@ function NavLink({ label }: { label: string }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -153,7 +176,7 @@ export default function Navbar() {
       <motion.header
         animate={{
           backdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
-          backgroundColor: scrolled ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0)',
+          backgroundColor: scrolled ? 'rgba(255,255,255,0.92)' : 'transparent',
           borderBottomColor: scrolled ? 'var(--border-subtle)' : 'transparent',
         }}
         transition={{ duration: 0.35, ease: EASE }}
@@ -163,18 +186,42 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
-            <div style={{ width: '34px', height: '34px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
-              <img src={ZunekoLogo} alt="Zuneko Labs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <div style={{ 
+              width: '34px', 
+              height: '34px', 
+              borderRadius: '8px', 
+              overflow: 'hidden', 
+              border: (scrolled || !isHome) ? '1px solid var(--border-subtle)' : '1px solid rgba(255,255,255,0.4)', 
+              flexShrink: 0,
+              transition: 'border-color 0.3s'
+            }}>
+              <img src={ZunekoLogo} alt="Zuneko Labs" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: (scrolled || !isHome) ? 'none' : 'brightness(0) invert(1)' }} />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
-              <span style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '15px', letterSpacing: '-0.01em', color: 'var(--text-primary)', lineHeight: 1.1 }}>Zuneko Labs</span>
-              <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '10px', color: 'var(--text-tertiary)', letterSpacing: '0.02em', lineHeight: 1 }}>by Emdee Digitronics</span>
+              <span style={{ 
+                fontFamily: 'var(--font-body)', 
+                fontWeight: 600, 
+                fontSize: '15px', 
+                letterSpacing: '-0.01em', 
+                color: (scrolled || !isHome) ? 'var(--text-primary)' : '#ffffff', 
+                lineHeight: 1.1,
+                transition: 'color 0.3s'
+              }}>Zuneko Labs</span>
+              <span style={{ 
+                fontFamily: 'var(--font-body)', 
+                fontWeight: 400, 
+                fontSize: '10px', 
+                color: (scrolled || !isHome) ? 'var(--text-tertiary)' : 'rgba(255,255,255,0.8)', 
+                letterSpacing: '0.02em', 
+                lineHeight: 1,
+                transition: 'color 0.3s'
+              }}>by Emdee Digitronics</span>
             </div>
           </a>
 
           {/* Desktop Nav */}
           <nav style={{ display: 'flex', gap: '36px', alignItems: 'center' }} className="hidden lg:flex">
-            {NAV_LINKS.map(link => <NavLink key={link} label={link} />)}
+            {NAV_LINKS.map(link => <NavLink key={link} label={link} scrolled={scrolled} isHome={isHome} />)}
           </nav>
 
           {/* Right side */}
@@ -186,22 +233,22 @@ export default function Navbar() {
                 display: 'none',
                 padding: '9px 22px',
                 borderRadius: '6px',
-                border: '1px solid var(--accent-primary)',
+                border: (scrolled || !isHome) ? '1px solid var(--accent-primary)' : '1px solid #ffffff',
                 background: 'transparent',
-                color: 'var(--accent-primary)',
+                color: (scrolled || !isHome) ? 'var(--accent-primary)' : '#ffffff',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 600,
                 fontSize: '13px',
                 textDecoration: 'none',
-                transition: 'all 0.2s ease',
+                transition: 'all 0.3s ease',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.background = 'var(--accent-primary)';
-                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.background = (scrolled || !isHome) ? 'var(--accent-primary)' : '#ffffff';
+                e.currentTarget.style.color = (scrolled || !isHome) ? '#ffffff' : 'var(--accent-primary)';
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.color = 'var(--accent-primary)';
+                e.currentTarget.style.color = (scrolled || !isHome) ? 'var(--accent-primary)' : '#ffffff';
               }}
             >
               Get Started
@@ -210,7 +257,17 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="lg:hidden"
-              style={{ background: 'none', border: '1px solid var(--border-subtle)', borderRadius: '6px', padding: '8px', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              style={{ 
+                background: 'none', 
+                border: (scrolled || !isHome) ? '1px solid var(--border-subtle)' : '1px solid rgba(255,255,255,0.3)', 
+                borderRadius: '6px', 
+                padding: '8px', 
+                color: (scrolled || !isHome) ? 'var(--text-primary)' : '#ffffff', 
+                cursor: 'pointer', 
+                display: 'flex', 
+                alignItems: 'center',
+                transition: 'all 0.3s'
+              }}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}

@@ -97,7 +97,7 @@ function RotatingWord() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '-100%', opacity: 0 }}
             transition={{ duration: 0.32, ease: EASE }}
-            style={{ display: 'inline-block', fontFamily: 'var(--font-body)', fontWeight: 500, color: 'var(--accent-primary)' }}
+            style={{ display: 'inline-block', fontFamily: 'var(--font-body)', fontWeight: 500, color: '#ffffff' }}
           >
             {ROTATING_WORDS[idx]}
           </motion.span>
@@ -109,12 +109,12 @@ function RotatingWord() {
 
 export default function HeroSection() {
   return (
-    <section id="hero" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <section id="hero" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', background: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       
-      {/* Forced White Background */}
-      <div style={{ position: 'absolute', inset: 0, background: '#ffffff', zIndex: 0 }} />
+      {/* Base Brand Layer */}
+      <div style={{ position: 'absolute', inset: 0, background: 'var(--accent-primary)', zIndex: 0 }} />
 
-      {/* Video with Low Opacity to ensure light theme */}
+      {/* Video Background with readability filters */}
       <video 
         autoPlay muted loop playsInline 
         style={{ 
@@ -124,14 +124,20 @@ export default function HeroSection() {
           height: '100%', 
           objectFit: 'cover', 
           zIndex: 1,
-          opacity: 0.15,
-          filter: 'brightness(1.2) grayscale(0.2)'
+          opacity: 0.35,
+          filter: 'brightness(0.7) contrast(1.1) grayscale(0.2)'
         }} 
         src={heroVideo} 
       />
 
-      {/* Content Protection Overlay */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'rgba(255,255,255,0.5)' }} />
+      {/* Clean Dark Green Protective Overlay */}
+      <div style={{ 
+        position: 'absolute', 
+        inset: 0, 
+        zIndex: 2, 
+        background: 'linear-gradient(to bottom, rgba(10,66,37,0.85) 0%, rgba(10,66,37,0.4) 50%, rgba(10,66,37,0.9) 100%)' 
+      }} />
+
 
       {/* Particles */}
       <ParticleCanvas />
@@ -144,9 +150,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(10,66,37,0.2)', background: 'rgba(10,66,37,0.05)', padding: '7px 18px', borderRadius: '4px', marginBottom: '36px' }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.1)', padding: '7px 18px', borderRadius: '4px', marginBottom: '36px' }}
         >
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500, color: 'var(--accent-primary)', letterSpacing: '0.05em' }}>
+          <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500, color: '#ffffff', letterSpacing: '0.05em' }}>
             Enterprise AI & Automation
           </span>
         </motion.div>
@@ -157,7 +163,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.42, ease: EASE }}
-            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 7.5vw, 104px)', color: 'var(--text-primary)', lineHeight: 0.96, letterSpacing: '-0.01em' }}
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 7.5vw, 104px)', color: '#ffffffff', lineHeight: 0.96, letterSpacing: '-0.01em' }}
           >
             Automate. Transform.
           </motion.div>
@@ -165,11 +171,11 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.56, ease: EASE }}
-            style={{ position: 'relative', display: 'inline-block', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 7.5vw, 104px)', color: 'var(--accent-primary)', fontStyle: 'italic', lineHeight: 0.96, letterSpacing: '-0.01em' }}
+            style={{ position: 'relative', display: 'inline-block', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 7.5vw, 104px)', color: '#ffffff', fontStyle: 'italic', lineHeight: 0.96, letterSpacing: '-0.01em' }}
           >
             Dominate.
             <svg style={{ position: 'absolute', bottom: '-6px', left: 0, width: '100%', height: '10px' }} viewBox="0 0 400 10" preserveAspectRatio="none">
-              <motion.path d="M 0 7 Q 100 2 200 7 Q 300 12 400 7" fill="none" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round"
+              <motion.path d="M 0 7 Q 100 2 200 7 Q 300 12 400 7" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 1.2, delay: 1.1, ease: EASE }} />
             </svg>
           </motion.div>
@@ -180,7 +186,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.85, ease: EASE }}
-          style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(15px, 1.8vw, 19px)', color: 'var(--text-secondary)', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', justifyContent: 'center', fontWeight: 400 }}
+          style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(15px, 1.8vw, 19px)', color: 'rgba(255,255,255,0.8)', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', justifyContent: 'center', fontWeight: 400 }}
         >
           We engineer&nbsp;—&nbsp;<RotatingWord />
         </motion.p>
@@ -201,8 +207,8 @@ export default function HeroSection() {
               gap: '8px',
               padding: '13px 30px',
               borderRadius: '6px',
-              background: 'var(--accent-primary)',
-              color: '#ffffff',
+              background: '#ffffff',
+              color: 'var(--accent-primary)',
               fontFamily: 'var(--font-body)',
               fontWeight: 600,
               fontSize: '14px',
@@ -210,27 +216,28 @@ export default function HeroSection() {
               transition: 'opacity 0.2s, transform 0.2s, box-shadow 0.2s',
               letterSpacing: '-0.01em',
             }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(10,66,37,0.15)'; }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,0.2)'; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
           >
             Start Your Transformation
           </a>
+          
           {/* Secondary */}
           <a
             href="#works"
             style={{
               padding: '13px 30px',
               borderRadius: '6px',
-              border: '1px solid var(--accent-primary)',
+              border: '1px solid rgba(255,255,255,0.4)',
               background: 'transparent',
-              color: 'var(--accent-primary)',
+              color: '#ffffff',
               fontFamily: 'var(--font-body)',
               fontWeight: 600,
               fontSize: '14px',
               textDecoration: 'none',
               transition: 'all 0.2s ease',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent-glow)'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
           >
             Explore Our Work
@@ -244,8 +251,8 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 1.25, ease: EASE }}
           style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
         >
-          <span className="pulse-dot" style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-secondary)', display: 'inline-block' }} />
-          <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '12px', color: 'var(--text-tertiary)', letterSpacing: '0.03em' }}>
+          <span className="pulse-dot" style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', display: 'inline-block' }} />
+          <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '12px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.03em' }}>
             Trusted by 15+ enterprises · Pune & Kolkata · Est. 2024
           </span>
         </motion.div>
@@ -253,8 +260,8 @@ export default function HeroSection() {
 
       {/* Scroll indicator */}
       <div style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 3 }}>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 400, color: 'var(--text-tertiary)', letterSpacing: '0.12em' }}>scroll</span>
-        <ChevronDown className="bounce-y" size={16} style={{ color: 'var(--text-tertiary)' }} />
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em' }}>scroll</span>
+        <ChevronDown className="bounce-y" size={16} style={{ color: 'rgba(255,255,255,0.5)' }} />
       </div>
     </section>
   );
