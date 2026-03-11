@@ -16,6 +16,9 @@ const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: st
     { label: 'Data Analysis & Visualization',     icon: <BarChart3 size={14} />,   href: '/services/aiml/data-analysis' },
     { label: 'Custom Software as a Service',      icon: <Cpu size={14} />,         href: '/service/customsaaas' },
     { label: 'Core System Message',               icon: <Globe size={14} />,       href: '/service/coresystem' },
+    { label: 'API Integration',             icon: <Smartphone size={14} />,  href: '/service/apiintegration' },
+    { label: 'HITL Design',             icon: <Smartphone size={14} />,  href: '/service/hitldesign' },
+    { label: 'AI-Native Product Development',             icon: <Smartphone size={14} />,  href: '/service/ainativeproduct' },
   ],
   Works: [
     { label: 'Case Studies',  icon: <Briefcase size={14} />,    href: '/works/case-studies' },

@@ -21,6 +21,9 @@ import CaseStudy from './Works/casestudy';
 import Projects from './Works/projects';
 import { CustomSaaSPage } from './service/AIML/pages/CustomSaaSPage';
 import { CoreSystemsPage } from './service/AIML/pages/coresystemmessage';
+import { APIIntegrationPage } from './service/AIML/pages/apiintegration';
+import { HITLDesignPage } from './service/AIML/pages/Hitldesignpage';
+import { AINativeProductPage } from './service/AIML/pages/Ainativeproductpage ';
 
 export default function App() {
   useEffect(() => {
@@ -81,6 +84,9 @@ export default function App() {
             <Route path="/works/projects" element={<Projects />} />
             <Route path="/service/customsaaas" element={<CustomSaaSPage />} />
             <Route path="/service/coresystem" element={<CoreSystemsPage />} />
+            <Route path="/service/apiintegration" element={<APIIntegrationPage />} />
+            <Route path="/service/hitldesign" element={<HITLDesignPage />} />
+             <Route path="/service/ainativeproduct" element={<AINativeProductPage />} />
           </Routes>
         </main>
 
