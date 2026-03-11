@@ -1,24 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, Cpu, Globe, Smartphone, BarChart3, Briefcase, Lightbulb, GraduationCap, Users, MapPin } from 'lucide-react';
+import { Menu, X, ArrowRight, Cpu, BarChart3, Briefcase, Lightbulb, GraduationCap, Users, MapPin, Eye, Brain } from 'lucide-react';
 import ZunekoLogo from '../../assets/Zuneko.svg';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const DROPDOWNS: Record<string, { label: string; icon: React.ReactNode; href: string }[]> = {
   Services: [
-    { label: 'Artificial Intelligence',           icon: <Cpu size={14} />,        href: '/services/aiml/artificial-intelligence' },
-    { label: 'Gen AI',                            icon: <BarChart3 size={14} />,   href: '/services/aiml/genai' },
-    { label: 'ML Application Development',        icon: <Globe size={14} />,       href: '/services/aiml/ml' },
-    { label: 'Agentic AI Development',            icon: <Smartphone size={14} />,  href: '/services/aiml/agenticai' },
-    { label: 'Retrieval-Augmented Generation',    icon: <Cpu size={14} />,        href: '/services/aiml/rag' },
-    { label: 'Natural Language Processing',       icon: <Globe size={14} />,       href: '/services/aiml/nlp' },
-    { label: 'Data Analysis & Visualization',     icon: <BarChart3 size={14} />,   href: '/services/aiml/data-analysis' },
-    { label: 'Custom Software as a Service',      icon: <Cpu size={14} />,         href: '/service/customsaaas' },
-    { label: 'Core System Message',               icon: <Globe size={14} />,       href: '/service/coresystem' },
-    { label: 'API Integration',             icon: <Smartphone size={14} />,  href: '/service/apiintegration' },
-    { label: 'HITL Design',             icon: <Smartphone size={14} />,  href: '/service/hitldesign' },
-    { label: 'AI-Native Product Development',             icon: <Smartphone size={14} />,  href: '/service/ainativeproduct' },
+    { label: 'Strategic Digital Transformation', icon: <BarChart3 size={14} />,   href: '/services/strategic-digital-transformation' },
+    { label: 'Computer Vision Technology',        icon: <Eye size={14} />,        href: '/services/computer-vision-technology' },
+    { label: 'Applied Artificial Intelligence',   icon: <Brain size={14} />,     href: '/services/applied-ai' },
+    { label: 'Next-gen Enterprise Tech',          icon: <Cpu size={14} />,        href: '/services/enterprise-technology' },
+    // ... existing sub-services or categorized ones can follow if needed 
+    // but for now let's focus on these 4 as major ones
   ],
   Works: [
     { label: 'Case Studies',  icon: <Briefcase size={14} />,    href: '/works/case-studies' },
@@ -50,11 +44,11 @@ function DropdownItem({ item, delay }: { item: { label: string; icon: React.Reac
       style={{
         display: 'flex', alignItems: 'center', gap: '10px',
         padding: '9px 12px', borderRadius: '7px', textDecoration: 'none',
-        background: hovered ? 'rgba(0,232,122,0.07)' : 'transparent',
+        background: hovered ? 'var(--accent-glow)' : 'transparent',
         transition: 'background 0.2s', cursor: 'pointer',
       }}
     >
-      <span style={{ color: hovered ? 'var(--accent-primary)' : 'var(--accent-secondary)', transition: 'color 0.2s', display: 'flex' }}>
+      <span style={{ color: hovered ? 'var(--accent-primary)' : 'var(--text-secondary)', transition: 'color 0.2s', display: 'flex' }}>
         {item.icon}
       </span>
       <span style={{ fontFamily: 'var(--font-body)', fontSize: '13px', fontWeight: 500, color: hovered ? 'var(--accent-primary)' : 'var(--text-secondary)', transition: 'color 0.2s' }}>
@@ -120,10 +114,10 @@ function NavLink({ label }: { label: string }) {
               transition={{ duration: 0.2, ease: EASE }}
               style={{
                 position: 'absolute', top: 'calc(100% + 4px)', left: '0',
-                minWidth: '240px', background: 'var(--bg-deep)',
+                minWidth: '240px', background: 'var(--bg-void)',
                 border: '1px solid var(--border-subtle)', borderRadius: '10px',
                 padding: '8px', zIndex: 1001,
-                boxShadow: '0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,232,122,0.06)',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.08), 0 0 0 1px rgba(10,66,37,0.03)',
               }}
             >
               {DROPDOWNS[label].map((item, i) => (
@@ -159,8 +153,8 @@ export default function Navbar() {
       <motion.header
         animate={{
           backdropFilter: scrolled ? 'blur(20px)' : 'blur(0px)',
-          backgroundColor: scrolled ? 'rgba(0,0,0,0.90)' : 'rgba(0,0,0,0)',
-          borderBottomColor: scrolled ? 'rgba(34,197,94,0.08)' : 'transparent',
+          backgroundColor: scrolled ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0)',
+          borderBottomColor: scrolled ? 'var(--border-subtle)' : 'transparent',
         }}
         transition={{ duration: 0.35, ease: EASE }}
         style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000, borderBottomWidth: '1px', borderBottomStyle: 'solid' }}
@@ -169,7 +163,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}>
-            <div style={{ width: '34px', height: '34px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(34,197,94,0.15)', flexShrink: 0 }}>
+            <div style={{ width: '34px', height: '34px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-subtle)', flexShrink: 0 }}>
               <img src={ZunekoLogo} alt="Zuneko Labs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1px' }}>
@@ -192,24 +186,22 @@ export default function Navbar() {
                 display: 'none',
                 padding: '9px 22px',
                 borderRadius: '6px',
-                border: '1px solid rgba(34,197,94,0.35)',
+                border: '1px solid var(--accent-primary)',
                 background: 'transparent',
-                color: 'var(--text-primary)',
+                color: 'var(--accent-primary)',
                 fontFamily: 'var(--font-body)',
-                fontWeight: 500,
+                fontWeight: 600,
                 fontSize: '13px',
                 textDecoration: 'none',
-                transition: 'border-color 0.2s, background 0.2s, color 0.2s',
+                transition: 'all 0.2s ease',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.background = 'var(--accent-primary)';
-                e.currentTarget.style.color = '#000000';
-                e.currentTarget.style.borderColor = 'var(--accent-primary)';
+                e.currentTarget.style.color = '#ffffff';
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.color = 'var(--text-primary)';
-                e.currentTarget.style.borderColor = 'rgba(34,197,94,0.35)';
+                e.currentTarget.style.color = 'var(--accent-primary)';
               }}
             >
               Get Started
@@ -218,7 +210,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="lg:hidden"
-              style={{ background: 'none', border: '1px solid rgba(34,197,94,0.15)', borderRadius: '6px', padding: '8px', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              style={{ background: 'none', border: '1px solid var(--border-subtle)', borderRadius: '6px', padding: '8px', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
@@ -238,7 +230,7 @@ export default function Navbar() {
             transition={{ duration: 0.25 }}
             style={{
               position: 'fixed', inset: 0,
-              background: 'rgba(0,0,0,0.97)', backdropFilter: 'blur(16px)',
+              background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(16px)',
               zIndex: 999, display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center',
               gap: '6px', overflowY: 'auto', padding: '80px 24px 40px',
@@ -257,7 +249,7 @@ export default function Navbar() {
                   href={getHref(link)}
                   onClick={closeMobile}
                   style={{
-                    fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '28px',
+                    fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '28px',
                     color: 'var(--text-secondary)', textDecoration: 'none',
                     padding: '10px 28px', display: 'block', transition: 'color 0.2s',
                   }}
@@ -273,9 +265,9 @@ export default function Navbar() {
                     href="/services/aiml/artificial-intelligence"
                     onClick={closeMobile}
                     style={{
-                      fontFamily: 'var(--font-mono)', fontSize: '11px', letterSpacing: '0.1em',
+                      fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500,
                       color: 'var(--accent-primary)', textDecoration: 'none',
-                      display: 'block', marginTop: '-4px', opacity: 0.75,
+                      display: 'block', marginTop: '-4px', opacity: 0.85,
                     }}
                   >
                     → Artificial Intelligence
@@ -292,24 +284,18 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.35, delay: NAV_LINKS.length * 0.06 + 0.05 }}
               style={{
-                marginTop: '24px', padding: '9px 22px',
-                background: 'transparent', color: 'var(--text-primary)',
-                borderRadius: '6px', border: '1px solid rgba(34,197,94,0.35)',
-                fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '13px',
+                marginTop: '24px', padding: '12px 32px',
+                background: 'var(--accent-primary)', color: '#ffffff',
+                borderRadius: '6px', 
+                fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '14px',
                 textDecoration: 'none', textAlign: 'center',
-                transition: 'background 0.2s, color 0.2s, border-color 0.2s',
+                transition: 'opacity 0.2s ease',
               }}
               onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = 'var(--accent-primary)';
-                el.style.color = '#000000';
-                el.style.borderColor = 'var(--accent-primary)';
+                e.currentTarget.style.opacity = '0.9';
               }}
               onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = 'transparent';
-                el.style.color = 'var(--text-primary)';
-                el.style.borderColor = 'rgba(34,197,94,0.35)';
+                e.currentTarget.style.opacity = '1';
               }}
             >
               Get Started

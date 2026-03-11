@@ -19,8 +19,8 @@ function FeatureCard({ card, index }: { card: typeof FEATURE_CARDS[0]; index: nu
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.7, delay: index * 0.1, ease: EASE_SMOOTH }}
       whileHover={{
-        borderColor: 'rgba(34,197,94,0.45)',
-        boxShadow: '0 0 30px rgba(34,197,94,0.1)',
+        borderColor: 'rgba(10,66,37,0.45)',
+        boxShadow: '0 0 30px rgba(10,66,37,0.1)',
       }}
       style={{
         background: 'var(--bg-surface)',
@@ -39,8 +39,8 @@ function FeatureCard({ card, index }: { card: typeof FEATURE_CARDS[0]; index: nu
         right: '-10px',
         width: '40px',
         height: '40px',
-        border: '1px solid rgba(34,197,94,0.1)',
-        background: 'rgba(34,197,94,0.05)',
+        border: '1px solid rgba(10,66,37,0.1)',
+        background: 'rgba(10,66,37,0.05)',
         transform: 'rotate(45deg)',
       }} />
 
@@ -62,7 +62,7 @@ export function About() {
     <section id="about" style={{
       background: 'var(--bg-deep)',
       padding: '120px 0',
-      backgroundImage: 'repeating-linear-gradient(45deg, rgba(34,197,94,0.03) 0px, rgba(34,197,94,0.03) 1px, transparent 1px, transparent 40px)',
+      backgroundImage: 'repeating-linear-gradient(45deg, rgba(10,66,37,0.03) 0px, rgba(10,66,37,0.03) 1px, transparent 1px, transparent 40px)',
     }}>
       <div style={{
         maxWidth: '1152px',
@@ -91,7 +91,7 @@ export function About() {
             fontFamily: 'var(--font-display)',
             fontWeight: 700,
             fontSize: '220px',
-            color: 'rgba(34,197,94,0.04)',
+            color: 'rgba(10,66,37,0.04)',
             lineHeight: 1,
             pointerEvents: 'none',
             userSelect: 'none',
@@ -128,7 +128,7 @@ export function About() {
                   border: '1px solid var(--border-subtle)',
                   padding: '6px 14px',
                   borderRadius: '100px',
-                  background: 'rgba(34,197,94,0.04)',
+                  background: 'rgba(10,66,37,0.04)',
                 }}>{fact}</span>
               ))}
             </div>

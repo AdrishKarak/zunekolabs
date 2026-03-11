@@ -1,57 +1,45 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { Zap, Eye, Brain, Database, Code2, TrendingUp, ArrowUpRight } from 'lucide-react';
+import { Eye, Brain, Cpu, TrendingUp, ArrowUpRight } from 'lucide-react';
 
 const EASE_SMOOTH = [0.16, 1, 0.3, 1] as const;
 
 const SERVICES = [
   {
-    icon: Zap,
-    title: 'AI Automation',
-    desc: 'End-to-end workflow automation powered by custom AI models and agent systems. Reduce manual overhead by 80%.',
-    stat: '80% overhead reduction',
-    tag: 'Core Service',
-    color: '#4ade80',
+    icon: TrendingUp,
+    title: 'Strategic Digital Transformation',
+    desc: 'Re-engineering core operations for an AI-native future. Eliminating tech debt and optimizing workflows.',
+    stat: '90% process efficiency',
+    tag: 'Strategy',
+    color: '#0a4225',
+    href: '/services/strategic-digital-transformation',
   },
   {
     icon: Eye,
-    title: 'Computer Vision',
-    desc: 'Real-time visual intelligence: defect detection, OCR, object tracking, and video analytics at production scale.',
-    stat: '99.2% accuracy',
+    title: 'Computer Vision Technology',
+    desc: 'Turning visual data into actionable intelligence with custom-trained vision models for industry.',
+    stat: '99.8% model accuracy',
     tag: 'Vision AI',
-    color: '#4ade80',
+    color: '#0a4225',
+    href: '/services/computer-vision-technology',
   },
   {
     icon: Brain,
-    title: 'LLM Applications',
-    desc: 'Custom GPT-powered tools, RAG systems, chatbots, and document intelligence pipelines trained on your data.',
-    stat: '12 FTE hrs/day saved',
-    tag: 'Language AI',
-    color: '#c9a84c',
+    title: 'Applied Artificial Intelligence',
+    desc: 'Resilient, AI-native systems solving real-world operational problems at scale with LLMs and Agents.',
+    stat: '100% data privacy',
+    tag: 'Intelligence',
+    color: '#0a4225',
+    href: '/services/applied-ai',
   },
   {
-    icon: Database,
-    title: 'Frappe / ERPNext',
-    desc: 'Full-cycle ERP implementation, customization, and migration for enterprise-scale operations.',
-    stat: '10,000+ users onboarded',
-    tag: 'Enterprise',
-    color: '#22c55e',
-  },
-  {
-    icon: Code2,
-    title: 'Custom Software',
-    desc: 'Bespoke Python/React applications engineered for complex enterprise workflows and edge cases.',
-    stat: 'Built to scale',
-    tag: 'Development',
-    color: '#4ade80',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Digital Transformation',
-    desc: 'Strategic tech consulting to modernize legacy systems and unlock operational efficiency at every layer.',
-    stat: '3x faster delivery',
-    tag: 'Consulting',
-    color: '#c9a84c',
+    icon: Cpu,
+    title: 'Next-gen Enterprise Tech',
+    desc: 'Building the backbone of modern firms with scalable, secure, and high-velocity infrastructure.',
+    stat: '99.9% uptime',
+    tag: 'Infrastructure',
+    color: '#0a4225',
+    href: '/services/enterprise-technology',
   },
 ] as const;
 
@@ -125,14 +113,15 @@ function StackCard({
         borderRadius: '16px',
         overflow: 'hidden',
         background: 'var(--bg-surface)',
-        border: `1px solid ${hovered ? service.color + '55' : 'rgba(34,197,94,0.1)'}`,
+        border: `1px solid ${hovered ? service.color + '55' : 'rgba(10,66,37,0.1)'}`,
         boxShadow: hovered
-          ? `0 24px 60px rgba(0,0,0,0.5), 0 0 40px ${service.color}18`
-          : '0 8px 32px rgba(0,0,0,0.3)',
+          ? `0 24px 60px rgba(0,0,0,0.12), 0 0 40px ${service.color}08`
+          : '0 8px 32px rgba(0,0,0,0.05)',
         transition: 'border-color 0.35s, box-shadow 0.35s',
         cursor: 'pointer',
         position: 'relative',
       }}>
+        <a href={service.href} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
 
         {/* Shimmer */}
         <AnimatePresence>
@@ -183,7 +172,7 @@ function StackCard({
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
             <motion.div
               animate={{
-                background: hovered ? `${service.color}22` : 'rgba(34,197,94,0.08)',
+                background: hovered ? `${service.color}22` : 'rgba(10,66,37,0.08)',
                 boxShadow: hovered ? `0 0 20px ${service.color}33` : 'none',
               }}
               transition={{ duration: 0.3 }}
@@ -272,6 +261,7 @@ function StackCard({
             </div>
           </div>
         </div>
+        </a>
       </div>
     </motion.div>
   );
@@ -354,7 +344,7 @@ export function Works() {
                   <polygon
                     key={`${row}-${col}`}
                     points={`${20+col*40},${10+row*34} ${40+col*40},${10+row*34} ${50+col*40},${27+row*34} ${40+col*40},${44+row*34} ${20+col*40},${44+row*34} ${10+col*40},${27+row*34}`}
-                    fill="none" stroke="#4ade80" strokeWidth="1"
+                    fill="none" stroke="#0a4225" strokeWidth="1"
                   />
                 ))
               )}
@@ -371,7 +361,7 @@ export function Works() {
             </span>
             <div style={{
               flex: 1, maxWidth: '200px', height: '2px',
-              background: 'rgba(34,197,94,0.1)', borderRadius: '2px', overflow: 'hidden',
+              background: 'rgba(10,66,37,0.1)', borderRadius: '2px', overflow: 'hidden',
             }}>
               <motion.div style={{
                 height: '100%',

@@ -54,8 +54,8 @@ export default function PageLoadOverlay({ onComplete }: PageLoadOverlayProps) {
               height: '64px',
               borderRadius: '14px',
               overflow: 'hidden',
-              boxShadow: '0 0 40px rgba(34,197,94,0.3)',
-              border: '1px solid rgba(34,197,94,0.3)',
+              boxShadow: '0 0 40px rgba(10,66,37,0.3)',
+              border: '1px solid rgba(10,66,37,0.3)',
             }}>
               <img src={ZunekoLogo} alt="ZunekoLabs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>

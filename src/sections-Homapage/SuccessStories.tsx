@@ -10,14 +10,14 @@ const TESTIMONIALS = [
     name: 'Rajesh Mehta',
     role: 'VP Operations',
     company: 'RetailForce India',
-    color: '#22c55e',
+    color: '#0a4225',
   },
   {
     quote: "The Frappe ERP migration they executed for us was flawless. 10,000 users onboarded with zero downtime. I've worked with a dozen tech firms—Zuneko is on another level.",
     name: 'Priya Sharma',
     role: 'CTO',
     company: 'Nexgen Manufacturing',
-    color: '#4ade80',
+    color: '#0a4225',
   },
   {
     quote: "Their LLM-powered document processing platform cut our contract review time from 3 days to 4 hours. The ROI was visible within the first billing cycle.",
@@ -31,7 +31,7 @@ const TESTIMONIALS = [
     name: 'Sunit Desai',
     role: 'Managing Director',
     company: 'PuneCore Industries',
-    color: '#22c55e',
+    color: '#0a4225',
   },
 ];
 
@@ -68,7 +68,7 @@ export function SuccessStories() {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(34,197,94,0.04) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(10,66,37,0.04) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 

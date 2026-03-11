@@ -49,7 +49,7 @@ function ParticleCanvas() {
         if (p.y < 0) p.y = H;  if (p.y > H) p.y = 0;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(34,197,94,${p.opacity})`;
+        ctx.fillStyle = `rgba(10,66,37,${p.opacity * 0.15})`;
         ctx.fill();
         for (let j = i + 1; j < particles.length; j++) {
           const q = particles[j];
@@ -58,7 +58,7 @@ function ParticleCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(q.x, q.y);
-            ctx.strokeStyle = `rgba(34,197,94,${0.06 * (1 - d / 130)})`;
+            ctx.strokeStyle = `rgba(10,66,37,${0.03 * (1 - d / 130)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -109,14 +109,29 @@ function RotatingWord() {
 
 export default function HeroSection() {
   return (
-    <section id="hero" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', background: 'var(--bg-void)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <section id="hero" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      
+      {/* Forced White Background */}
+      <div style={{ position: 'absolute', inset: 0, background: '#ffffff', zIndex: 0 }} />
 
-      {/* Video */}
-      <video autoPlay muted loop playsInline style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }} src={heroVideo} />
+      {/* Video with Low Opacity to ensure light theme */}
+      <video 
+        autoPlay muted loop playsInline 
+        style={{ 
+          position: 'absolute', 
+          inset: 0, 
+          width: '100%', 
+          height: '100%', 
+          objectFit: 'cover', 
+          zIndex: 1,
+          opacity: 0.15,
+          filter: 'brightness(1.2) grayscale(0.2)'
+        }} 
+        src={heroVideo} 
+      />
 
-      {/* Overlays */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to bottom, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.60) 50%, rgba(0,0,0,0.94) 100%)' }} />
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'radial-gradient(ellipse 70% 55% at 35% 50%, rgba(34,197,94,0.04) 0%, transparent 70%)' }} />
+      {/* Content Protection Overlay */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'rgba(255,255,255,0.5)' }} />
 
       {/* Particles */}
       <ParticleCanvas />
@@ -129,7 +144,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(34,197,94,0.2)', background: 'rgba(34,197,94,0.05)', padding: '7px 18px', borderRadius: '4px', marginBottom: '36px' }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(10,66,37,0.2)', background: 'rgba(10,66,37,0.05)', padding: '7px 18px', borderRadius: '4px', marginBottom: '36px' }}
         >
           <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500, color: 'var(--accent-primary)', letterSpacing: '0.05em' }}>
             Enterprise AI & Automation
@@ -154,7 +169,7 @@ export default function HeroSection() {
           >
             Dominate.
             <svg style={{ position: 'absolute', bottom: '-6px', left: 0, width: '100%', height: '10px' }} viewBox="0 0 400 10" preserveAspectRatio="none">
-              <motion.path d="M 0 7 Q 100 2 200 7 Q 300 12 400 7" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round"
+              <motion.path d="M 0 7 Q 100 2 200 7 Q 300 12 400 7" fill="none" stroke="var(--accent-primary)" strokeWidth="2" strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 1.2, delay: 1.1, ease: EASE }} />
             </svg>
           </motion.div>
@@ -187,7 +202,7 @@ export default function HeroSection() {
               padding: '13px 30px',
               borderRadius: '6px',
               background: 'var(--accent-primary)',
-              color: '#000000',
+              color: '#ffffff',
               fontFamily: 'var(--font-body)',
               fontWeight: 600,
               fontSize: '14px',
@@ -195,7 +210,7 @@ export default function HeroSection() {
               transition: 'opacity 0.2s, transform 0.2s, box-shadow 0.2s',
               letterSpacing: '-0.01em',
             }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.88'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(34,197,94,0.22)'; }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(10,66,37,0.15)'; }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
           >
             Start Your Transformation
@@ -206,17 +221,17 @@ export default function HeroSection() {
             style={{
               padding: '13px 30px',
               borderRadius: '6px',
-              border: '1px solid rgba(241,245,242,0.18)',
+              border: '1px solid var(--accent-primary)',
               background: 'transparent',
-              color: 'var(--text-primary)',
+              color: 'var(--accent-primary)',
               fontFamily: 'var(--font-body)',
-              fontWeight: 500,
+              fontWeight: 600,
               fontSize: '14px',
               textDecoration: 'none',
-              transition: 'border-color 0.2s, background 0.2s',
+              transition: 'all 0.2s ease',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(34,197,94,0.35)'; e.currentTarget.style.background = 'rgba(34,197,94,0.04)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(241,245,242,0.18)'; e.currentTarget.style.background = 'transparent'; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent-glow)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
           >
             Explore Our Work
           </a>

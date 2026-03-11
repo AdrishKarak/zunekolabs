@@ -25,6 +25,12 @@ import { APIIntegrationPage } from './service/AIML/pages/apiintegration';
 import { HITLDesignPage } from './service/AIML/pages/Hitldesignpage';
 import { AINativeProductPage } from './service/AIML/pages/Ainativeproductpage ';
 
+// Flagship Service Pages
+import StrategicDigitalTransformation from './pages/services/StrategicDigitalTransformation';
+import ComputerVisionTechnology from './pages/services/ComputerVisionTechnology';
+import AppliedAI from './pages/services/AppliedAI';
+import EnterpriseTechnology from './pages/services/EnterpriseTechnology';
+
 export default function App() {
   useEffect(() => {
     let cleanup: (() => void) | undefined;
@@ -87,6 +93,12 @@ export default function App() {
             <Route path="/service/apiintegration" element={<APIIntegrationPage />} />
             <Route path="/service/hitldesign" element={<HITLDesignPage />} />
              <Route path="/service/ainativeproduct" element={<AINativeProductPage />} />
+
+             {/* Flagship Services */}
+             <Route path="/services/strategic-digital-transformation" element={<StrategicDigitalTransformation />} />
+             <Route path="/services/computer-vision-technology" element={<ComputerVisionTechnology />} />
+             <Route path="/services/applied-ai" element={<AppliedAI />} />
+             <Route path="/services/enterprise-technology" element={<EnterpriseTechnology />} />
           </Routes>
         </main>
 

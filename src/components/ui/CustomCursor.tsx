@@ -18,8 +18,8 @@ export default function CustomCursor() {
       if (cursorRef.current) {
         cursorRef.current.style.width = '40px';
         cursorRef.current.style.height = '40px';
-        cursorRef.current.style.background = 'rgba(34,197,94,0.1)';
-        cursorRef.current.style.borderColor = 'rgba(34,197,94,0.6)';
+        cursorRef.current.style.background = 'rgba(10,66,37,0.1)';
+        cursorRef.current.style.borderColor = 'rgba(10,66,37,0.6)';
       }
     };
 

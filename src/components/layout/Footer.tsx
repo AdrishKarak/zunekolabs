@@ -58,7 +58,7 @@ export default function Footer() {
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
             <motion.a
               href="#contact"
-              whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(34,197,94,0.3)' }}
+              whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(10,66,37,0.3)' }}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -102,7 +102,7 @@ export default function Footer() {
           {/* Logo + about */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(34,197,94,0.2)' }}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(10,66,37,0.2)' }}>
                 <img src={ZunekoLogo} alt="ZunekoLabs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div>
