@@ -255,53 +255,7 @@ function MediumCard({ p, index }: { p: typeof PROJECTS[0]; index: number }) {
 }
 
 /* ── FLIP card (small) ── */
-function FlipCard({ p, index }: { p: typeof PROJECTS[0]; index: number }) {
-  const [flipped, setFlipped] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
 
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 42 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.68, delay: index * 0.1, ease: EASE }}
-      style={{ perspective: 1200, cursor: 'pointer' }}
-      onClick={() => setFlipped(f => !f)}
-    >
-      <motion.div
-        animate={{ rotateY: flipped ? 180 : 0 }}
-        transition={{ duration: 0.58, ease: EASE }}
-        style={{ position: 'relative', transformStyle: 'preserve-3d', minHeight: 320 }}
-      >
-        {/* Front */}
-        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', borderRadius: 20, overflow: 'hidden', background: 'var(--bg-surface)', border: '1px solid rgba(255,255,255,0.05)', padding: 26, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, marginBottom: 20, opacity: 0.5 }}/>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', color: p.color, border: `1px solid ${p.color}28`, padding: '2px 9px', borderRadius: 100, display: 'inline-block', marginBottom: 16, alignSelf: 'flex-start' }}>{p.category}</span>
-          <div style={{ marginBottom: 14 }}>{p.svg}</div>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, color: 'var(--text-primary)', margin: '0 0 4px', lineHeight: 1.2 }}>{p.title}</h3>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-tertiary)', margin: '0 0 16px' }}>{p.subtitle}</p>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 'auto' }}>
-            {p.stats.map((s, i) => <StatPill key={i} val={s.val} label={s.label} color={p.color} delay={0}/>)}
-          </div>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: p.color, opacity: 0.45, margin: '14px 0 0', letterSpacing: '0.1em' }}>TAP TO READ MORE →</p>
-        </div>
-
-        {/* Back */}
-        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', borderRadius: 20, overflow: 'hidden', background: `linear-gradient(140deg,var(--bg-surface),${p.color}0a)`, border: `1px solid ${p.color}28`, padding: 26, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ height: 2, background: `linear-gradient(90deg,${p.color},transparent)`, marginBottom: 16, opacity: 0.7 }}/>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, letterSpacing: '0.16em', color: p.color, marginBottom: 10, display: 'block' }}>{p.category}</span>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 17, color: 'var(--text-primary)', margin: '0 0 12px', lineHeight: 1.2 }}>{p.title}</h3>
-          <p style={{ fontFamily: 'var(--font-body)', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.72, margin: '0 0 14px', flex: 1 }}>{p.desc}</p>
-          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 14 }}>
-            {p.tags.map((t, i) => <Tag key={t} label={t} color={p.color} delay={0}/>)}
-          </div>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: p.color, opacity: 0.45, margin: 0, letterSpacing: '0.1em' }}>TAP TO FLIP BACK ←</p>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
 
 /* ── PRANISHAKTI — redesigned as full-width horizontal showcase ── */
 function PranishaktiCard({ p }: { p: typeof PROJECTS[0] }) {
