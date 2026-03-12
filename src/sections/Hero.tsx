@@ -124,144 +124,148 @@ export default function HeroSection() {
           height: '100%', 
           objectFit: 'cover', 
           zIndex: 1,
-          opacity: 0.35,
-          filter: 'brightness(0.7) contrast(1.1) grayscale(0.2)'
+          opacity: 0.45,
+          filter: 'brightness(0.6) contrast(1.1) grayscale(0.15)'
         }} 
         src={heroVideo} 
       />
 
-      {/* Clean Dark Green Protective Overlay */}
+      {/* Protective Overlay - Darker sides, lighter center for video visibility */}
       <div style={{ 
         position: 'absolute', 
         inset: 0, 
         zIndex: 2, 
-        background: 'linear-gradient(to bottom, rgba(10,66,37,0.85) 0%, rgba(10,66,37,0.4) 50%, rgba(10,66,37,0.9) 100%)' 
+        background: 'linear-gradient(90deg, rgba(10,66,37,0.88) 0%, rgba(10,66,37,0.35) 35%, rgba(10,66,37,0.35) 65%, rgba(10,66,37,0.88) 100%)' 
       }} />
-
 
       {/* Particles */}
       <ParticleCanvas />
 
-      {/* Content */}
-      <div style={{ position: 'relative', zIndex: 3, maxWidth: '960px', margin: '0 auto', padding: '0 32px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', paddingTop: '14vh', paddingBottom: '100px', width: '100%' }}>
+      {/* Two-Column Content Layout */}
+      <div style={{ position: 'relative', zIndex: 3, width: '100%', height: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', padding: '60px 40px', gap: '60px', maxWidth: '1400px', margin: '0 auto' }}>
+        
+        {/* Left Column - Main Content */}
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>
 
-        {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(255,255,255,0.4)', background: 'rgba(255,255,255,0.1)', padding: '7px 18px', borderRadius: '4px', marginBottom: '36px' }}
-        >
-          <span style={{ fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 500, color: '#ffffff', letterSpacing: '0.05em' }}>
-            Enterprise AI & Automation
-          </span>
-        </motion.div>
-
-        {/* Headline */}
-        <div style={{ marginBottom: '28px' }}>
-          <motion.div
+          {/* Headline */}
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.42, ease: EASE }}
-            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 7.5vw, 104px)', color: '#ffffffff', lineHeight: 0.96, letterSpacing: '-0.01em' }}
+            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 6vw, 76px)', color: '#ffffff', lineHeight: 1.15, letterSpacing: '-0.015em', marginBottom: '28px' }}
           >
-            Automate. Transform.
+            Intelligence that Works
+          </motion.h1>
+
+          {/* Rotating subtitle - ultra-clean */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55, ease: EASE }}
+            style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(16px, 2vw, 22px)', color: '#00ff88', marginBottom: '48px', fontWeight: 500, letterSpacing: '-0.01em' }}
+          >
+            <RotatingWord />
           </motion.div>
+
+          {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.56, ease: EASE }}
-            style={{ position: 'relative', display: 'inline-block', fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(52px, 7.5vw, 104px)', color: '#ffffff', fontStyle: 'italic', lineHeight: 0.96, letterSpacing: '-0.01em' }}
+            transition={{ duration: 0.6, delay: 0.75, ease: EASE }}
+            style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '44px' }}
           >
-            Dominate.
-            <svg style={{ position: 'absolute', bottom: '-6px', left: 0, width: '100%', height: '10px' }} viewBox="0 0 400 10" preserveAspectRatio="none">
-              <motion.path d="M 0 7 Q 100 2 200 7 Q 300 12 400 7" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round"
-                initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 1.2, delay: 1.1, ease: EASE }} />
-            </svg>
+            {/* Primary */}
+            <a
+              href="#contact"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 28px',
+                borderRadius: '6px',
+                background: '#ffffff',
+                color: 'var(--accent-primary)',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 600,
+                fontSize: '13px',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
+                letterSpacing: '-0.01em',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.25)'; }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+            >
+              Get Started
+            </a>
+            
+            {/* Secondary */}
+            <a
+              href="#works"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 28px',
+                borderRadius: '6px',
+                border: '1.5px solid rgba(255,255,255,0.35)',
+                background: 'transparent',
+                color: '#ffffff',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 600,
+                fontSize: '13px',
+                textDecoration: 'none',
+                transition: 'all 0.2s ease',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.35)'; }}
+            >
+              View Work
+            </a>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.95, ease: EASE }}
+            style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.15)' }}
+          >
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', display: 'inline-block' }} />
+            <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '11px', color: 'rgba(255,255,255,0.65)', letterSpacing: '0.02em' }}>
+              15+ Clients · 2024
+            </span>
           </motion.div>
         </div>
 
-        {/* Rotating subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.85, ease: EASE }}
-          style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(15px, 1.8vw, 19px)', color: 'rgba(255,255,255,0.8)', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', justifyContent: 'center', fontWeight: 400 }}
-        >
-          We engineer&nbsp;—&nbsp;<RotatingWord />
-        </motion.p>
-
-        {/* CTAs */}
+        {/* Right Column - Visual Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.05, ease: EASE }}
-          style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '36px' }}
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '24px', justifyContent: 'center' }}
         >
-          {/* Primary */}
-          <a
-            href="#contact"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '13px 30px',
-              borderRadius: '6px',
-              background: '#ffffff',
-              color: 'var(--accent-primary)',
-              fontFamily: 'var(--font-body)',
-              fontWeight: 600,
-              fontSize: '14px',
-              textDecoration: 'none',
-              transition: 'opacity 0.2s, transform 0.2s, box-shadow 0.2s',
-              letterSpacing: '-0.01em',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 28px rgba(0,0,0,0.2)'; }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
-          >
-            Start Your Transformation
-          </a>
-          
-          {/* Secondary */}
-          <a
-            href="#works"
-            style={{
-              padding: '13px 30px',
-              borderRadius: '6px',
-              border: '1px solid rgba(255,255,255,0.4)',
-              background: 'transparent',
-              color: '#ffffff',
-              fontFamily: 'var(--font-body)',
-              fontWeight: 600,
-              fontSize: '14px',
-              textDecoration: 'none',
-              transition: 'all 0.2s ease',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            Explore Our Work
-          </a>
-        </motion.div>
+          {/* Stat Cards */}
+          <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '24px', backdropFilter: 'blur(10px)' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>15+</div>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>Enterprise Clients</div>
+          </div>
 
-        {/* Trust line */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.25, ease: EASE }}
-          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-        >
-          <span className="pulse-dot" style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ffffff', display: 'inline-block' }} />
-          <span style={{ fontFamily: 'var(--font-body)', fontWeight: 400, fontSize: '12px', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.03em' }}>
-            Trusted by 15+ enterprises · Pune & Kolkata · Est. 2024
-          </span>
+          <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '24px', backdropFilter: 'blur(10px)' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>2024</div>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>Founded in Pune</div>
+          </div>
+
+          <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '24px', backdropFilter: 'blur(10px)' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>2</div>
+            <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>Offices</div>
+          </div>
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <div style={{ position: 'absolute', bottom: '32px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 3 }}>
-        <span style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em' }}>scroll</span>
-        <ChevronDown className="bounce-y" size={16} style={{ color: 'rgba(255,255,255,0.5)' }} />
+      <div style={{ position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 3 }}>
+        <span style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.1em' }}>SCROLL</span>
+        <ChevronDown size={16} style={{ color: 'rgba(255,255,255,0.45)', animation: 'bounce 2s infinite' }} />
       </div>
     </section>
   );
