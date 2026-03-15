@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { BrainCircuit, MessageSquare, Bot, Database, Sparkles, ArrowRight } from 'lucide-react';
 import Magnetic from '../../components/ui/Magnetic';

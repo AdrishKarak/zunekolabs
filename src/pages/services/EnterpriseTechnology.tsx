@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Network, Server, ShieldCheck, Cpu, Zap, ArrowRight } from 'lucide-react';
 
@@ -138,9 +137,8 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
 }
 
 export default function EnterpriseTechnology() {
-  const containerRef = useRef<HTMLDivElement>(null);
   return (
-    <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
       {/* Brutalist / Industrial Header */}
       <section style={{ 
         padding: 'clamp(120px, 20vh, 200px) 0 clamp(80px, 12vh, 140px)', 

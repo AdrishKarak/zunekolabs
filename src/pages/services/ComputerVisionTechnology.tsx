@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, Shield, Package, FileText, Share2, CheckCircle2, ArrowRight } from 'lucide-react';
 import Magnetic from '../../components/ui/Magnetic';
@@ -136,9 +135,8 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
 }
 
 export default function ComputerVisionTechnology() {
-  const containerRef = useRef<HTMLDivElement>(null);
   return (
-    <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
       {/* Hero */}
       <section style={{ 
         padding: 'clamp(80px, 15vh, 160px) 0 clamp(60px, 10vh, 100px)', 
