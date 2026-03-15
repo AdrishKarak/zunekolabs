@@ -117,7 +117,7 @@ export default function AppliedAI() {
     <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh', paddingBottom: '120px' }}>
       {/* Immersive Header */}
       <section style={{ 
-        padding: '180px 0 120px', 
+        padding: 'clamp(100px, 18vh, 180px) 0 100px', 
         background: 'radial-gradient(circle at top right, var(--accent-glow) 0%, transparent 60%)',
         position: 'relative'
       }}>
@@ -172,8 +172,8 @@ export default function AppliedAI() {
 
       {/* Main Grid */}
       <section style={{ position: 'relative' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '24px' }}>
             {SERVICES.map((service, i) => (
               <ServiceCard key={service.title} service={service} index={i} />
             ))}
@@ -187,7 +187,7 @@ export default function AppliedAI() {
           <div style={{ 
             background: 'var(--bg-deep)', 
             borderRadius: '40px', 
-            padding: '80px', 
+            padding: 'clamp(32px, 8vw, 80px)', 
             border: '1px solid var(--border-subtle)',
             position: 'relative',
             overflow: 'hidden'

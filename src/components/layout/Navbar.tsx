@@ -9,6 +9,7 @@ import {
 
 import ZunekoLogo from '../../assets/Zuneko.svg';
 import { ServicesMegaDropdown } from './dropdown';
+import Magnetic from '../ui/Magnetic';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -416,14 +417,18 @@ export default function Navbar() {
           </a>
 
           {/* Desktop nav — hidden on mobile via .nb-desktop-nav CSS class */}
-          <nav className="nb-desktop-nav" style={{ gap: '36px', alignItems: 'center' }}>
+          <nav className="nb-desktop-nav" style={{ gap: '30px', alignItems: 'center' }}>
             {NAV_LINKS.map(link =>
               link === 'Services' ? (
                 <div key={link} onMouseEnter={openServices} onMouseLeave={closeServices}>
-                  <NavLink label={link} scrolled={scrolled} isHome={isHome} />
+                  <Magnetic>
+                    <NavLink label={link} scrolled={scrolled} isHome={isHome} />
+                  </Magnetic>
                 </div>
               ) : (
-                <NavLink key={link} label={link} scrolled={scrolled} isHome={isHome} />
+                <Magnetic key={link}>
+                  <NavLink label={link} scrolled={scrolled} isHome={isHome} />
+                </Magnetic>
               )
             )}
           </nav>
@@ -431,28 +436,30 @@ export default function Navbar() {
           {/* Right side */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             {/* Desktop CTA — hidden on mobile */}
-            <a
-              href="#contact"
-              className="nb-cta-btn"
-              style={{
-                padding: '9px 22px', borderRadius: '6px',
-                border: isLight ? '1px solid var(--accent-primary)' : '1px solid #ffffff',
-                background: 'transparent',
-                color: isLight ? 'var(--accent-primary)' : '#ffffff',
-                fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '13px',
-                textDecoration: 'none', transition: 'all 0.3s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = isLight ? 'var(--accent-primary)' : '#ffffff';
-                e.currentTarget.style.color      = isLight ? '#ffffff' : 'var(--accent-primary)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.color      = isLight ? 'var(--accent-primary)' : '#ffffff';
-              }}
-            >
-              Get Started
-            </a>
+            <Magnetic>
+              <a
+                href="#contact"
+                className="nb-cta-btn"
+                style={{
+                  padding: '9px 22px', borderRadius: '6px',
+                  border: isLight ? '1px solid var(--accent-primary)' : '1px solid #ffffff',
+                  background: 'transparent',
+                  color: isLight ? 'var(--accent-primary)' : '#ffffff',
+                  fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '13px',
+                  textDecoration: 'none', transition: 'background 0.3s, color 0.3s, border-color 0.3s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = isLight ? 'var(--accent-primary)' : '#ffffff';
+                  e.currentTarget.style.color      = isLight ? '#ffffff' : 'var(--accent-primary)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color      = isLight ? 'var(--accent-primary)' : '#ffffff';
+                }}
+              >
+                Get Started
+              </a>
+            </Magnetic>
 
             {/* Hamburger — only on mobile */}
             <button

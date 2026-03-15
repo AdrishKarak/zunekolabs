@@ -87,39 +87,33 @@ function ParticleCanvas() {
 /* ─── Rotating word ───────────────────────────────────────────── */
 function RotatingWord() {
   const [idx, setIdx] = useState(0);
-  const [vis, setVis]  = useState(true);
 
   useEffect(() => {
     const t = setInterval(() => {
-      setVis(false);
-      setTimeout(() => {
-        setIdx(i => (i + 1) % ROTATING_WORDS.length);
-        setVis(true);
-      }, 320);
-    }, 2600);
+      setIdx(i => (i + 1) % ROTATING_WORDS.length);
+    }, 3000);
     return () => clearInterval(t);
   }, []);
 
   return (
-    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom' }}>
+    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', height: '1.2em', position: 'relative', width: '100%' }}>
       <AnimatePresence mode="wait">
-        {vis && (
-          <motion.span
-            key={ROTATING_WORDS[idx]}
-            initial={{ y: '100%', opacity: 0 }}
-            animate={{ y: 0,      opacity: 1 }}
-            exit={{ y: '-100%',   opacity: 0 }}
-            transition={{ duration: 0.32, ease: EASE_SMOOTH }}
-            style={{
-              display: 'inline-block',
-              color: G_HI,
-              fontFamily: 'var(--font-heading)',
-              fontWeight: 600,
-            }}
-          >
-            {ROTATING_WORDS[idx]}
-          </motion.span>
-        )}
+        <motion.span
+          key={ROTATING_WORDS[idx]}
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: 0,      opacity: 1 }}
+          exit={{ y: '-100%',   opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            display: 'block',
+            color: G_HI,
+            fontFamily: 'var(--font-heading)',
+            fontWeight: 600,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {ROTATING_WORDS[idx]}
+        </motion.span>
       </AnimatePresence>
     </span>
   );
@@ -165,21 +159,21 @@ export default function HeroSection() {
 
       <ParticleCanvas />
 
-      {/* ── CONTENT — single left-anchored block ─────────────────── */}
+      {/* ── CONTENT ── */}
       <div style={{
         position: 'relative', zIndex: 3,
         flex: 1,
         display: 'flex',
         alignItems: 'center',
         maxWidth: 1280, width: '100%', margin: '0 auto',
-        padding: 'clamp(80px,10vh,120px) 64px 80px',
+        padding: 'clamp(80px, 12vh, 140px) clamp(20px, 5vw, 64px) 80px',
       }}>
 
-        <div style={{
-          maxWidth: 580,
+        <div className="hero-headline" style={{
+          flex: 1,
+          maxWidth: 640,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'flex-start',
         }}>
 
           {/* Eyebrow */}
@@ -246,10 +240,10 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.72, ease: EASE_SMOOTH }}
-            style={{ marginBottom: 28 }}
+            style={{ marginBottom: 28, width: '100%' }}
           >
             <p style={{
-              fontFamily: 'var(--font-mono)', fontSize: 9,
+              fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 2vw, 9px)',
               letterSpacing: '0.2em', color: G_LO, opacity: 0.45,
               margin: '0 0 8px',
             }}>
@@ -284,6 +278,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.58, delay: 1.02, ease: EASE_SMOOTH }}
+            className="hero-ctas"
             style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}
           >
             {/* Primary */}

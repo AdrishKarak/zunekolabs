@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Eye, Brain, Cpu, TrendingUp, ArrowUpRight } from 'lucide-react';
 
@@ -76,11 +76,13 @@ function StackCard({
   index,
   total,
   scrollYProgress,
+  isMobile,
 }: {
   service: Service;
   index: number;
   total: number;
   scrollYProgress: ReturnType<typeof useScroll>['scrollYProgress'];
+  isMobile: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const Icon = service.icon;
@@ -165,8 +167,9 @@ function StackCard({
 
         {/* Content row */}
         <div style={{
-          padding: '28px 32px', position: 'relative', zIndex: 2,
-          display: 'flex', gap: '28px', alignItems: 'flex-start',
+          padding: isMobile ? '24px' : '28px 32px', position: 'relative', zIndex: 2,
+          display: 'flex', gap: isMobile ? '16px' : '28px', alignItems: 'flex-start',
+          flexDirection: isMobile ? 'column' : 'row',
         }}>
           {/* Icon + number */}
           <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
@@ -197,7 +200,7 @@ function StackCard({
           </div>
 
           {/* Text */}
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px', flexWrap: 'wrap' }}>
               <h3 style={{
                 fontFamily: 'var(--font-heading)', fontWeight: 700,
@@ -278,7 +281,16 @@ export function Works() {
   });
 
   // Card height (row layout ~160px) + stacking offsets
-  const CARD_H = 160;
+  // On mobile we need more height to avoid overlap
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 1024);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const CARD_H = isMobile ? 320 : 160;
 
   return (
     <section
@@ -396,6 +408,7 @@ export function Works() {
                 index={i}
                 total={total}
                 scrollYProgress={scrollYProgress}
+                isMobile={isMobile}
               />
             ))}
           </div>

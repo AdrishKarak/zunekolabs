@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import Magnetic from '../components/ui/Magnetic';
 import heroVideo from '../assets/Zuneko.mp4';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -108,44 +109,83 @@ function RotatingWord() {
 }
 
 export default function HeroSection() {
-  return (
-    <section id="hero" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', background: 'var(--accent-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      
-      {/* Base Brand Layer */}
-      <div style={{ position: 'absolute', inset: 0, background: 'var(--accent-primary)', zIndex: 0 }} />
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start']
+  });
 
-      {/* Video Background with readability filters */}
-      <video 
-        autoPlay muted loop playsInline 
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-15%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  return (
+    <section 
+      id="hero" 
+      ref={containerRef}
+      style={{ 
+        position: 'relative', 
+        height: '100vh', 
+        overflow: 'hidden', 
+        background: 'var(--accent-primary)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
+    >
+      
+      {/* Background layer with parallax */}
+      <motion.div 
         style={{ 
           position: 'absolute', 
           inset: 0, 
-          width: '100%', 
-          height: '100%', 
-          objectFit: 'cover', 
-          zIndex: 1,
-          opacity: 0.45,
-          filter: 'brightness(0.6) contrast(1.1) grayscale(0.15)'
-        }} 
-        src={heroVideo} 
-      />
+          zIndex: 0,
+          y: backgroundY
+        }}
+      >
+        <div style={{ position: 'absolute', inset: 0, background: 'var(--accent-primary)', zIndex: 0 }} />
+        
+        <video 
+          autoPlay muted loop playsInline 
+          style={{ 
+            position: 'absolute', 
+            inset: 0, 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover', 
+            zIndex: 1,
+            opacity: 0.45,
+            filter: 'brightness(0.6) contrast(1.1) grayscale(0.15)'
+          }} 
+          src={heroVideo} 
+        />
 
-      {/* Protective Overlay - Darker sides, lighter center for video visibility */}
-      <div style={{ 
-        position: 'absolute', 
-        inset: 0, 
-        zIndex: 2, 
-        background: 'linear-gradient(90deg, rgba(10,66,37,0.88) 0%, rgba(10,66,37,0.35) 35%, rgba(10,66,37,0.35) 65%, rgba(10,66,37,0.88) 100%)' 
-      }} />
+        <div style={{ 
+          position: 'absolute', 
+          inset: 0, 
+          zIndex: 2, 
+          background: 'linear-gradient(90deg, rgba(10,66,37,0.88) 0%, rgba(10,66,37,0.35) 35%, rgba(10,66,37,0.35) 65%, rgba(10,66,37,0.88) 100%)' 
+        }} />
 
-      {/* Particles */}
-      <ParticleCanvas />
+        <ParticleCanvas />
+      </motion.div>
+
+      {/* Content layer */}
+      <motion.div 
+        style={{ 
+          position: 'relative', 
+          zIndex: 3, 
+          width: '100%',
+          y: contentY,
+          opacity
+        }}
+      >
 
       {/* Two-Column Content Layout */}
-      <div style={{ position: 'relative', zIndex: 3, width: '100%', height: '100%', display: 'grid', gridTemplateColumns: '1fr 1fr', alignItems: 'center', padding: '60px 40px', gap: '60px', maxWidth: '1400px', margin: '0 auto' }}>
+        <div className="hero-layout" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 24px' }}>
         
         {/* Left Column - Main Content */}
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>
+        <div className="hero-headline" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 
           {/* Headline */}
           <motion.h1
@@ -172,55 +212,60 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.75, ease: EASE }}
+            className="hero-ctas"
             style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '44px' }}
           >
             {/* Primary */}
-            <a
-              href="#contact"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                borderRadius: '6px',
-                background: '#ffffff',
-                color: 'var(--accent-primary)',
-                fontFamily: 'var(--font-body)',
-                fontWeight: 600,
-                fontSize: '13px',
-                textDecoration: 'none',
-                transition: 'all 0.2s',
-                letterSpacing: '-0.01em',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.25)'; }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
-            >
-              Get Started
-            </a>
+            <Magnetic>
+              <a
+                href="#contact"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 28px',
+                  borderRadius: '6px',
+                  background: '#ffffff',
+                  color: 'var(--accent-primary)',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s',
+                  letterSpacing: '-0.01em',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+              >
+                Get Started
+              </a>
+            </Magnetic>
             
             {/* Secondary */}
-            <a
-              href="#works"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '12px 28px',
-                borderRadius: '6px',
-                border: '1.5px solid rgba(255,255,255,0.35)',
-                background: 'transparent',
-                color: '#ffffff',
-                fontFamily: 'var(--font-body)',
-                fontWeight: 600,
-                fontSize: '13px',
-                textDecoration: 'none',
-                transition: 'all 0.2s ease',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.35)'; }}
-            >
-              View Work
-            </a>
+            <Magnetic>
+              <a
+                href="#works"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '12px 28px',
+                  borderRadius: '6px',
+                  border: '1.5px solid rgba(255,255,255,0.35)',
+                  background: 'transparent',
+                  color: '#ffffff',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '13px',
+                  textDecoration: 'none',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.35)'; }}
+              >
+                View Work
+              </a>
+            </Magnetic>
           </motion.div>
 
           {/* Trust indicators */}
@@ -238,35 +283,45 @@ export default function HeroSection() {
         </div>
 
         {/* Right Column - Visual Stats */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.7, ease: EASE }}
-          style={{ display: 'flex', flexDirection: 'column', gap: '24px', justifyContent: 'center' }}
-        >
-          {/* Stat Cards */}
-          <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '24px', backdropFilter: 'blur(10px)' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>15+</div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>Enterprise Clients</div>
-          </div>
-
-          <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '24px', backdropFilter: 'blur(10px)' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>2024</div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>Founded in Pune</div>
-          </div>
-
-          <div style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '8px', padding: '24px', backdropFilter: 'blur(10px)' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>2</div>
-            <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>Offices</div>
-          </div>
-        </motion.div>
-      </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', justifyContent: 'center' }}>
+          {[
+            { val: '15+', label: 'Enterprise Clients' },
+            { val: '2024', label: 'Founded in Pune' },
+            { val: '2', label: 'Global Offices' }
+          ].map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 + (i * 0.15), ease: EASE }}
+              className="stat-card"
+            >
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(32px, 4vw, 48px)', fontWeight: 700, color: '#00ff88', marginBottom: '6px' }}>{stat.val}</div>
+              <div style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: 'rgba(255,255,255,0.7)', fontWeight: 400 }}>{stat.label}</div>
+            </motion.div>
+          ))}
+        </div>
+        </div>
+      </motion.div>
 
       {/* Scroll indicator */}
-      <div style={{ position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', zIndex: 3 }}>
+      <motion.div 
+        style={{ 
+          position: 'absolute', 
+          bottom: '28px', 
+          left: '50%', 
+          x: '-50%',
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          gap: '6px', 
+          zIndex: 3,
+          opacity
+        }}
+      >
         <span style={{ fontFamily: 'var(--font-body)', fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.1em' }}>SCROLL</span>
         <ChevronDown size={16} style={{ color: 'rgba(255,255,255,0.45)', animation: 'bounce 2s infinite' }} />
-      </div>
+      </motion.div>
     </section>
   );
 }

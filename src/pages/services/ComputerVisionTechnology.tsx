@@ -140,7 +140,7 @@ export default function ComputerVisionTechnology() {
     <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
       {/* Hero */}
       <section style={{ 
-        padding: '160px 0 100px', 
+        padding: 'clamp(80px, 15vh, 160px) 0 100px', 
         background: 'linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-void) 100%)',
         textAlign: 'center',
         position: 'relative',
@@ -201,9 +201,9 @@ export default function ComputerVisionTechnology() {
       </section>
 
       {/* Services Grid */}
-      <section style={{ padding: '80px 0 160px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '32px' }}>
+      <section style={{ padding: '40px 0 120px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '24px' }}>
             {SERVICES.map((service, i) => (
               <ServiceCard key={service.title} service={service} index={i} />
             ))}
@@ -220,14 +220,14 @@ export default function ComputerVisionTechnology() {
               <p style={{ fontSize: '18px', opacity: 0.9, lineHeight: 1.7, marginBottom: '32px' }}>
                 We specialize in deploying complex vision architectures directly onto edge hardware, ensuring zero-latency decision making without the need for cloud dependency.
               </p>
-              <div style={{ display: 'flex', gap: '40px' }}>
+              <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
                 <div>
-                  <div style={{ fontSize: '32px', fontWeight: 700 }}>&lt; 50ms</div>
-                  <div style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Inference Latency</div>
+                  <div style={{ fontSize: 'clamp(24px, 4vw, 32px)', fontWeight: 700 }}>&lt; 50ms</div>
+                  <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Inference Latency</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '32px', fontWeight: 700 }}>99.8%</div>
-                  <div style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Model Accuracy</div>
+                  <div style={{ fontSize: 'clamp(24px, 4vw, 32px)', fontWeight: 700 }}>99.8%</div>
+                  <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Model Accuracy</div>
                 </div>
               </div>
             </div>
