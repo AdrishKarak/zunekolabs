@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Magnetic from '../../../components/ui/Magnetic';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -42,14 +43,18 @@ const STYLES = `
 
   /* mobile */
   @media (max-width: 860px) {
-    .hero-grid  { grid-template-columns: 1fr !important; }
+    .hero-grid  { grid-template-columns: 1fr !important; text-align: center; }
     .hero-svg   { display: none !important; }
-    .col2       { grid-template-columns: 1fr !important; gap: 28px !important; }
-    .col4       { grid-template-columns: 1fr 1fr !important; }
-    .cta-inner  { flex-direction: column !important; align-items: flex-start !important; }
+    .col2       { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .col3       { grid-template-columns: 1fr !important; gap: 24px !important; }
+    .col4       { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    .tech-grid  { grid-template-columns: 1fr !important; gap: 12px !important; }
+    .cta-inner  { flex-direction: column !important; align-items: center !important; text-align: center; }
     .hero-section { padding: 80px 20px 60px !important; }
     .page-section { padding-left: 20px !important; padding-right: 20px !important; }
     .how-top    { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .hero-meta  { justify-content: center !important; }
+    .hero-stats { justify-content: center !important; }
   }
   @media (max-width: 520px) {
     .col4 { grid-template-columns: 1fr !important; }
@@ -174,16 +179,16 @@ function HeroSection() {
             {['AI-Native Product', 'Engineering.'].map((line,li)=>(
               <div key={li} style={{ overflow:'hidden', marginBottom: li===0?4:26 }}>
                 <motion.h1 initial={{ y:'100%' }} animate={{ y:0 }} transition={{ duration:.82, delay:.22+li*.14, ease:EASE }}
-                  style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(34px,5vw,70px)', color: li===0?'#0d3d22':'#1a6e42', lineHeight:1.02, margin:0, letterSpacing:'-0.02em' }}>
+                  style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(36px, 6vw, 68px)', color: li===0?'#0d3d22':'#1a6e42', lineHeight:1.02, margin:0, letterSpacing:'-0.02em' }}>
                   {line}
                 </motion.h1>
               </div>
             ))}
             <motion.p initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ duration:.6, delay:.52, ease:EASE }}
-              style={{ fontFamily:'var(--font-body)', fontSize:'clamp(13px,1.4vw,17px)', color:'#3d6b50', lineHeight:1.82, margin:'0 0 28px', maxWidth:460 }}>
+              style={{ fontFamily:'var(--font-body)', fontSize:'clamp(15px,1.4vw,17px)', color:'#3d6b50', lineHeight:1.82, margin:'0 0 28px', maxWidth:460, marginLeft: 'auto', marginRight: 'auto' }}>
               Building software products where AI is a core capability — not a feature bolt-on. We help businesses generate new revenue streams through technology assets that get smarter over time.
             </motion.p>
-            <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:.64, ease:EASE }}
+            <motion.div className="hero-meta" initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:.64, ease:EASE }}
               style={{ display:'flex', flexWrap:'wrap', gap:18, marginBottom:32 }}>
               {['AI as core functionality','Revenue-generating products','Self-improving systems','Shipped — not prototyped'].map((t,i)=>(
                 <motion.div key={i} initial={{ opacity:0, scale:.82 }} animate={{ opacity:1, scale:1 }} transition={{ duration:.34, delay:.68+i*.08, ease:EASE }}
@@ -193,7 +198,7 @@ function HeroSection() {
                 </motion.div>
               ))}
             </motion.div>
-            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:1.0, ease:EASE }}
+            <motion.div className="hero-stats" initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:1.0, ease:EASE }}
               style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(26,110,66,.1)', flexWrap:'wrap' }}>
               {[{val:'New',label:'Revenue streams'},{val:'Durable',label:'Competitive moat'},{val:'10×',label:'Throughput per person'}].map((s,i)=>(
                 <div key={i}>
@@ -280,7 +285,7 @@ function DifferenceSection() {
           </p>
         </FadeUp>
         <FadeIn delay={0.1}>
-          <div style={{ display:'grid', gridTemplateColumns:'140px 1fr 1fr', gap:'0 20px', padding:'10px 0', borderBottom:'1px solid rgba(26,110,66,.1)', marginBottom:4 }}>
+          <div className="col3" style={{ display:'grid', gridTemplateColumns:'140px 1fr 1fr', gap:'0 20px', padding:'10px 0', borderBottom:'1px solid rgba(26,110,66,.1)', marginBottom:4 }}>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'#3d7a55', opacity:.5, letterSpacing:'0.12em' }}>ASPECT</span>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'#1a6e42', opacity:.75, letterSpacing:'0.12em' }}>AI-NATIVE</span>
             <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'#3d7a55', opacity:.45, letterSpacing:'0.12em' }}>AI-AUGMENTED</span>
@@ -288,7 +293,7 @@ function DifferenceSection() {
         </FadeIn>
         {DIFF_ROWS.map((r,i)=>(
           <FadeUp key={i} delay={0.06+i*.08}>
-            <div style={{ display:'grid', gridTemplateColumns:'140px 1fr 1fr', gap:'0 20px', padding:'16px 0', borderBottom:'1px solid rgba(26,110,66,.06)', alignItems:'start' }}>
+            <div className="col3" style={{ display:'grid', gridTemplateColumns:'140px 1fr 1fr', gap:'0 20px', padding:'16px 0', borderBottom:'1px solid rgba(26,110,66,.06)', alignItems:'start' }}>
               <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'#3d7a55', opacity:.55, letterSpacing:'0.08em', paddingTop:2 }}>{r.aspect}</span>
               <span style={{ fontFamily:'var(--font-body)', fontSize:13.5, color:'#0d3d22', lineHeight:1.6 }}>{r.native}</span>
               <span style={{ fontFamily:'var(--font-body)', fontSize:13.5, color:'#3d6b50', lineHeight:1.6, opacity:.65 }}>{r.augmented}</span>
@@ -387,7 +392,7 @@ function TechSection() {
         <div style={{ display:'flex', flexDirection:'column', gap:2 }}>
           {STACK.map((row,ri)=>(
             <FadeUp key={ri} delay={0.06+ri*.07}>
-              <div style={{ display:'grid', gridTemplateColumns:'140px 1fr', gap:'0 28px', padding:'15px 0', borderBottom:'1px solid rgba(26,110,66,.08)', alignItems:'center' }}>
+              <div className="tech-grid" style={{ display:'grid', gridTemplateColumns:'140px 1fr', gap:'0 28px', padding:'15px 0', borderBottom:'1px solid rgba(26,110,66,.08)', alignItems:'center' }}>
                 <span style={{ fontFamily:'var(--font-mono)', fontSize:9.5, color:'#3d7a55', opacity:.55, letterSpacing:'0.12em' }}>{row.label.toUpperCase()}</span>
                 <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
                   {row.items.map((item,ii)=>(
@@ -440,11 +445,13 @@ function CTASection() {
                 <FadeUp delay={0.16}><p style={{ fontFamily:'var(--font-body)', fontSize:14, color:'#3d6b50', margin:0, lineHeight:1.7, maxWidth:440 }}>Tell us your domain, your data, and the outcome you're trying to create. We'll come back with an honest assessment of what's achievable.</p></FadeUp>
               </div>
               <FadeUp delay={0.22}>
-                <a href="#contact" style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'#fff', background:'#1a6e42', border:'1px solid #1a6e42', padding:'13px 28px', borderRadius:8, textDecoration:'none', display:'inline-block', flexShrink:0, transition:'background .22s,color .22s' }}
-                  onMouseEnter={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color='#1a6e42';}}
-                  onMouseLeave={e=>{e.currentTarget.style.background='#1a6e42';e.currentTarget.style.color='#fff';}}>
-                  Scope your AI product →
-                </a>
+                <Magnetic>
+                  <a href="#contact" style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'#fff', background:'#1a6e42', border:'1px solid #1a6e42', padding:'13px 28px', borderRadius:8, textDecoration:'none', display:'inline-block', flexShrink:0, transition:'background .22s,color .22s' }}
+                    onMouseEnter={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color='#1a6e42';}}
+                    onMouseLeave={e=>{e.currentTarget.style.background='#1a6e42';e.currentTarget.style.color='#fff';}}>
+                    Scope your AI product →
+                  </a>
+                </Magnetic>
               </FadeUp>
             </div>
           </div>

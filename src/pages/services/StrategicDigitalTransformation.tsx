@@ -150,7 +150,14 @@ export default function StrategicDigitalTransformation() {
         </motion.div>
 
         <motion.div 
-          style={{ y: heroY, opacity: heroOpacity, zIndex: 1, textAlign: 'center', maxWidth: '1000px', padding: '0 32px' }}
+          style={{ 
+            y: heroY, 
+            opacity: heroOpacity, 
+            zIndex: 1, 
+            textAlign: 'center', 
+            maxWidth: '1000px', 
+            padding: 'clamp(80px, 12vh, 140px) clamp(20px, 5vw, 64px) 80px' 
+          }}
         >
           <motion.span
             initial={{ opacity: 0, y: 20 }}
@@ -186,9 +193,9 @@ export default function StrategicDigitalTransformation() {
       </section>
 
       {/* Grid Section */}
-      <section style={{ padding: '120px 0', position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '32px' }}>
+      <section style={{ padding: 'clamp(60px, 10vw, 120px) 0', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 clamp(20px, 4vw, 32px)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))', gap: '32px' }}>
             {SERVICES.map((service, i) => (
               <div key={service.title} style={i === 4 ? { gridColumn: '1 / -1', maxWidth: '800px', margin: '0 auto', width: '100%' } : {}}>
                 <ServiceCard service={service} index={i} />
@@ -199,10 +206,10 @@ export default function StrategicDigitalTransformation() {
       </section>
 
       {/* CTA Section */}
-      <section style={{ padding: '100px 0 160px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 32px' }}>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '40px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px' }}>Ready to modernize your tech stack?</h2>
-          <p style={{ color: 'var(--text-secondary)', marginBottom: '48px', fontSize: '18px' }}>Schedule a strategic audit with our engineering team to identify automation opportunities and workflow bottlenecks.</p>
+      <section style={{ padding: 'clamp(60px, 8vw, 100px) 0 clamp(80px, 12vw, 160px)', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)' }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 5vw, 40px)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px' }}>Ready to modernize your tech stack?</h2>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '48px', fontSize: 'clamp(15px, 2vw, 18px)' }}>Schedule a strategic audit with our engineering team to identify automation opportunities and workflow bottlenecks.</p>
           <button style={{
             background: 'var(--accent-primary)',
             color: '#fff',

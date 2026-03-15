@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { BrainCircuit, MessageSquare, Bot, Database, Sparkles, ArrowRight } from 'lucide-react';
+import Magnetic from '../../components/ui/Magnetic';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -54,7 +55,7 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-subtle)',
         borderRadius: '24px',
-        padding: '40px',
+        padding: 'clamp(24px, 5vw, 40px)',
         display: 'flex',
         flexDirection: 'column',
         gap: '24px',
@@ -112,16 +113,15 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
 }
 
 export default function AppliedAI() {
-  const containerRef = useRef<HTMLDivElement>(null);
   return (
-    <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh', paddingBottom: '120px' }}>
+    <div style={{ background: 'var(--bg-void)', minHeight: '100vh', paddingBottom: '120px' }}>
       {/* Immersive Header */}
       <section style={{ 
-        padding: 'clamp(100px, 18vh, 180px) 0 100px', 
+        padding: 'clamp(80px, 15vh, 160px) 0 clamp(60px, 10vh, 100px)', 
         background: 'radial-gradient(circle at top right, var(--accent-glow) 0%, transparent 60%)',
         position: 'relative'
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 32px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)' }}>
           <div style={{ maxWidth: '800px' }}>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -136,32 +136,33 @@ export default function AppliedAI() {
                 borderRadius: '100px', 
                 background: 'var(--accent-dim)', 
                 color: 'var(--accent-primary)',
-                fontSize: '12px',
+                fontSize: '11px',
                 fontWeight: 700,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
-                marginBottom: '32px'
+                marginBottom: '24px'
               }}>
                 <Sparkles size={14} /> Intelligence Applied
               </div>
               <h1 style={{ 
                 fontFamily: 'var(--font-display)', 
-                fontSize: 'clamp(48px, 8vw, 100px)', 
+                fontSize: 'clamp(38px, 8vw, 90px)', 
                 fontWeight: 700, 
                 color: 'var(--text-primary)', 
-                lineHeight: 0.95,
+                lineHeight: 1,
                 letterSpacing: '-0.03em',
-                marginBottom: '40px'
+                marginBottom: '32px'
               }}>
                 Applied Artificial <br />
                 <span style={{ color: 'var(--accent-primary)', fontStyle: 'italic' }}>Intelligence</span>
               </h1>
               <p style={{ 
                 fontFamily: 'var(--font-body)', 
-                fontSize: '22px', 
+                fontSize: 'clamp(18px, 2vw, 22px)', 
                 color: 'var(--text-secondary)', 
                 lineHeight: 1.5,
-                fontWeight: 400
+                fontWeight: 400,
+                maxWidth: '640px'
               }}>
                 Bridging the gap between frontier research and enterprise logic. We build resilient, AI-native systems that solve real-world operational problems at scale.
               </p>
@@ -181,68 +182,78 @@ export default function AppliedAI() {
         </div>
       </section>
 
-      {/* Framework Highlight */}
-      <section style={{ marginTop: '140px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 32px' }}>
+      {/* Framework Highlight - Responsive Grid */}
+      <section style={{ marginTop: 'clamp(80px, 15vw, 140px)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)' }}>
           <div style={{ 
             background: 'var(--bg-deep)', 
-            borderRadius: '40px', 
+            borderRadius: 'clamp(24px, 4vw, 40px)', 
             padding: 'clamp(32px, 8vw, 80px)', 
             border: '1px solid var(--border-subtle)',
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div style={{ position: 'relative', zIndex: 1, maxWidth: '600px' }}>
-              <h2 style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px' }}>Infinite Context RAG</h2>
-              <p style={{ fontSize: '16px', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '32px' }}>
-                Our proprietary RAG architectures utilize dynamic re-ranking and multi-vector search to provide your AI systems with the most relevant corporate knowledge, virtually eliminating hallucination and ensuring compliance.
-              </p>
-              <div style={{ display: 'flex', gap: '24px' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '30px', fontWeight: 700, color: 'var(--accent-primary)' }}>100ms</div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', textTransform: 'uppercase' }}>Search Latency</div>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '30px', fontWeight: 700, color: 'var(--accent-primary)' }}>99.1%</div>
-                  <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', textTransform: 'uppercase' }}>Citation Accuracy</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 500px), 1fr))', gap: '40px', alignItems: 'center', position: 'relative', zIndex: 1 }}>
+              <div style={{ maxWidth: '600px' }}>
+                <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px', lineHeight: 1.2 }}>Infinite Context RAG</h2>
+                <p style={{ fontSize: 'clamp(14px, 1.2vw, 16px)', color: 'var(--text-secondary)', lineHeight: 1.8, marginBottom: '32px' }}>
+                  Our proprietary RAG architectures utilize dynamic re-ranking and multi-vector search to provide your AI systems with the most relevant corporate knowledge, virtually eliminating hallucination and ensuring compliance.
+                </p>
+                <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+                  <div>
+                    <div style={{ fontSize: 'clamp(24px, 3vw, 30px)', fontWeight: 700, color: 'var(--accent-primary)' }}>100ms</div>
+                    <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Search Latency</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 'clamp(24px, 3vw, 30px)', fontWeight: 700, color: 'var(--accent-primary)' }}>99.1%</div>
+                    <div style={{ fontSize: '10px', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Citation Accuracy</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            {/* Abstract visual */}
-            <div style={{ position: 'absolute', top: '50%', right: '80px', transform: 'translateY(-50%)', opacity: 0.1, pointerEvents: 'none' }}>
-              <BrainCircuit size={300} strokeWidth={0.5} color="var(--accent-primary)" />
+              <div style={{ display: 'flex', justifyContent: 'center', opacity: 0.15 }}>
+                <BrainCircuit size={clamp_val(200, 300)} strokeWidth={0.5} color="var(--accent-primary)" />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Strategic Footer */}
-      <section style={{ marginTop: '140px', textAlign: 'center' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 32px' }}>
-          <h2 style={{ fontSize: '42px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '24px', letterSpacing: '-0.01em' }}>Engineered for Precision</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '18px', marginBottom: '48px' }}>Ready to move beyond chatbots? Let's build your AI-native future today.</p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
-            <button style={{ 
-              background: 'var(--accent-primary)', 
-              color: '#fff', 
-              padding: '16px 36px', 
-              borderRadius: '8px', 
-              fontWeight: 600, 
-              border: 'none', 
-              cursor: 'pointer' 
-            }}>Schedule a Demo</button>
-            <button style={{ 
-              background: 'transparent', 
-              color: 'var(--text-primary)', 
-              padding: '16px 36px', 
-              borderRadius: '8px', 
-              fontWeight: 600, 
-              border: '1px solid var(--border-subtle)', 
-              cursor: 'pointer' 
-            }}>Download Whitepaper</button>
+      <section style={{ marginTop: 'clamp(80px, 15vw, 140px)', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)' }}>
+          <h2 style={{ fontSize: 'clamp(32px, 5vw, 42px)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '20px', letterSpacing: '-0.01em' }}>Engineered for Precision</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(16px, 2vw, 18px)', marginBottom: '40px' }}>Ready to move beyond chatbots? Let's build your AI-native future today.</p>
+          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Magnetic>
+              <button style={{ 
+                background: 'var(--accent-primary)', 
+                color: '#fff', 
+                padding: '16px 36px', 
+                borderRadius: '8px', 
+                fontWeight: 600, 
+                border: 'none', 
+                cursor: 'pointer' 
+              }}>Schedule a Demo</button>
+            </Magnetic>
+            <Magnetic>
+              <button style={{ 
+                background: 'transparent', 
+                color: 'var(--text-primary)', 
+                padding: '16px 36px', 
+                borderRadius: '8px', 
+                fontWeight: 600, 
+                border: '1px solid var(--border-subtle)', 
+                cursor: 'pointer' 
+              }}>Download Whitepaper</button>
+            </Magnetic>
           </div>
         </div>
       </section>
     </div>
   );
 }
+
+// Small helper for clamping values if needed or just use constant
+const clamp_val = (min: number, max: number) => {
+  return typeof window !== 'undefined' ? Math.max(min, Math.min(max, window.innerWidth * 0.2)) : max;
+};

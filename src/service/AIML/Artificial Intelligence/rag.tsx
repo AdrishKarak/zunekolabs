@@ -14,7 +14,13 @@ const GLOBAL_STYLES = `
   .rag-arch-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.4) !important; }
   @media(max-width:900px){ .rag-grid-3{ grid-template-columns: 1fr 1fr !important; } }
   @media(max-width:600px){ .rag-grid-3{ grid-template-columns: 1fr !important; } }
-  @media(max-width:768px){ .rag-tl-line{ display:none; } .rag-step-wrap{ justify-content:center !important; } .rag-step-card{ width:90% !important; } }
+  @media(max-width:768px){ 
+    .rag-tl-line{ display:none; } 
+    .rag-step-wrap{ justify-content:center !important; } 
+    .rag-step-card{ width:100% !important; }
+    .rag-sec-header { text-align: center !important; }
+    .rag-sec-header p { margin-left: auto !important; margin-right: auto !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════
@@ -67,7 +73,7 @@ export function RAGGrowth() {
     <section style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden' }}>
       <style>{GLOBAL_STYLES}</style>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ marginBottom: '60px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="rag-sec-header" style={{ marginBottom: '60px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>WHAT WE UNLOCK</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0, maxWidth: '700px' }}>
             Boost Your Business Growth<br /><span style={{ color: 'var(--accent-primary)' }}>with Retrieval Augmented Generation.</span>
@@ -100,7 +106,7 @@ export function RAGArchitectures() {
   return (
     <section style={{ background: 'var(--bg-deep)', padding: '120px 32px', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="rag-sec-header" style={{ textAlign: 'center', marginBottom: '64px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>UNDER THE HOOD</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0 }}>
             RAG Architectures and<br /><span style={{ color: 'var(--accent-primary)' }}>Retrieval Stacks We Build With.</span>
@@ -147,7 +153,7 @@ export function RAGRoadmap() {
   return (
     <section style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1060px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ textAlign: 'center', marginBottom: '72px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="rag-sec-header" style={{ textAlign: 'center', marginBottom: '72px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>HOW WE BUILD</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0 }}>
             Our Proven RAG System<br /><span style={{ color: 'var(--accent-primary)' }}>Development Roadmap.</span>
@@ -272,7 +278,7 @@ export function RAGIndustries() {
   return (
     <section style={{ background: 'var(--bg-deep)', padding: '120px 32px', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ marginBottom: '60px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="rag-sec-header" style={{ marginBottom: '60px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>RAG BY VERTICAL</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0, maxWidth: '720px' }}>
             Specialized RAG Solutions<br /><span style={{ color: 'var(--accent-primary)' }}>for Various Industries.</span>

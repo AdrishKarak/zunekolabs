@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import heroBg from '../assets/Ai.jpeg';
 import herovd from '../assets/Zuneko.mp4';
@@ -121,8 +121,17 @@ function RotatingWord() {
 
 /* ─── Main hero ───────────────────────────────────────────────── */
 export default function HeroSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  
+  // Parallax transforms
+  const backgroundY = useTransform(scrollY, [0, 500], [0, 150]);
+  const contentY = useTransform(scrollY, [0, 500], [0, -100]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   return (
     <section
+      ref={containerRef}
       id="hero"
       style={{
         position: 'relative',
@@ -133,17 +142,18 @@ export default function HeroSection() {
         flexDirection: 'column',
       }}
     >
-      {/* Background video */}
-      <video
-        src={herovd}
-        poster={heroBg}
-        autoPlay loop muted playsInline aria-hidden
-        style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          objectFit: 'cover', zIndex: 0, opacity: 0.65,
-        }}
-      />
+      <motion.div style={{ y: backgroundY, position: 'absolute', inset: 0, zIndex: 0 }}>
+        <video
+          src={herovd}
+          poster={heroBg}
+          autoPlay loop muted playsInline aria-hidden
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover', opacity: 0.65,
+          }}
+        />
+      </motion.div>
 
       {/* Dark overlay */}
       <div style={{
@@ -159,14 +169,15 @@ export default function HeroSection() {
 
       <ParticleCanvas />
 
-      {/* ── CONTENT ── */}
-      <div style={{
+      <motion.div style={{ 
         position: 'relative', zIndex: 3,
         flex: 1,
         display: 'flex',
         alignItems: 'center',
         maxWidth: 1280, width: '100%', margin: '0 auto',
         padding: 'clamp(80px, 12vh, 140px) clamp(20px, 5vw, 64px) 80px',
+        y: contentY,
+        opacity
       }}>
 
         <div className="hero-headline" style={{
@@ -355,10 +366,9 @@ export default function HeroSection() {
             </span>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* ── Scroll indicator ─────────────────────────────────────── */}
-      <div style={{
+      <motion.div style={{
         position: 'absolute', bottom: 24, left: '50%',
         transform: 'translateX(-50%)',
         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5, zIndex: 3,
@@ -372,10 +382,21 @@ export default function HeroSection() {
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 1.7, repeat: Infinity, ease: 'easeInOut' }}
+          style={{ opacity: 0.4 }}
         >
-          <ChevronDown size={15} style={{ color: G_LO, opacity: 0.26 }} />
+          <ChevronDown size={15} style={{ color: G_LO }} />
         </motion.div>
-      </div>
+      </motion.div>
+      <style>{`
+        @media (max-width: 768px) {
+          #hero {
+            padding-top: 60px !important;
+            min-height: auto !important;
+            height: auto !important;
+            padding-bottom: 100px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

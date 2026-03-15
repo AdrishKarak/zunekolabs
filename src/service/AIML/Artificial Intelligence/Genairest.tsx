@@ -14,7 +14,13 @@ const GLOBAL_STYLES = `
   .gen-arch-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.4) !important; }
   @media(max-width:900px){ .gen-grid-3{ grid-template-columns: 1fr 1fr !important; } }
   @media(max-width:600px){ .gen-grid-3{ grid-template-columns: 1fr !important; } }
-  @media(max-width:768px){ .gen-tl-line{ display:none; } .gen-step-wrap{ justify-content:center !important; } .gen-step-card{ width:90% !important; } }
+  @media(max-width:768px){ 
+    .gen-tl-line{ display:none; } 
+    .gen-step-wrap{ justify-content:center !important; } 
+    .gen-step-card{ width:100% !important; }
+    .gen-sec-header { text-align: center !important; }
+    .gen-sec-header p { margin-left: auto !important; margin-right: auto !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════
@@ -67,7 +73,7 @@ export function GenAIGrowth() {
     <section style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden' }}>
       <style>{GLOBAL_STYLES}</style>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ marginBottom: '60px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="gen-sec-header" style={{ marginBottom: '60px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>WHAT WE UNLOCK</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0, maxWidth: '700px' }}>
             Boost Your Business Growth<br/><span style={{ color: 'var(--accent-primary)' }}>and Efficiency with Gen AI.</span>
@@ -100,7 +106,7 @@ export function GenAIArchitectures() {
   return (
     <section style={{ background: 'var(--bg-deep)', padding: '120px 32px', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ textAlign: 'center', marginBottom: '64px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="gen-sec-header" style={{ textAlign: 'center', marginBottom: '64px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>UNDER THE HOOD</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0 }}>
             Generative AI Architectures<br/><span style={{ color: 'var(--accent-primary)' }}>and Models We Work With.</span>
@@ -147,7 +153,7 @@ export function GenAIRoadmap() {
   return (
     <section style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1060px', margin: '0 auto' }}>
-        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} style={{ textAlign: 'center', marginBottom: '72px' }}>
+        <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, ease: EASE }} className="gen-sec-header" style={{ textAlign: 'center', marginBottom: '72px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>HOW WE BUILD</span>
           <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(30px, 4.5vw, 56px)', color: 'var(--text-primary)', lineHeight: 1.08, margin: 0 }}>
             Our Proven Custom Gen AI<br/><span style={{ color: 'var(--accent-primary)' }}>Development Roadmap.</span>

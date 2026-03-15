@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Magnetic from '../../../components/ui/Magnetic';
 const EASE = [0.16, 1, 0.3, 1] as const;
 const G = '#1a6e42';
 
@@ -27,15 +28,18 @@ const STYLES = `
   .hitl-pill:hover { background:rgba(26,110,66,.08); color:#1a6e42; border-color:rgba(26,110,66,.3); }
 
   @media (max-width: 860px) {
-    .hero-grid   { grid-template-columns: 1fr !important; }
+    .hero-grid   { grid-template-columns: 1fr !important; text-align: center; }
     .hero-svg    { display: none !important; }
     .col2        { grid-template-columns: 1fr !important; gap: 28px !important; }
-    .col4        { grid-template-columns: 1fr 1fr !important; }
-    .cta-inner   { flex-direction: column !important; align-items: flex-start !important; }
+    .col4        { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    .cta-inner   { flex-direction: column !important; align-items: center !important; text-align: center; }
     .hero-section{ padding: 80px 20px 60px !important; }
     .page-section{ padding-left: 20px !important; padding-right: 20px !important; }
     .how-top     { grid-template-columns: 1fr !important; gap: 20px !important; }
-    .use-cases-table { grid-template-columns: 1fr !important; }
+    .use-cases-table { grid-template-columns: 1fr !important; gap: 8px !important; border-bottom: none !important; padding: 20px 0 !important; }
+    .use-cases-table span:last-child { text-align: left !important; margin-top: 4px; }
+    .hero-meta   { justify-content: center !important; }
+    .hero-stats  { justify-content: center !important; }
   }
   @media (max-width: 520px) { .col4 { grid-template-columns: 1fr !important; } }
 `;
@@ -167,18 +171,18 @@ function HeroSection() {
         <div className="hero-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0 52px', alignItems:'center' }}>
           <div>
             {['Human-in-the-Loop', '(HITL) Design.'].map((line,li)=>(
-              <div key={li} style={{ overflow:'hidden', marginBottom:li===0?4:26 }}>
+              <div key={li} style={{ overflow:'hidden', marginBottom:li===0?4:28 }}>
                 <motion.h1 initial={{ y:'100%' }} animate={{ y:0 }} transition={{ duration:.82, delay:.22+li*.14, ease:EASE }}
-                  style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(32px,4.8vw,68px)', color:li===0?'#0d3d22':G, lineHeight:1.02, margin:0, letterSpacing:'-0.02em' }}>
+                  style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(36px, 6vw, 68px)', color:li===0?'#0d3d22':G, lineHeight:1.02, margin:0, letterSpacing:'-0.02em' }}>
                   {line}
                 </motion.h1>
               </div>
             ))}
             <motion.p initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ duration:.6, delay:.52, ease:EASE }}
-              style={{ fontFamily:'var(--font-body)', fontSize:'clamp(13px,1.4vw,17px)', color:'#3d6b50', lineHeight:1.82, margin:'0 0 28px', maxWidth:460 }}>
+              style={{ fontFamily:'var(--font-body)', fontSize:'clamp(14px,1.4vw,17px)', color:'#3d6b50', lineHeight:1.82, margin:'0 auto 28px', maxWidth:460 }}>
               UI/UX engineering that puts the right human in control of the right AI output — at the right moment. Validation interfaces, audit trails and access controls for enterprises that can't afford to get it wrong.
             </motion.p>
-            <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:.64, ease:EASE }}
+            <motion.div className="hero-meta" initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:.64, ease:EASE }}
               style={{ display:'flex', flexWrap:'wrap', gap:18, marginBottom:32 }}>
               {['Validation interfaces','Audit trails','Access control','Compliance by design'].map((t,i)=>(
                 <motion.div key={i} initial={{ opacity:0, scale:.82 }} animate={{ opacity:1, scale:1 }} transition={{ duration:.34, delay:.68+i*.08, ease:EASE }}
@@ -188,7 +192,7 @@ function HeroSection() {
                 </motion.div>
               ))}
             </motion.div>
-            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:1.0, ease:EASE }}
+            <motion.div className="hero-stats" initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:1.0, ease:EASE }}
               style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(26,110,66,.1)', flexWrap:'wrap' }}>
               {[{val:'Zero',label:'Unreviewed errors'},{val:'Full',label:'Audit trail'},{val:'100%',label:'Compliance-ready'}].map((s,i)=>(
                 <div key={i}>
@@ -359,11 +363,13 @@ function CTASection() {
                 <FadeUp delay={0.16}><p style={{ fontFamily:'var(--font-body)', fontSize:14, color:'#3d6b50', margin:0, lineHeight:1.7, maxWidth:440 }}>Tell us your use case and your compliance requirements. We'll design a HITL architecture that keeps your team in control without slowing them down.</p></FadeUp>
               </div>
               <FadeUp delay={0.22}>
-                <a href="#contact" style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'#fff', background:G, border:`1px solid ${G}`, padding:'13px 28px', borderRadius:8, textDecoration:'none', display:'inline-block', flexShrink:0, transition:'background .22s,color .22s' }}
-                  onMouseEnter={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color=G;}}
-                  onMouseLeave={e=>{e.currentTarget.style.background=G;e.currentTarget.style.color='#fff';}}>
-                  Design your oversight system →
-                </a>
+                <Magnetic>
+                  <a href="#contact" style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'#fff', background:G, border:`1px solid ${G}`, padding:'13px 28px', borderRadius:8, textDecoration:'none', display:'inline-block', flexShrink:0, transition:'background .22s,color .22s' }}
+                    onMouseEnter={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color=G;}}
+                    onMouseLeave={e=>{e.currentTarget.style.background=G;e.currentTarget.style.color='#fff';}}>
+                    Design your oversight system →
+                  </a>
+                </Magnetic>
               </FadeUp>
             </div>
           </div>

@@ -10,9 +10,18 @@ const GLOBAL_STYLES = `
   .ai-step-card:hover { transform: translateY(-4px) scale(1.01); }
   .ai-stat-card { transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s; }
   .ai-stat-card:hover { transform: translateY(-7px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.4) !important; }
-  @media(max-width:900px){ .grid-3{ grid-template-columns: 1fr 1fr !important; } }
-  @media(max-width:600px){ .grid-3{ grid-template-columns: 1fr !important; } .feat-span{ grid-column: span 1 !important; } }
-  @media(max-width:768px){ .tl-line{ display:none; } .step-wrap{ justify-content: center !important; } .step-card{ width: 90% !important; } }
+  
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  
+  @media(max-width:1024px){ .grid-3{ grid-template-columns: 1fr 1fr !important; } }
+  @media(max-width:640px){ .grid-3{ grid-template-columns: 1fr !important; } .feat-span{ grid-column: span 1 !important; } }
+  @media(max-width:768px){ 
+    .tl-line{ display:none; } 
+    .step-wrap{ justify-content: center !important; } 
+    .step-card{ width: 100% !important; }
+    .sec-header { text-align: center !important; }
+    .sec-header p { margin-left: auto !important; margin-right: auto !important; }
+  }
 `;
 
 /* ═══════════════════════════════════════════════
@@ -194,11 +203,11 @@ export function EnterpriseChallenges() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden' }}>
+    <section style={{ background: 'var(--bg-void)', padding: 'clamp(60px, 10vw, 120px) clamp(20px, 5vw, 32px)', overflow: 'hidden' }}>
       <style>{GLOBAL_STYLES}</style>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }} style={{ marginBottom: '60px' }}>
+          transition={{ duration: 0.7, ease: EASE }} className="sec-header" style={{ marginBottom: '60px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>
             THE PROBLEM SPACE
           </span>
@@ -210,7 +219,7 @@ export function EnterpriseChallenges() {
             Click any challenge to see exactly how our AI eliminates it.
           </p>
         </motion.div>
-        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' }}>
+        <div className="grid-3">
           {CHALLENGES.map((c, i) => <ChallengeCard key={c.id} c={c} index={i} inView={inView}/>)}
         </div>
       </div>
@@ -315,10 +324,10 @@ export function WorkflowTransformation() {
   const inView = useInView(ref, { once: true, margin: '-60px' });
 
   return (
-    <section style={{ background: 'var(--bg-deep)', padding: '120px 32px', overflow: 'hidden' }}>
+    <section style={{ background: 'var(--bg-deep)', padding: 'clamp(60px, 10vw, 120px) clamp(20px, 5vw, 32px)', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1060px', margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }} style={{ textAlign: 'center', marginBottom: '68px' }}>
+          transition={{ duration: 0.7, ease: EASE }} className="sec-header" style={{ textAlign: 'center', marginBottom: '68px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>
             THE PROCESS
           </span>
@@ -489,10 +498,10 @@ export function EnterpriseCapabilities() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section style={{ background: 'var(--bg-void)', padding: '120px 32px', overflow: 'hidden' }}>
+    <section style={{ background: 'var(--bg-void)', padding: 'clamp(60px, 10vw, 120px) clamp(20px, 5vw, 32px)', overflow: 'hidden' }}>
       <div ref={ref} style={{ maxWidth: '1180px', margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }} style={{ textAlign: 'center', marginBottom: '60px' }}>
+          transition={{ duration: 0.7, ease: EASE }} className="sec-header" style={{ textAlign: 'center', marginBottom: '60px' }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--accent-primary)', letterSpacing: '0.2em', display: 'block', marginBottom: '12px' }}>
             WHAT WE DELIVER
           </span>
@@ -502,10 +511,10 @@ export function EnterpriseCapabilities() {
           </h2>
         </motion.div>
 
-        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' }}>
+        <div className="grid-3">
           {CAPABILITIES.map((cap, i) => (
             <motion.div key={cap.title}
-              className="ai-card"
+              className={`ai-card ${cap.featured ? 'feat-span' : ''}`}
               initial={{ opacity: 0, y: 38 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.07, ease: EASE }}
@@ -514,7 +523,7 @@ export function EnterpriseCapabilities() {
                 background: cap.featured ? 'var(--bg-raised)' : 'var(--bg-surface)',
                 border: `1px solid ${cap.featured ? cap.color+'2a' : cap.color+'1a'}`,
                 boxShadow: cap.featured ? '0 8px 28px rgba(0,0,0,0.22)' : '0 4px 16px rgba(0,0,0,0.16)',
-                gridColumn: cap.featured ? 'span 2' : 'span 1',
+                gridColumn: cap.featured ? undefined : 'span 1',
               }}
             >
               <div style={{ height: '2px', background: `linear-gradient(90deg,${cap.color},transparent)`, opacity: cap.featured ? 0.65 : 0.38 }}/>
@@ -640,7 +649,7 @@ export function AIStatCountdown() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section style={{ background: 'var(--bg-deep)', padding: '120px 32px', overflow: 'hidden', position: 'relative' }}>
+    <section style={{ background: 'var(--bg-deep)', padding: 'clamp(60px, 10vw, 120px) clamp(20px, 5vw, 32px)', overflow: 'hidden', position: 'relative' }}>
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.022,
         backgroundImage: 'linear-gradient(rgba(0,232,122,1) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,122,1) 1px,transparent 1px)',
@@ -657,7 +666,7 @@ export function AIStatCountdown() {
             <span style={{ color: 'var(--accent-primary)' }}>Ours don't need to.</span>
           </h2>
         </motion.div>
-        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' }}>
+        <div className="grid-3">
           {AI_STATS.map((s, i) => <StatCard key={i} stat={s} index={i} active={inView}/>)}
         </div>
       </div>

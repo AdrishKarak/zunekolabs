@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Magnetic from '../../../components/ui/Magnetic';
 const EASE = [0.16, 1, 0.3, 1] as const;
 const G = '#1a6e42';
 
@@ -25,14 +26,16 @@ const STYLES = `
   .api-chip:hover { background: rgba(26,110,66,.1); color: #1a6e42; border-color: rgba(26,110,66,.3); }
 
   @media (max-width: 860px) {
-    .hero-grid { grid-template-columns: 1fr !important; }
+    .hero-grid { grid-template-columns: 1fr !important; text-align: center; }
     .hero-svg  { display: none !important; }
-    .col2      { grid-template-columns: 1fr !important; gap: 28px !important; }
-    .col4      { grid-template-columns: 1fr 1fr !important; }
-    .cta-inner { flex-direction: column !important; align-items: flex-start !important; }
+    .col2 { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .col4 { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
+    .cta-inner { flex-direction: column !important; align-items: center !important; text-align: center; }
     .hero-section { padding: 80px 20px 60px !important; }
     .page-section { padding-left: 20px !important; padding-right: 20px !important; }
     .how-top   { grid-template-columns: 1fr !important; gap: 20px !important; }
+    .hero-meta { justify-content: center !important; }
+    .hero-stats { justify-content: center !important; }
   }
   @media (max-width: 520px) { .col4 { grid-template-columns: 1fr !important; } }
 `;
@@ -150,21 +153,21 @@ function HeroSection() {
           <span style={{ fontFamily:'var(--font-mono)', fontSize:10, letterSpacing:'0.18em', color:G, opacity:.85 }}>ENTERPRISE INTEGRATION</span>
         </motion.div>
 
-        <div className="hero-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0 52px', alignItems:'center' }}>
+        <div className="hero-grid" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:'0 clamp(20px, 4vw, 52px)', alignItems:'center' }}>
           <div>
-            {['API-led Integration', 'Ecosystems.'].map((line,li)=>(
-              <div key={li} style={{ overflow:'hidden', marginBottom:li===0?4:26 }}>
+            {['API Integration','& Architecture.'].map((line,li)=>(
+              <div key={li} style={{ overflow:'hidden', marginBottom:li===0?4:28 }}>
                 <motion.h1 initial={{ y:'100%' }} animate={{ y:0 }} transition={{ duration:.82, delay:.22+li*.14, ease:EASE }}
-                  style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(34px,5vw,70px)', color:li===0?'#0d3d22':G, lineHeight:1.02, margin:0, letterSpacing:'-0.02em' }}>
+                  style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(36px, 6vw, 68px)', color:li===0?'#0d3d22':G, lineHeight:1.02, margin:0, letterSpacing:'-0.02em' }}>
                   {line}
                 </motion.h1>
               </div>
             ))}
             <motion.p initial={{ opacity:0, y:16 }} animate={{ opacity:1, y:0 }} transition={{ duration:.6, delay:.52, ease:EASE }}
-              style={{ fontFamily:'var(--font-body)', fontSize:'clamp(13px,1.4vw,17px)', color:'#3d6b50', lineHeight:1.82, margin:'0 0 28px', maxWidth:460 }}>
-              Secure, unified data layers and interoperability across ERP, CRM, finance and third-party systems — eliminating silos and enabling real-time enterprise visibility.
+              style={{ fontFamily:'var(--font-body)', fontSize:'clamp(13.5px, 1.4vw, 17px)', color:'#3d6b50', lineHeight:1.82, margin:'0 auto 28px', maxWidth:480 }}>
+              Engineered connectivity for the modern enterprise. We build resilient API layers, secure middleware and automated data flows that turn fragmented systems into a unified platform.
             </motion.p>
-            <motion.div initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:.64, ease:EASE }}
+            <motion.div className="hero-meta" initial={{ opacity:0, y:12 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:.64, ease:EASE }}
               style={{ display:'flex', flexWrap:'wrap', gap:18, marginBottom:32 }}>
               {['REST & GraphQL','ERP / CRM connectors','Real-time data fabric','Event-driven pipelines'].map((t,i)=>(
                 <motion.div key={i} initial={{ opacity:0, scale:.82 }} animate={{ opacity:1, scale:1 }} transition={{ duration:.34, delay:.68+i*.08, ease:EASE }}
@@ -174,7 +177,7 @@ function HeroSection() {
                 </motion.div>
               ))}
             </motion.div>
-            <motion.div initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:1.0, ease:EASE }}
+            <motion.div className="hero-stats" initial={{ opacity:0, y:14 }} animate={{ opacity:1, y:0 }} transition={{ duration:.55, delay:1.0, ease:EASE }}
               style={{ display:'flex', gap:28, paddingTop:24, borderTop:'1px solid rgba(26,110,66,.1)', flexWrap:'wrap' }}>
               {[{val:'Single',label:'Source of truth'},{val:'Real-time',label:'Data propagation'},{val:'Zero',label:'Manual syncs'}].map((s,i)=>(
                 <div key={i}>
@@ -261,19 +264,19 @@ function WhatWeBuildSection() {
         <div style={{ overflow:'hidden', marginBottom:10 }}><RevealClip delay={0.06}><h2 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:'clamp(24px,3vw,42px)', color:'#0d3d22', lineHeight:1.1, margin:0 }}>Four disciplines. One coherent data fabric.</h2></RevealClip></div>
         <FadeUp delay={0.16} style={{ marginBottom:48 }}><p style={{ fontFamily:'var(--font-body)', fontSize:14.5, color:'#3d6b50', lineHeight:1.82, maxWidth:520, margin:'10px 0 0' }}>We engineer a coherent integration architecture that can grow without becoming unmaintainable.</p></FadeUp>
         <div className="col2" style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
-          {SERVICES.map((s,i)=>(
+          {SERVICES.map((b,i)=>(
             <FadeUp key={i} delay={0.08+i*.09}>
-              <div className="api-card" style={{ padding:'24px', borderRadius:14, background:'#fff' }}>
+              <div className="api-card" style={{ padding:'clamp(20px, 4vw, 24px)', borderRadius:14, background:'#fff' }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16 }}>
                   <div>
-                    <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:G, opacity:.6, letterSpacing:'0.12em', display:'block', marginBottom:8 }}>{s.num}</span>
-                    <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:15.5, color:'#0d3d22', margin:0, lineHeight:1.25, maxWidth:200 }}>{s.title}</h3>
+                    <span style={{ fontFamily:'var(--font-mono)', fontSize:10, color:G, opacity:.6, letterSpacing:'0.12em', display:'block', marginBottom:8 }}>{b.num}</span>
+                    <h3 style={{ fontFamily:'var(--font-display)', fontWeight:700, fontSize:15.5, color:'#0d3d22', margin:0, lineHeight:1.25, maxWidth:200 }}>{b.title}</h3>
                   </div>
-                  <div style={{ opacity:.65, flexShrink:0 }}>{s.svg}</div>
+                  <div style={{ opacity:.65, flexShrink:0 }}>{b.svg}</div>
                 </div>
-                <p style={{ fontFamily:'var(--font-body)', fontSize:13, color:'#3d6b50', lineHeight:1.75, margin:'0 0 18px' }}>{s.body}</p>
+                <p style={{ fontFamily:'var(--font-body)', fontSize:13, color:'#3d6b50', lineHeight:1.75, margin:'0 0 18px' }}>{b.body}</p>
                 <div style={{ display:'flex', flexWrap:'wrap', gap:5 }}>
-                  {s.tags.map((t,ti)=><span key={ti} className="api-chip" style={{ fontFamily:'var(--font-mono)', fontSize:9.5, padding:'3px 9px', borderRadius:100, border:'1px solid rgba(26,110,66,.18)', color:'#3d7a55' }}>{t}</span>)}
+                  {b.tags.map((t,ti)=><span key={ti} className="api-chip" style={{ fontFamily:'var(--font-mono)', fontSize:9.5, padding:'3px 9px', borderRadius:100, border:'1px solid rgba(26,110,66,.18)', color:'#3d7a55' }}>{t}</span>)}
                 </div>
               </div>
             </FadeUp>
@@ -345,11 +348,13 @@ function CTASection() {
                 <FadeUp delay={0.16}><p style={{ fontFamily:'var(--font-body)', fontSize:14, color:'#3d6b50', margin:0, lineHeight:1.7, maxWidth:440 }}>Tell us your systems, your pain points, and what decisions you're trying to make faster. We'll return with an integration architecture proposal.</p></FadeUp>
               </div>
               <FadeUp delay={0.22}>
-                <a href="#contact" style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'#fff', background:G, border:`1px solid ${G}`, padding:'13px 28px', borderRadius:8, textDecoration:'none', display:'inline-block', flexShrink:0, transition:'background .22s,color .22s' }}
-                  onMouseEnter={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color=G;}}
-                  onMouseLeave={e=>{e.currentTarget.style.background=G;e.currentTarget.style.color='#fff';}}>
-                  Start the integration audit →
-                </a>
+                <Magnetic>
+                  <a href="#contact" style={{ fontFamily:'var(--font-mono)', fontSize:13, color:'#fff', background:G, border:`1px solid ${G}`, padding:'13px 28px', borderRadius:8, textDecoration:'none', display:'inline-block', flexShrink:0, transition:'background .22s,color .22s' }}
+                    onMouseEnter={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.color=G;}}
+                    onMouseLeave={e=>{e.currentTarget.style.background=G;e.currentTarget.style.color='#fff';}}>
+                    Discuss your integration →
+                  </a>
+                </Magnetic>
               </FadeUp>
             </div>
           </div>

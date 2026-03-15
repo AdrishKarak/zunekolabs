@@ -1,5 +1,6 @@
 import { useState} from 'react';
 import { motion, AnimatePresence} from 'framer-motion';
+import Magnetic from '../../../components/ui/Magnetic';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -121,23 +122,25 @@ const STYLES = `
 
   /* ── Mobile responsive ── */
   @media (max-width: 860px) {
-    .saas-hero-grid    { grid-template-columns: 1fr !important; }
+    .saas-hero-grid    { grid-template-columns: 1fr !important; text-align: center; }
     .saas-flavour-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
     .saas-how-top      { grid-template-columns: 1fr !important; gap: 20px !important; }
     .saas-how-grid     { grid-template-columns: 1fr !important; }
-    .saas-pillars-grid { grid-template-columns: 1fr 1fr !important; }
+    .saas-pillars-grid { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
     .saas-deliv-grid   { grid-template-columns: 1fr !important; gap: 20px !important; }
-    .saas-deliv-cards  { grid-template-columns: 1fr 1fr !important; }
-    .saas-cta-inner    { flex-direction: column !important; align-items: flex-start !important; }
+    .saas-deliv-cards  { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+    .saas-cta-inner    { flex-direction: column !important; align-items: center !important; text-align: center; }
     .saas-stack-row    { grid-template-columns: 1fr !important; gap: 10px !important; }
     .saas-hero-svg     { display: none !important; }
     .saas-section      { padding-left: 20px !important; padding-right: 20px !important; }
     .saas-hero-section { padding: 80px 20px 60px !important; }
+    .saas-hero-badges  { justify-content: center !important; }
+    .saas-hero-stats   { justify-content: center !important; }
   }
   @media (max-width: 520px) {
     .saas-pillars-grid { grid-template-columns: 1fr !important; }
     .saas-deliv-cards  { grid-template-columns: 1fr !important; }
-    .saas-hero-badges  { flex-direction: column !important; gap: 10px !important; align-items: flex-start !important; }
+    .saas-hero-badges  { flex-direction: column !important; gap: 10px !important; align-items: center !important; }
   }
 `;
 
@@ -366,7 +369,7 @@ function HeroSection() {
                   transition={{ duration: 0.82, delay: 0.22 + li * 0.14, ease: EASE }}
                   style={{
                     fontFamily: 'var(--font-display)', fontWeight: 700,
-                    fontSize: 'clamp(38px,5.5vw,74px)',
+                    fontSize: 'clamp(36px, 6vw, 68px)',
                     color: li === 0 ? '#0d3d22' : '#1a6e42',
                     lineHeight: 1.02, margin: 0,
                     letterSpacing: '-0.02em',
@@ -382,7 +385,7 @@ function HeroSection() {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.54, ease: EASE }}
-              style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(14px,1.4vw,17px)', color: '#3d6b50', lineHeight: 1.82, margin: '0 0 32px', maxWidth: 460 }}
+              style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(15px,1.4vw,17px)', color: '#3d6b50', lineHeight: 1.82, margin: '0 auto 32px', maxWidth: 460 }}
             >
               Multi-tenant platforms designed for your exact domain — secure, compliant, and built to scale from launch to enterprise.
             </motion.p>
@@ -416,6 +419,7 @@ function HeroSection() {
 
             {/* Stat row */}
             <motion.div
+              className="saas-hero-stats"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 1.0, ease: EASE }}
@@ -772,15 +776,17 @@ function CTASection() {
               </FadeUp>
             </div>
             <FadeUp delay={0.22}>
-              <a
-                href="#contact"
-                className="saas-cta-btn"
-                style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 500, color: '#ffffff', background: '#1a6e42', border: '1px solid #1a6e42', padding: '13px 30px', borderRadius: 8, textDecoration: 'none', display: 'inline-block', flexShrink: 0 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a6e42'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#1a6e42'; e.currentTarget.style.color = '#ffffff'; }}
-              >
-                Start the conversation →
-              </a>
+              <Magnetic>
+                <a
+                  href="#contact"
+                  className="saas-cta-btn"
+                  style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 500, color: '#ffffff', background: '#1a6e42', border: '1px solid #1a6e42', padding: '13px 30px', borderRadius: 8, textDecoration: 'none', display: 'inline-block', flexShrink: 0 }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a6e42'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = '#1a6e42'; e.currentTarget.style.color = '#ffffff'; }}
+                >
+                  Start the conversation →
+                </a>
+              </Magnetic>
             </FadeUp>
           </div>
         </FadeUp>

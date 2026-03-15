@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Eye, Shield, Package, FileText, Share2, CheckCircle2, ArrowRight } from 'lucide-react';
+import Magnetic from '../../components/ui/Magnetic';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -54,7 +55,7 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-subtle)',
         borderRadius: '24px',
-        padding: '40px',
+        padding: 'clamp(24px, 5vw, 40px)',
         display: 'flex',
         flexDirection: 'column',
         gap: '24px',
@@ -140,7 +141,7 @@ export default function ComputerVisionTechnology() {
     <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
       {/* Hero */}
       <section style={{ 
-        padding: 'clamp(80px, 15vh, 160px) 0 100px', 
+        padding: 'clamp(80px, 15vh, 160px) 0 clamp(60px, 10vh, 100px)', 
         background: 'linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-void) 100%)',
         textAlign: 'center',
         position: 'relative',
@@ -164,18 +165,18 @@ export default function ComputerVisionTechnology() {
             }}>Visual Intelligence</span>
             <h1 style={{ 
               fontFamily: 'var(--font-display)', 
-              fontSize: 'clamp(44px, 7vw, 90px)', 
+              fontSize: 'clamp(38px, 8vw, 90px)', 
               fontWeight: 700, 
               color: 'var(--text-primary)', 
               lineHeight: 1.1, 
-              marginBottom: '40px' 
+              marginBottom: '32px' 
             }}>
               Computer Vision <br />
               <span style={{ color: 'var(--accent-primary)' }}>Technology</span>
             </h1>
             <p style={{ 
               fontFamily: 'var(--font-body)', 
-              fontSize: '20px', 
+              fontSize: 'clamp(17px, 2vw, 20px)', 
               color: 'var(--text-secondary)', 
               maxWidth: '800px', 
               margin: '0 auto', 
@@ -212,21 +213,21 @@ export default function ComputerVisionTechnology() {
       </section>
       
       {/* Visual Tech Highlight */}
-      <section style={{ padding: '120px 0', background: 'var(--accent-primary)', color: '#ffffff' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 32px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px', alignItems: 'center' }}>
+      <section style={{ padding: 'clamp(60px, 12vw, 120px) 0', background: 'var(--accent-primary)', color: '#ffffff' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: 'clamp(20px, 8vw, 60px)', alignItems: 'center' }}>
             <div>
-              <h2 style={{ fontSize: '42px', fontWeight: 700, marginBottom: '24px', lineHeight: 1.2 }}>Real-time Edge Analysis</h2>
-              <p style={{ fontSize: '18px', opacity: 0.9, lineHeight: 1.7, marginBottom: '32px' }}>
+              <h2 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: 700, marginBottom: '24px', lineHeight: 1.2 }}>Real-time Edge Analysis</h2>
+              <p style={{ fontSize: 'clamp(15px, 1.5vw, 18px)', opacity: 0.9, lineHeight: 1.7, marginBottom: '32px' }}>
                 We specialize in deploying complex vision architectures directly onto edge hardware, ensuring zero-latency decision making without the need for cloud dependency.
               </p>
               <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap' }}>
                 <div>
-                  <div style={{ fontSize: 'clamp(24px, 4vw, 32px)', fontWeight: 700 }}>&lt; 50ms</div>
+                  <div style={{ fontSize: 'clamp(22px, 4vw, 32px)', fontWeight: 700 }}>&lt; 50ms</div>
                   <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Inference Latency</div>
                 </div>
                 <div>
-                  <div style={{ fontSize: 'clamp(24px, 4vw, 32px)', fontWeight: 700 }}>99.8%</div>
+                  <div style={{ fontSize: 'clamp(22px, 4vw, 32px)', fontWeight: 700 }}>99.8%</div>
                   <div style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.8 }}>Model Accuracy</div>
                 </div>
               </div>
@@ -254,26 +255,28 @@ export default function ComputerVisionTechnology() {
       </section>
 
       {/* Case Study Entry */}
-      <section style={{ padding: '120px 0', textAlign: 'center' }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 32px' }}>
-          <h2 style={{ fontSize: '36px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '32px' }}>Seeing is believing.</h2>
-          <button style={{
-            background: 'var(--bg-void)',
-            color: 'var(--accent-primary)',
-            border: '2px solid var(--accent-primary)',
-            padding: '16px 40px',
-            borderRadius: '12px',
-            fontFamily: 'var(--font-body)',
-            fontWeight: 600,
-            fontSize: '16px',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--accent-primary)'; e.currentTarget.style.color = '#fff'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--accent-primary)'; }}
-          >
-            Review Our Case Studies
-          </button>
+      <section style={{ padding: 'clamp(80px, 15vw, 120px) 0', textAlign: 'center' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)' }}>
+          <h2 style={{ fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '32px' }}>Seeing is believing.</h2>
+          <Magnetic>
+            <button style={{
+              background: 'var(--bg-void)',
+              color: 'var(--accent-primary)',
+              border: '2px solid var(--accent-primary)',
+              padding: '16px 40px',
+              borderRadius: '12px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              fontSize: '16px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--accent-primary)'; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--accent-primary)'; }}
+            >
+              Review Our Case Studies
+            </button>
+          </Magnetic>
         </div>
       </section>
     </div>

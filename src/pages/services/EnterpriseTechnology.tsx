@@ -54,7 +54,7 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
         background: 'var(--bg-surface)',
         border: '1px solid var(--border-subtle)',
         borderRadius: '32px',
-        padding: '48px',
+        padding: 'clamp(32px, 6vw, 48px)',
         display: 'flex',
         flexDirection: 'column',
         gap: '24px',
@@ -95,7 +95,7 @@ function ServiceCard({ service, index }: { service: typeof SERVICES[number], ind
           marginBottom: '32px',
         }}>{service.desc}</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '40px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px', marginBottom: '40px' }}>
           {service.points.map(point => (
             <div key={point} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '13px', color: 'var(--text-secondary)', fontWeight: 500 }}>
               <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-primary)', flexShrink: 0 }} />
@@ -143,13 +143,13 @@ export default function EnterpriseTechnology() {
     <div ref={containerRef} style={{ background: 'var(--bg-void)', minHeight: '100vh' }}>
       {/* Brutalist / Industrial Header */}
       <section style={{ 
-        padding: '200px 0 140px', 
+        padding: 'clamp(120px, 20vh, 200px) 0 clamp(80px, 12vh, 140px)', 
         borderBottom: '1px solid var(--border-subtle)',
         background: 'var(--bg-deep)',
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 32px', position: 'relative', zIndex: 1 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)', position: 'relative', zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -177,7 +177,7 @@ export default function EnterpriseTechnology() {
               Enterprise <br />
               <span style={{ color: 'var(--accent-primary)' }}>Technology</span>
             </h1>
-            <div style={{ display: 'flex', gap: '60px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 'clamp(32px, 6vw, 60px)', alignItems: 'flex-start', flexWrap: 'wrap' }}>
               <p style={{ 
                 fontFamily: 'var(--font-body)', 
                 fontSize: '22px', 
@@ -210,9 +210,9 @@ export default function EnterpriseTechnology() {
       </section>
 
       {/* Modern Grid */}
-      <section style={{ padding: '120px 0' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 32px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '40px' }}>
+      <section style={{ padding: 'clamp(60px, 10vw, 120px) 0' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 clamp(20px, 4vw, 32px)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 380px), 1fr))', gap: '40px' }}>
             {SERVICES.map((service, i) => (
               <ServiceCard key={service.title} service={service} index={i} />
             ))}
@@ -221,13 +221,13 @@ export default function EnterpriseTechnology() {
       </section>
 
       {/* Integration Highlight */}
-      <section style={{ padding: '100px 0 180px', background: 'var(--bg-deep)' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 32px', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '48px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '32px' }}>Global Standards Compliant</h2>
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', marginBottom: '64px', maxWidth: '700px', margin: '0 auto 64px' }}>
+      <section style={{ padding: 'clamp(60px, 8vw, 100px) 0 clamp(80px, 12vw, 180px)', background: 'var(--bg-deep)' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 clamp(20px, 5vw, 32px)', textAlign: 'center' }}>
+          <h2 style={{ fontSize: 'clamp(32px, 6vw, 48px)', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '32px' }}>Global Standards Compliant</h2>
+          <p style={{ fontSize: 'clamp(16px, 2vw, 18px)', color: 'var(--text-secondary)', marginBottom: '64px', maxWidth: '700px', margin: '0 auto 64px' }}>
             Every architected system exceeds industry standards for security, data privacy, and reliability. SOC2, HIPAA, and GDPR readiness baked into the foundation.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '80px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 'clamp(32px, 10vw, 80px)', flexWrap: 'wrap' }}>
             <ShieldCheck size={48} color="var(--accent-primary)" opacity={0.5} />
             <Server size={48} color="var(--accent-primary)" opacity={0.5} />
             <Network size={48} color="var(--accent-primary)" opacity={0.5} />

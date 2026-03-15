@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import Magnetic from '../components/ui/Magnetic';
 
 const EASE_SMOOTH = [0.16, 1, 0.3, 1] as const;
 
@@ -97,7 +98,7 @@ function RotatingWord() {
   }, []);
 
   return (
-    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', minWidth: '260px' }}>
+    <span style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'bottom', minWidth: 'clamp(180px, 30vw, 260px)' }}>
       <AnimatePresence mode="wait">
         {visible && (
           <motion.span
@@ -340,8 +341,15 @@ function DataNodesSVG() {
 
 /* ─── Main hero ───────────────────────────────────────────────── */
 export default function HeroSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   return (
     <section
+      ref={containerRef}
       id="hero"
       style={{
         position: 'relative',
@@ -364,17 +372,18 @@ export default function HeroSection() {
         background: 'radial-gradient(ellipse 45% 55% at 8% 52%, rgba(0,232,122,0.07) 0%, transparent 65%)',
       }} />
 
-      <GeometricSVG />
-      <CircuitSVG />
+      <motion.div style={{ y: y1 }}><GeometricSVG /></motion.div>
+      <motion.div style={{ y: y2 }}><CircuitSVG /></motion.div>
       <GlowRingSVG />
       <ParticleCanvas />
 
       {/* Main content */}
-      <div style={{
+      <motion.div style={{ 
         position: 'relative', zIndex: 3,
         maxWidth: '1152px', margin: '0 auto', padding: '0 32px',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         textAlign: 'center', paddingTop: '15vh', paddingBottom: '80px', width: '100%',
+        opacity
       }}>
 
         {/* Eyebrow badge */}
@@ -402,19 +411,34 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.5, ease: EASE_SMOOTH }}
             style={{
               fontFamily: 'var(--font-display)', fontWeight: 700,
-              fontSize: 'clamp(56px, 8vw, 110px)',
+              fontSize: 'clamp(38px, 8vw, 110px)',
               color: 'var(--text-primary)', lineHeight: 0.95,
             }}
           >
             Intelligence that
           </motion.div>
+          <style>{`
+        @media (max-width: 768px) {
+          .rotating-word-container {
+            min-width: 100% !important;
+            display: block !important;
+            margin-top: 4px !important;
+          }
+          #hero {
+            padding-top: 60px !important;
+            min-height: auto !important;
+            height: auto !important;
+            padding-bottom: 100px !important;
+          }
+        }
+      `}</style>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.62, ease: EASE_SMOOTH }}
             style={{
               fontFamily: 'var(--font-display)', fontWeight: 700,
-              fontSize: 'clamp(56px, 8vw, 110px)',
+              fontSize: 'clamp(38px, 8vw, 110px)',
               color: 'var(--accent-primary)', fontStyle: 'italic',
               lineHeight: 0.95, position: 'relative', display: 'inline-block',
             }}
@@ -457,53 +481,57 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 1.1, ease: EASE_SMOOTH }}
           style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '40px' }}
         >
-          <a
-            href="#contact"
-            style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              padding: '14px 32px', borderRadius: '6px',
-              background: 'var(--accent-primary)', color: 'var(--bg-void)',
-              fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '15px',
-              textDecoration: 'none',
-              transition: 'background 0.25s, box-shadow 0.25s, transform 0.25s',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-              (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(0,232,122,0.32)';
-              (e.currentTarget as HTMLElement).style.background = '#1affa0';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.transform = '';
-              (e.currentTarget as HTMLElement).style.boxShadow = '';
-              (e.currentTarget as HTMLElement).style.background = 'var(--accent-primary)';
-            }}
-          >
-            Start Your Transformation →
-          </a>
-          <a
-            href="#works"
-            style={{
-              padding: '14px 32px', borderRadius: '6px',
-              border: '1.5px solid rgba(0,180,96,0.35)',
-              background: 'transparent',
-              color: 'var(--text-primary)',
-              fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '15px',
-              textDecoration: 'none',
-              transition: 'border-color 0.25s, background 0.25s, transform 0.25s',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.65)';
-              (e.currentTarget as HTMLElement).style.background = 'rgba(0,232,122,0.06)';
-              (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.35)';
-              (e.currentTarget as HTMLElement).style.background = 'transparent';
-              (e.currentTarget as HTMLElement).style.transform = '';
-            }}
-          >
-            Explore Our Work
-          </a>
+          <Magnetic>
+            <a
+              href="#contact"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '14px 32px', borderRadius: '6px',
+                background: 'var(--accent-primary)', color: 'var(--bg-void)',
+                fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '15px',
+                textDecoration: 'none',
+                transition: 'background 0.25s, box-shadow 0.25s, transform 0.25s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+                (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(0,232,122,0.32)';
+                (e.currentTarget as HTMLElement).style.background = '#1affa0';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.transform = '';
+                (e.currentTarget as HTMLElement).style.boxShadow = '';
+                (e.currentTarget as HTMLElement).style.background = 'var(--accent-primary)';
+              }}
+            >
+              Start Your Transformation →
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#works"
+              style={{
+                padding: '14px 32px', borderRadius: '6px',
+                border: '1.5px solid rgba(0,180,96,0.35)',
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '15px',
+                textDecoration: 'none',
+                transition: 'border-color 0.25s, background 0.25s, transform 0.25s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.65)';
+                (e.currentTarget as HTMLElement).style.background = 'rgba(0,232,122,0.06)';
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.35)';
+                (e.currentTarget as HTMLElement).style.background = 'transparent';
+                (e.currentTarget as HTMLElement).style.transform = '';
+              }}
+            >
+              Explore Our Work
+            </a>
+          </Magnetic>
         </motion.div>
 
         {/* Stats row */}
@@ -511,7 +539,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.25, ease: EASE_SMOOTH }}
-          style={{ display: 'flex', gap: '52px', justifyContent: 'center', marginBottom: '36px', flexWrap: 'wrap' }}
+          style={{ display: 'flex', gap: 'clamp(24px, 5vw, 52px)', justifyContent: 'center', marginBottom: '36px', flexWrap: 'wrap' }}
         >
           {[
             { val: '15+',  label: 'Clients Served' },
@@ -519,8 +547,8 @@ export default function HeroSection() {
             { val: '2',    label: 'Offices' },
           ].map((s, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 28, color: 'var(--accent-primary)', lineHeight: 1, marginBottom: 5 }}>{s.val}</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '0.16em', color: 'var(--text-secondary)' }}>{s.label.toUpperCase()}</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 3vw, 28px)', color: 'var(--accent-primary)', lineHeight: 1, marginBottom: 5 }}>{s.val}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '0.16em', color: 'var(--text-secondary)' }}>{s.label.toUpperCase()}</div>
             </div>
           ))}
         </motion.div>
@@ -530,18 +558,18 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, delay: 1.4, ease: EASE_SMOOTH }}
-          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'center' }}
         >
           <motion.span
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
-            style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-primary)', display: 'inline-block' }}
+            style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent-primary)', display: 'inline-block', flexShrink: 0 }}
           />
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--text-secondary)', letterSpacing: '0.08em' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(9px, 1.2vw, 11px)', color: 'var(--text-secondary)', letterSpacing: '0.08em' }}>
             Trusted by 15+ businesses · Pune &amp; Kolkata · Est. 2024
           </span>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Floating AI network — right side */}
       <DataNodesSVG />

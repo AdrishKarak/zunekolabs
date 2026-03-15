@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Magnetic from '../../../components/ui/Magnetic';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -75,19 +76,21 @@ const STYLES = `
 
   /* ── Mobile responsive ── */
   @media (max-width: 860px) {
-    .mod-hero-grid    { grid-template-columns: 1fr !important; }
-    .mod-2col         { grid-template-columns: 1fr !important; gap: 28px !important; }
-    .mod-4col         { grid-template-columns: 1fr 1fr !important; }
+    .mod-hero-grid    { grid-template-columns: 1fr !important; text-align: center; }
+    .mod-2col         { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .mod-4col         { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
     .mod-approach-top { grid-template-columns: 1fr !important; gap: 20px !important; }
     .mod-fit-grid     { grid-template-columns: 1fr !important; gap: 20px !important; }
-    .mod-cta-inner    { flex-direction: column !important; align-items: flex-start !important; }
+    .mod-cta-inner    { flex-direction: column !important; align-items: center !important; text-align: center; }
     .mod-hero-svg     { display: none !important; }
     .mod-section      { padding-left: 20px !important; padding-right: 20px !important; }
     .mod-hero-section { padding: 80px 20px 60px !important; }
+    .mod-hero-badges  { justify-content: center !important; }
+    .mod-hero-stats   { justify-content: center !important; }
   }
   @media (max-width: 520px) {
     .mod-4col         { grid-template-columns: 1fr !important; }
-    .mod-hero-badges  { flex-direction: column !important; gap: 8px !important; align-items: flex-start !important; }
+    .mod-hero-badges  { flex-direction: column !important; gap: 8px !important; align-items: center !important; }
   }
 `;
 
@@ -355,7 +358,7 @@ function HeroSection() {
                   transition={{ duration: 0.82, delay: 0.22 + li * 0.14, ease: EASE }}
                   style={{
                     fontFamily: 'var(--font-display)', fontWeight: 700,
-                    fontSize: 'clamp(36px,5.5vw,72px)',
+                    fontSize: 'clamp(36px, 6vw, 68px)',
                     color: li === 0 ? '#0d3d22' : '#1a6e42',
                     lineHeight: 1.02, margin: 0,
                     letterSpacing: '-0.02em',
@@ -371,7 +374,7 @@ function HeroSection() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.52, ease: EASE }}
-              style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(14px,1.4vw,17px)', color: '#3d6b50', lineHeight: 1.82, margin: '0 0 30px', maxWidth: 460 }}
+              style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(15px,1.4vw,17px)', color: '#3d6b50', lineHeight: 1.82, margin: '0 auto 30px', maxWidth: 460 }}
             >
               Refactoring monolithic, legacy applications into modern enterprise-grade software — without stopping the business or gambling on big-bang rewrites.
             </motion.p>
@@ -400,6 +403,7 @@ function HeroSection() {
 
             {/* Stat row */}
             <motion.div
+              className="mod-hero-stats"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: 1.0, ease: EASE }}
@@ -777,13 +781,15 @@ function CTASection() {
                 </FadeUp>
               </div>
               <FadeUp delay={0.22}>
-                <a href="#contact" className="mod-cta-btn"
-                  style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 500, color: '#ffffff', background: '#1a6e42', border: '1px solid #1a6e42', padding: '13px 30px', borderRadius: 8, textDecoration: 'none', display: 'inline-block', flexShrink: 0 }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a6e42'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = '#1a6e42'; e.currentTarget.style.color = '#ffffff'; }}
-                >
-                  Book a scoping call →
-                </a>
+                <Magnetic>
+                  <a href="#contact" className="mod-cta-btn"
+                    style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 500, color: '#ffffff', background: '#1a6e42', border: '1px solid #1a6e42', padding: '13px 30px', borderRadius: 8, textDecoration: 'none', display: 'inline-block', flexShrink: 0 }}
+                    onMouseEnter={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#1a6e42'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background = '#1a6e42'; e.currentTarget.style.color = '#ffffff'; }}
+                  >
+                    Book a scoping call →
+                  </a>
+                </Magnetic>
               </FadeUp>
             </div>
           </div>

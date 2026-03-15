@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import Magnetic from '../components/ui/Magnetic';
 
 const EASE_SMOOTH = [0.16, 1, 0.3, 1] as const;
 
@@ -340,8 +341,15 @@ function DataNodesSVG() {
 
 /* ─── Main hero ───────────────────────────────────────────────── */
 export default function HeroSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+
   return (
     <section
+      ref={containerRef}
       id="hero"
       style={{
         position: 'relative',
@@ -364,17 +372,18 @@ export default function HeroSection() {
         background: 'radial-gradient(ellipse 45% 55% at 8% 52%, rgba(0,232,122,0.07) 0%, transparent 65%)',
       }} />
 
-      <GeometricSVG />
-      <CircuitSVG />
+      <motion.div style={{ y: y1 }}><GeometricSVG /></motion.div>
+      <motion.div style={{ y: y2 }}><CircuitSVG /></motion.div>
       <GlowRingSVG />
       <ParticleCanvas />
 
       {/* Main content */}
-      <div style={{
+      <motion.div style={{ 
         position: 'relative', zIndex: 3,
         maxWidth: '1152px', margin: '0 auto', padding: '0 32px',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         textAlign: 'center', paddingTop: '15vh', paddingBottom: '80px', width: '100%',
+        opacity
       }}>
 
         {/* Eyebrow badge */}
@@ -457,53 +466,57 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 1.1, ease: EASE_SMOOTH }}
           style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '40px' }}
         >
-          <a
-            href="#contact"
-            style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              padding: '14px 32px', borderRadius: '6px',
-              background: 'var(--accent-primary)', color: 'var(--bg-void)',
-              fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '15px',
-              textDecoration: 'none',
-              transition: 'background 0.25s, box-shadow 0.25s, transform 0.25s',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-              (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(0,232,122,0.32)';
-              (e.currentTarget as HTMLElement).style.background = '#1affa0';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.transform = '';
-              (e.currentTarget as HTMLElement).style.boxShadow = '';
-              (e.currentTarget as HTMLElement).style.background = 'var(--accent-primary)';
-            }}
-          >
-            Start Your Transformation →
-          </a>
-          <a
-            href="#works"
-            style={{
-              padding: '14px 32px', borderRadius: '6px',
-              border: '1.5px solid rgba(0,180,96,0.35)',
-              background: 'transparent',
-              color: 'var(--text-primary)',
-              fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '15px',
-              textDecoration: 'none',
-              transition: 'border-color 0.25s, background 0.25s, transform 0.25s',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.65)';
-              (e.currentTarget as HTMLElement).style.background = 'rgba(0,232,122,0.06)';
-              (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.35)';
-              (e.currentTarget as HTMLElement).style.background = 'transparent';
-              (e.currentTarget as HTMLElement).style.transform = '';
-            }}
-          >
-            Explore Our Work
-          </a>
+          <Magnetic>
+            <a
+              href="#contact"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                padding: '14px 32px', borderRadius: '6px',
+                background: 'var(--accent-primary)', color: 'var(--bg-void)',
+                fontFamily: 'var(--font-heading)', fontWeight: 600, fontSize: '15px',
+                textDecoration: 'none',
+                transition: 'background 0.25s, box-shadow 0.25s, transform 0.25s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+                (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 28px rgba(0,232,122,0.32)';
+                (e.currentTarget as HTMLElement).style.background = '#1affa0';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.transform = '';
+                (e.currentTarget as HTMLElement).style.boxShadow = '';
+                (e.currentTarget as HTMLElement).style.background = 'var(--accent-primary)';
+              }}
+            >
+              Start Your Transformation →
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#works"
+              style={{
+                padding: '14px 32px', borderRadius: '6px',
+                border: '1.5px solid rgba(0,180,96,0.35)',
+                background: 'transparent',
+                color: 'var(--text-primary)',
+                fontFamily: 'var(--font-body)', fontWeight: 500, fontSize: '15px',
+                textDecoration: 'none',
+                transition: 'border-color 0.25s, background 0.25s, transform 0.25s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.65)';
+                (e.currentTarget as HTMLElement).style.background = 'rgba(0,232,122,0.06)';
+                (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'rgba(0,180,96,0.35)';
+                (e.currentTarget as HTMLElement).style.background = 'transparent';
+                (e.currentTarget as HTMLElement).style.transform = '';
+              }}
+            >
+              Explore Our Work
+            </a>
+          </Magnetic>
         </motion.div>
 
         {/* Stats row */}
@@ -541,7 +554,7 @@ export default function HeroSection() {
             Trusted by 15+ businesses · Pune &amp; Kolkata · Est. 2024
           </span>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Floating AI network — right side */}
       <DataNodesSVG />
@@ -559,6 +572,21 @@ export default function HeroSection() {
           <ChevronDown size={18} style={{ color: 'var(--text-secondary)' }} />
         </motion.div>
       </div>
+      <style>{`
+        @media (max-width: 768px) {
+          .rotating-word-container {
+            min-width: 100% !important;
+            display: block !important;
+            margin-top: 4px !important;
+          }
+          #hero {
+            padding-top: 60px !important;
+            min-height: auto !important;
+            height: auto !important;
+            padding-bottom: 100px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
